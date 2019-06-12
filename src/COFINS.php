@@ -8,7 +8,7 @@ class COFINS
 {
     public function __construct($COFINS, $CodCli, $CodPro)
     {
-        $dao = new NotaFiscalDAO();
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
 
 
         if ($COFINS->Zerar === 1) {
@@ -19,7 +19,7 @@ class COFINS
             return $COFINS;
         }
 
-        $cliente = $dao->getClienteUltimoCOFINS($CodCli, $CodPro);
+        $cliente = $dummy->getClienteUltimoCOFINS($CodCli, $CodPro);
         if (sizeof($cliente) > 0) {
             $COFINS->CST = $cliente[0]['CST'];
         }

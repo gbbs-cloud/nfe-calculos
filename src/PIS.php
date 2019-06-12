@@ -8,7 +8,7 @@ class PIS
 {
     public function __construct($PIS, $CodCli, $CodPro)
     {
-        $dao = new NotaFiscalDAO();
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
 
 
         if ($PIS->Zerar === 1) {
@@ -19,7 +19,7 @@ class PIS
             return $PIS;
         }
 
-        $cliente = $dao->getClienteUltimoPIS($CodCli, $CodPro);
+        $cliente = $dummy->getClienteUltimoPIS($CodCli, $CodPro);
         if (sizeof($cliente) > 0) {
             $PIS->CST = $cliente[0]['CST'];
         }

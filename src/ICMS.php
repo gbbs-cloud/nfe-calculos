@@ -25,7 +25,7 @@ class ICMS
         $CliContribuinte,
         $modBCST = null
     ) {
-        $dao = new NotaFiscalDAO();
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
 
         //Logs::escreverNoLogObjeto($CodPro, "CodPro Calculo Impostos");
 
@@ -46,7 +46,7 @@ class ICMS
             return $ICMS;
         }
 
-        $cliente = $dao->getClienteUltimaAliquota($CodCli, $CodPro);
+        $cliente = $dummy->getClienteUltimaAliquota($CodCli, $CodPro);
 
         //REDUÇÃO DO PERCENTUAL DA ALIQUOTA ICMS
         $reducao = $this->getPerICMSReducao($ufDest, $CodNCM, $CodPro);
@@ -158,14 +158,13 @@ class ICMS
 
     public function getPerICMS($orig, $dest)
     {
-        $NotaFiscalDAO = new NotaFiscalDAO;
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
         if ($this->CliContribuinte === '1' && $dest === '42' && $orig === '42') {
             $pICMS = 12;
         } else {
-            $pICMS = $NotaFiscalDAO->getpICMS($orig, $dest);
+            $pICMS = $dummy->getpICMS($orig, $dest);
         }
 
-        unset($NotaFiscalDAO);
         return $pICMS;
     }
 
@@ -175,9 +174,8 @@ class ICMS
 
     public function getPerICMSReducao($dest, $NCM, $CodPro)
     {
-        $NotaFiscalDAO = new NotaFiscalDAO;
-        $pICMS = $NotaFiscalDAO->getpICMSReducao($dest, $NCM, $CodPro);
-        unset($NotaFiscalDAO);
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
+        $pICMS = $dummy->getpICMSReducao($dest, $NCM, $CodPro);
         return $pICMS;
     }
 
@@ -191,9 +189,8 @@ class ICMS
         if ($this->ST > 0) {
             return $this->ST;
         } else {
-            $NotaFiscalDAO = new NotaFiscalDAO;
-            $pICMS = $NotaFiscalDAO->getpICMSST($orig, $dest);
-            unset($NotaFiscalDAO);
+            $dummy = new \stdClass();  // TODO retrieve data from correct source
+            $pICMS = $dummy->getpICMSST($orig, $dest);
             return $pICMS;
         }
     }
@@ -204,10 +201,9 @@ class ICMS
 
     private function getPerMVAST($REG, $NCM)
     {
-        $NotaFiscalDAO = new NotaFiscalDAO;
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
         // Logs::escreverNoLog($REG . $NCM. $this->ufDestSig);
-        $pMVAST = $NotaFiscalDAO->getpMVAST($REG, $NCM, $this->ufDestSig, $this->CodEmi);
-        unset($NotaFiscalDAO);
+        $pMVAST = $dummy->getpMVAST($REG, $NCM, $this->ufDestSig, $this->CodEmi);
         return $pMVAST;
     }
 
@@ -217,9 +213,8 @@ class ICMS
 
     private function getufDesSig($destino)
     {
-        $NotaFiscalDAO = new NotaFiscalDAO;
-        $ufDestSig = $NotaFiscalDAO->getufDesSig($destino);
-        unset($NotaFiscalDAO);
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
+        $ufDestSig = $dummy->getufDesSig($destino);
         return $ufDestSig;
     }
 

@@ -10,7 +10,7 @@ class IPI
 
     public function __construct($IPI, $CodNCM, $CodCli, $CodPro)
     {
-        $dao = new NotaFiscalDAO();
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
 
         $this->CodNCM = $CodNCM;
         $IPI->pIPI = $this->getpIPI();
@@ -26,7 +26,7 @@ class IPI
         }
 
 
-        $cliente = $dao->getClienteUltimoIPI($CodCli, $CodPro);
+        $cliente = $dummy->getClienteUltimoIPI($CodCli, $CodPro);
         if (sizeof($cliente) > 0) {
             $IPI->CST = $cliente[0]['CST'];
             $IPI->descCST = $cliente[0]['descricao'];
@@ -155,9 +155,8 @@ class IPI
 
     private function getPerIPI($CodNCM)
     {
-        $NotaFiscalDAO = new NotaFiscalDAO;
-        $pIPI = $NotaFiscalDAO->getpIPI($CodNCM);
-        unset($NotaFiscalDAO);
+        $dummy = new \stdClass();  // TODO retrieve data from correct source
+        $pIPI = $dummy->getpIPI($CodNCM);
         return $pIPI;
     }
 }
