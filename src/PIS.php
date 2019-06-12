@@ -10,7 +10,6 @@ class PIS
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 
-
         if ($PIS->Zerar === 1) {
             $PIS->pPIS = '0';
             $PIS->vBC = '0';
@@ -131,7 +130,6 @@ class PIS
 
     private function calcIsento($PIS)
     {
-        //return $IPI;
         $PIS->pPIS = 0.65;
         if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
             $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
@@ -147,8 +145,6 @@ class PIS
 
     private function calcaPIS($PIS)
     {
-
-
         $PIS->pPIS = 0.65;
         if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
             $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
@@ -157,13 +153,11 @@ class PIS
         }
         $PIS->pRedBC = 0;
         $PIS->vPIS = (($PIS->vBC - ($PIS->vBC * ($PIS->pRedBC / 100))) * ($PIS->pPIS / 100));
-        //$PIS->Desconto = 0;
         return $PIS;
     }
 
     private function calcIsentoDesconto($PIS)
     {
-
         $PIS->pPIS = 0.65;
         if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
             $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
@@ -180,15 +174,9 @@ class PIS
 
     private function calcAliqCST03($PIS)
     {
-        /* if($PIS->REIDE === 1){
-          $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
-          }else{
-          $PIS->Desconto =0;
-          } */
         $PIS->vBC = 0;
         $PIS->pPIS = 0;
         $PIS->vPIS = round((($PIS->vAliqProd) * ($PIS->qBCProd)), 2);
-        //$PIS->Desconto =0;
         return $PIS;
     }
 }

@@ -10,7 +10,6 @@ class COFINS
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 
-
         if ($COFINS->Zerar === 1) {
             $COFINS->pCOFINS = '0';
             $COFINS->vBC = '0';
@@ -129,7 +128,6 @@ class COFINS
 
     private function calcIsento($COFINS)
     {
-        //return $IPI;
         $COFINS->pCOFINS = 3;
         if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
             $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
@@ -145,8 +143,6 @@ class COFINS
 
     private function calcaCOFINS($COFINS)
     {
-
-        //$COFINS->CST = "01";
         $COFINS->pCOFINS = 3;
         $COFINS->pRedBC = 0;
         $COFINS->vCOFINS = (($COFINS->vBC - ($COFINS->vBC * ($COFINS->pRedBC / 100))) * ($COFINS->pCOFINS / 100));
@@ -160,7 +156,6 @@ class COFINS
 
     private function calcIsentoDesconto($COFINS)
     {
-
         $COFINS->pCOFINS = 3;
         if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
             $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
@@ -178,12 +173,6 @@ class COFINS
 
     private function calcAliqCST03($COFINS)
     {
-        /* $COFINS->pCOFINS = 3;
-          if($COFINS->REIDE === 1){
-          $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
-          }else{
-          $COFINS->Desconto =0;
-          } */
         $COFINS->vBC = 0;
         $COFINS->pCOFINS = 0;
         $COFINS->vCOFINS = round((($COFINS->vAliqProd) * ($COFINS->qBCProd)), 2);

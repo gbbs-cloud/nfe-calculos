@@ -27,8 +27,6 @@ class ICMS
     ) {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 
-        //Logs::escreverNoLogObjeto($CodPro, "CodPro Calculo Impostos");
-
         $this->ufOrig = $ufOrig;
         $this->ufDest = $ufDest;
         $this->CodNCM = $CodNCM;
@@ -144,9 +142,6 @@ class ICMS
                 return $this->calcCST70($ICMS);
                 break;
             case "90":
-//                if ($ICMS->UFST != null)
-//                    return $this->calcCST90($ICMS);
-//                else
                 return $this->calcCST90c($ICMS, $modBCST);
                 break;
         }
@@ -155,7 +150,6 @@ class ICMS
     /*
      * @Pega o percentual de ICMS resultande do cruzamento de dados de 2 UF's
      */
-
     public function getPerICMS($orig, $dest)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
@@ -171,7 +165,6 @@ class ICMS
     /*
      * @Pega o percentual de ICMS resultande do NCM e Estado de Destino
      */
-
     public function getPerICMSReducao($dest, $NCM, $CodPro)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
@@ -182,7 +175,6 @@ class ICMS
     /*
      * @Pega o percentual de ICMSST resultande do cruzamento de dados de 2 UF's
      */
-
     private function getPerICMSST($orig, $dest)
     {
 
@@ -198,11 +190,9 @@ class ICMS
     /*
      * @Pega o percentual de MVA
      */
-
     private function getPerMVAST($REG, $NCM)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
-        // Logs::escreverNoLog($REG . $NCM. $this->ufDestSig);
         $pMVAST = $dummy->getpMVAST($REG, $NCM, $this->ufDestSig, $this->CodEmi);
         return $pMVAST;
     }
@@ -210,7 +200,6 @@ class ICMS
     /*
      * @Pega a SIGLA do UF destino para o ICMS ST
      */
-
     private function getufDesSig($destino)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
@@ -221,17 +210,14 @@ class ICMS
     /*
      * @Pega o percentual de ICMSST
      */
-
     private function getpICMSST()
     {
-        //    Logs::escreverNoLog($this->ufOrig.",". $this->ufDest, 'ESTADOS ');
         return $this->getPerICMSST($this->ufOrig, $this->ufDest);
     }
 
     /*
      * @Pega o percentual de ICMS
      */
-
     private function getpICMS()
     {
         return $this->getPerICMS($this->ufOrig, $this->ufDest);
@@ -240,7 +226,6 @@ class ICMS
     /*
      * @Pega o percentual de MVA ST pelo NCM/Regime
      */
-
     private function getpMVAST($ICMS)
     {
 
@@ -250,7 +235,6 @@ class ICMS
     /*
      * @Calcula o Valor crédito do ICMS que pode ser aproveitado
      */
-
     private function calcvCredICMSSN($ICMS)
     {
         $ICMS->vCredICMSSN = ($ICMS->vBC * $ICMS->pCredSN) / 100;
@@ -260,7 +244,6 @@ class ICMS
     /*
      * @Calcula o Valor do ICMS
      */
-
     private function calcvICMS($ICMS)
     {
         //Logs::escreverNoLogObjeto($ICMS, "ICMS CALCVICMS ");
@@ -268,22 +251,11 @@ class ICMS
         return $ICMS->vICMS;
     }
 
-//    private function calcvFCP($ICMS) {
-//        //Logs::escreverNoLogObjeto($ICMS, "ICMS CALCVICMS ");
-//        $ICMS->vFCP = ($ICMS->vBC * ($ICMS->pFCP / 100));
-//        return $ICMS->vFCP;
-//    }
-
     /*
      * @Calcula o Valor do ICMSST
      */
-
     private function calcvICMSST($ICMS, $modBCST = null)
     {
-
-        // Logs::escreverNoLog($ICMS);
-        //Logs::escreverNoLog($modBCST);
-
         if ($modBCST === '6') {
             $ICMS->vICMS = $this->calcvICMS($ICMS);
             $ICMS->vICMSST = $ICMS->vBCST * ($ICMS->pICMSST / 100) - $ICMS->vICMS;
@@ -302,7 +274,6 @@ class ICMS
         $ICMS->vICMS = $this->calcvICMS($ICMS);
         $ICMS->vBCST = $ICMS->vBCST * (1 + ($ICMS->pMVAST / 100)); ///VERIFICAR AQUI OQUE ESTÃO ACONTECENDO
         $ICMS->vICMSST = (((($ICMS->vBCST - ($ICMS->vBCST * ((float)$ICMS->pRedBCST / 100)))) * ($ICMS->pICMSST / 100)) - $ICMS->vICMS);
-        //$ICMS->vICMSST = (((($ICMS->vBCST + ($ICMS->vBCST * ($ICMS->pRedBCST / 100))) * ($ICMS->pMVAST/100)) * ($ICMS->pICMSST/100) - $ICMS->vICMS));
 
         return $ICMS->vICMSST;
     }
@@ -325,7 +296,6 @@ class ICMS
     /*
      * @Calcula  a redução na base de culculo do ICMS
      */
-
     private function calcRedBC($ICMS)
     {
         $ICMS->vBC = $ICMS->vBC - ($ICMS->vBC * ((float)$ICMS->pRedBC / 100));
@@ -335,7 +305,6 @@ class ICMS
     /*
      * @Calcula  a redução na base de culculo do ICMSST
      */
-
     private function calcRedBCST($ICMS)
     {
         $ICMS->vBCST = $ICMS->vBCST - ($ICMS->vBCST * ((float)$ICMS->pRedBCST / 100));
@@ -343,7 +312,6 @@ class ICMS
     }
 
     /* /// SIMPLES NACIONAL /// */
-
     private function calcCSOSN101($ICMS)
     {
         $ICMS->vCredICMSSN = $this->calcvCredICMSSN($ICMS);
@@ -401,12 +369,9 @@ class ICMS
     }
 
     /* --- FUNCOES CALCULOS POR CST DO REGIME NORMAL --- */
-
     private function calcCST00($ICMS)
     {
-
         $ICMS->vICMS = ($this->calcvICMS($ICMS));
-        //$ICMS->vFCP = ($this->calcvFCP($ICMS));
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
         $ICMS->pMVAST = 0;
@@ -417,10 +382,7 @@ class ICMS
 
     private function calcCST200($ICMS)
     {
-
         $ICMS->vICMS = ($this->calcvICMS($ICMS));
-        //$ICMS->vICMS = "120";
-        //$ICMS->pICMS = 0;
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
         $ICMS->pMVAST = 0;
@@ -432,26 +394,20 @@ class ICMS
 
     private function calcCST10($ICMS, $modBCST = null)
     {
-
         $ICMS->vBCST = $this->calcRedBCST($ICMS);
         $ICMS->vBC = $this->calcRedBC($ICMS);
-        //$ICMS->pICMS = $this->getpICMS();
 
-        //  $ICMS->pICMSST = $this->getpICMSST();
         $ICMS->vICMS = ($this->calcvICMS($ICMS));
         $ICMS->vICMSST = $this->calcvICMSST($ICMS, $modBCST);
 
-        //Logs::escreverNoLogObjeto($ICMS, $titulo);
         return $ICMS;
     }
 
     private function calcCST20($ICMS)
     {
-//        $ICMS->pRedBC = 0;
         $ICMS->vICMSDeson = $this->calcvICMSDeson($ICMS);
         $ICMS->vBC = $this->calcRedBC($ICMS);
         $ICMS->vICMS = ($this->calcvICMS($ICMS));
-
 
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
@@ -477,11 +433,9 @@ class ICMS
             $ICMS->Desconto = 0;
         }
 
-
         $ICMS->vBC = 0;
         $ICMS->vICMS = 0;
         $ICMS->pICMS = 0;
-
 
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
@@ -498,7 +452,6 @@ class ICMS
         $ICMS->vICMS = 0;
         $ICMS->pICMS = 0;
 
-
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
         $ICMS->pMVAST = 0;
@@ -512,7 +465,6 @@ class ICMS
         $ICMS->vICMS = 0;
         $ICMS->pICMS = 0;
 
-
         $ICMS->vICMSST = 0;
         $ICMS->vBCST = 0;
         $ICMS->pMVAST = 0;
@@ -523,19 +475,6 @@ class ICMS
 
     private function calcCST51($ICMS)
     {
-
-//      <ICMS>
-//      <ICMS51>
-//      <orig>0</orig>
-//      <CST>51</CST>
-//      <modBC>3</modBC>
-//      <pRedBC>20.00</pRedBC>
-//      <vBC>80.00</vBC>
-//      <pICMS>12.00</pICMS>
-//      <vICMS>9.60</vICMS>
-//      </ICMS51>
-//      </ICMS>
-
         $ICMS->vBC = $this->calcRedBC($ICMS);
         $ICMS->pICMS = $this->getpICMS();
         $ICMS->vICMS = ($this->calcvICMS($ICMS));
@@ -550,7 +489,6 @@ class ICMS
 
     private function calcCST60($ICMS)
     {
-
         $ICMS->vBC = 0;
         $ICMS->vICMS = 0;
         $ICMS->pICMS = 0;
@@ -564,7 +502,6 @@ class ICMS
 
     private function calcCST70($ICMS)
     {
-
         $ICMS->vBCST = $this->calcRedBCST($ICMS);
         $ICMS->vBC = $this->calcRedBC($ICMS);
         $ICMS->pICMSST = $this->getpICMSST();
@@ -576,7 +513,6 @@ class ICMS
 
     private function calcCST90c($ICMS, $modBCST)
     {
-        //  $ICMS->vICMS = ($this->calcvICMS( $ICMS ));
         if ($ICMS->CSTNotaRef === '10') {
             $ICMS->vICMS = ($this->calcvICMS($ICMS));
             $ICMS->vICMSST = $this->calcvICMSST($ICMS, $modBCST);

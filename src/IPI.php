@@ -15,7 +15,6 @@ class IPI
         $this->CodNCM = $CodNCM;
         $IPI->pIPI = $this->getpIPI();
 
-
         if ($IPI->Zerar === 1) {
             $IPI->vBC = '0';
             if ($IPI->vIPI === 0) {
@@ -25,13 +24,11 @@ class IPI
             return $IPI;
         }
 
-
         $cliente = $dummy->getClienteUltimoIPI($CodCli, $CodPro);
         if (sizeof($cliente) > 0) {
             $IPI->CST = $cliente[0]['CST'];
             $IPI->descCST = $cliente[0]['descricao'];
         }
-
 
         switch ($IPI->CST) {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
@@ -50,7 +47,6 @@ class IPI
             case 99:
                 return $this->calcAliquotaAdValoren($IPI);
                 break;
-
 
             /* 01 ENTRADA TRIBUTADA COM ALICOTA ZERO */
             case 01:
@@ -93,22 +89,11 @@ class IPI
                 return $this->calcIsento($IPI);
                 break;
         }
-
-
-        //  return $this->calcAliquotaAdValoren($IPI);
-        // switch ($IPI->TipoAliquota) {
-        //     case 0:
-        //   break;
-        //  case 1:
-        //     return $this->calcAliquotaEspecifica($IPI);
-        // break;
-        //}
     }
 
     /*
      * @ISENTO
      */
-
     private function calcIsento($IPI)
     {
         $IPI->vIPI = '0';
@@ -122,7 +107,6 @@ class IPI
     /*
      * @Calcula o Valor IPI Ad Valoren
      */
-
     private function calcAliquotaAdValoren($IPI)
     {
         $IPI->vIPI = ($IPI->vBC * ($IPI->pIPI / 100));
@@ -143,7 +127,6 @@ class IPI
     /*
      * @Pega o percentual de IPI
      */
-
     private function getpIPI()
     {
         return $this->getPerIPI($this->CodNCM);
@@ -152,7 +135,6 @@ class IPI
     /*
      * @Pega o percentual de IPI pelo NCM do Produto.
      */
-
     private function getPerIPI($CodNCM)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
