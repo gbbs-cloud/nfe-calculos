@@ -1,12 +1,12 @@
 {
-    "name": ":vendor/:package_name",
+    "name": "gbbs/:package_name",
     "type": "library",
     "description": ":package_description",
     "keywords": [
-        ":vendor",
+        "gbbs",
         ":package_name"
     ],
-    "homepage": "https://github.com/:vendor/:package_name",
+    "homepage": "https://github.com/gbbs/:package_name",
     "license": "MIT",
     "authors": [
         {
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            ":vendor\\:package_name\\": "src"
+            "gbbs\\:package_name\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            ":vendor\\:package_name\\": "tests"
+            "gbbs\\:package_name\\": "tests"
         }
     },
     "scripts": {
