@@ -6,7 +6,11 @@ namespace Gbbs\Impostos;
 
 class PIS
 {
-    public function __construct($PIS, $CodCli, $CodPro)
+    public function __construct()
+    {
+    }
+
+    public function calcular($PIS, $CodCli, $CodPro)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 

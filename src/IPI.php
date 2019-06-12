@@ -8,7 +8,11 @@ class IPI
 {
     private $CodNCM;
 
-    public function __construct($IPI, $CodNCM, $CodCli, $CodPro)
+    public function __construct()
+    {
+    }
+
+    public function calcular($IPI, $CodNCM, $CodCli, $CodPro)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 

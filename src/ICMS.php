@@ -14,7 +14,11 @@ class ICMS
     private $ST = 0;
     private $CliContribuinte;
 
-    public function __construct(
+    public function __construct()
+    {
+    }
+
+    public function calcular(
         $ICMS,
         $ufOrig,
         $ufDest,

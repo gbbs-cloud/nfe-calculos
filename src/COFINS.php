@@ -6,7 +6,11 @@ namespace Gbbs\Impostos;
 
 class COFINS
 {
-    public function __construct($COFINS, $CodCli, $CodPro)
+    public function __construct()
+    {
+    }
+
+    public function calcular($COFINS, $CodCli, $CodPro)
     {
         $dummy = new \stdClass();  // TODO retrieve data from correct source
 
