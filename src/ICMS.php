@@ -253,7 +253,7 @@ class ICMS
     }
 
     /*
-     * @Calcula o Valor crÃ©dito do ICMS que pode ser aproveitado
+     * @Calcula o Valor crédito do ICMS que pode ser aproveitado
      */
 
     private function calcvCredICMSSN($ICMS)
@@ -305,7 +305,7 @@ class ICMS
         }
 
         $ICMS->vICMS = $this->calcvICMS($ICMS);
-        $ICMS->vBCST = $ICMS->vBCST * (1 + ($ICMS->pMVAST / 100)); ///VERIFICAR AQUI OQUE ESTÃ� ACONTECENDO
+        $ICMS->vBCST = $ICMS->vBCST * (1 + ($ICMS->pMVAST / 100)); ///VERIFICAR AQUI OQUE ESTÃO ACONTECENDO
         $ICMS->vICMSST = (((($ICMS->vBCST - ($ICMS->vBCST * ((float)$ICMS->pRedBCST / 100)))) * ($ICMS->pICMSST / 100)) - $ICMS->vICMS);
         //$ICMS->vICMSST = (((($ICMS->vBCST + ($ICMS->vBCST * ($ICMS->pRedBCST / 100))) * ($ICMS->pMVAST/100)) * ($ICMS->pICMSST/100) - $ICMS->vICMS));
 
@@ -328,7 +328,7 @@ class ICMS
     }
 
     /*
-     * @Calcula  a reduÃ§Ã£o na base de culculo do ICMS
+     * @Calcula  a redução na base de culculo do ICMS
      */
 
     private function calcRedBC($ICMS)
@@ -338,7 +338,7 @@ class ICMS
     }
 
     /*
-     * @Calcula  a reduÃ§Ã£o na base de culculo do ICMSST
+     * @Calcula  a redução na base de culculo do ICMSST
      */
 
     private function calcRedBCST($ICMS)
