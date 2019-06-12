@@ -1,7 +1,7 @@
 {
     "name": "gbbs/nfe-calculos",
     "type": "library",
-    "description": ":package_description",
+    "description": "Cálculos de NFe",
     "keywords": [
         "gbbs",
         "nfe-calculos"

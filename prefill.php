@@ -27,7 +27,7 @@ $replacements = [
     'dermarios@gmail.com'                => function () use(&$values) { return $values['author_email'] ?: ($values['author_github_username'] . '@example.com'); },
     'gbbs'                      => function () use(&$values) { return $values['package_vendor']; },
     'nfe-calculos'                => function () use(&$values) { return $values['package_name']; },
-    ':package_description'         => function () use(&$values) { return $values['package_description']; },
+    'Cálculos de NFe'         => function () use(&$values) { return $values['package_description']; },
     'League\\Skeleton'             => function () use(&$values) { return $values['psr4_namespace']; },
 ];
 
