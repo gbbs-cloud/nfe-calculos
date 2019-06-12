@@ -38,8 +38,8 @@ $ composer require gbbs/nfe-calculos
 ## Usage
 
 ``` php
-$skeleton = new League\Skeleton();
-echo $skeleton->echoPhrase('Hello, League!');
+$skeleton = new Gbbs\Skeleton();
+echo $skeleton->echoPhrase('Hello, Gbbs!');
 ```
 
 ## Change log
