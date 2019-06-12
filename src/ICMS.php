@@ -62,12 +62,12 @@ class ICMS
                     $ICMS->pICMS = $this->getPerICMS($this->ufOrig, $this->ufDest);
                     $ICMS->pICMSST = $this->getPerICMSST($this->ufOrig, $this->ufDest);
                 } else {
-                    $ICMS->pICMS = $cliente[0][pICMS];
+                    $ICMS->pICMS = $cliente[0]['pICMS'];
                 }
-                $this->ST = $cliente[0][pICMSST];
-                $ICMS->CST = $cliente[0][CST];
-                $ICMS->descCST = $cliente[0][descricao];
-                $ICMS->CFOP = $cliente[0][CFOP];
+                $this->ST = $cliente[0]['pICMSST'];
+                $ICMS->CST = $cliente[0]['CST'];
+                $ICMS->descCST = $cliente[0]['descricao'];
+                $ICMS->CFOP = $cliente[0]['CFOP'];
             } else {
                 if ($ICMS->ClienteIE === "ISENTO") {
                     $ICMS->pICMS = $this->getPerICMS($this->ufOrig, $this->ufDest);
