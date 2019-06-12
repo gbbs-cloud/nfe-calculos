@@ -186,7 +186,7 @@ class COFINS
           } */
         $COFINS->vBC = 0;
         $COFINS->pCOFINS = 0;
-        $COFINS->vCOFINS = Moeda::round_number((($COFINS->vAliqProd) * ($COFINS->qBCProd)));
+        $COFINS->vCOFINS = round((($COFINS->vAliqProd) * ($COFINS->qBCProd)), 2);
         $COFINS->Desconto = 0;
 
         return $COFINS;

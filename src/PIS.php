@@ -187,7 +187,7 @@ class PIS
           } */
         $PIS->vBC = 0;
         $PIS->pPIS = 0;
-        $PIS->vPIS = Moeda::round_number((($PIS->vAliqProd) * ($PIS->qBCProd)));
+        $PIS->vPIS = round((($PIS->vAliqProd) * ($PIS->qBCProd)), 2);
         //$PIS->Desconto =0;
         return $PIS;
     }
