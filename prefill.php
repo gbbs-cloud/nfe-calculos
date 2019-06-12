@@ -21,7 +21,7 @@ $values = [];
 
 $replacements = [
     'gbbs\\\\:package_name\\\\' => function () use(&$values) { return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\'; },
-    ':author_name'                 => function () use(&$values) { return $values['author_name']; },
+    'Mário Sérgio Silvera'                 => function () use(&$values) { return $values['author_name']; },
     ':author_username'             => function () use(&$values) { return $values['author_github_username']; },
     ':author_website'              => function () use(&$values) { return $values['author_website'] ?: ('https://github.com/' . $values['author_github_username']); },
     ':author_email'                => function () use(&$values) { return $values['author_email'] ?: ($values['author_github_username'] . '@example.com'); },
