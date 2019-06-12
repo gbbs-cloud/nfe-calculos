@@ -35,13 +35,6 @@ Via Composer
 $ composer require gbbs/nfe-calculos
 ```
 
-## Usage
-
-``` php
-$skeleton = new Gbbs\Skeleton();
-echo $skeleton->echoPhrase('Hello, Gbbs!');
-```
-
 ## Change log
 
 Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
