@@ -1,12 +1,12 @@
 {
-    "name": "gbbs/:package_name",
+    "name": "gbbs/nfe-calculos",
     "type": "library",
     "description": ":package_description",
     "keywords": [
         "gbbs",
-        ":package_name"
+        "nfe-calculos"
     ],
-    "homepage": "https://github.com/gbbs/:package_name",
+    "homepage": "https://github.com/gbbs/nfe-calculos",
     "license": "MIT",
     "authors": [
         {
@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "gbbs\\:package_name\\": "src"
+            "gbbs\\nfe-calculos\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "gbbs\\:package_name\\": "tests"
+            "gbbs\\nfe-calculos\\": "tests"
         }
     },
     "scripts": {

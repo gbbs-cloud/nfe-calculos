@@ -20,13 +20,13 @@ $fields = [
 $values = [];
 
 $replacements = [
-    'gbbs\\\\:package_name\\\\' => function () use(&$values) { return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\'; },
+    'gbbs\\\\nfe-calculos\\\\' => function () use(&$values) { return str_replace('\\', '\\\\', $values['psr4_namespace']) . '\\\\'; },
     'Mário Sérgio Silvera'                 => function () use(&$values) { return $values['author_name']; },
     'dermarios'             => function () use(&$values) { return $values['author_github_username']; },
     ':author_website'              => function () use(&$values) { return $values['author_website'] ?: ('https://github.com/' . $values['author_github_username']); },
     'dermarios@gmail.com'                => function () use(&$values) { return $values['author_email'] ?: ($values['author_github_username'] . '@example.com'); },
     'gbbs'                      => function () use(&$values) { return $values['package_vendor']; },
-    ':package_name'                => function () use(&$values) { return $values['package_name']; },
+    'nfe-calculos'                => function () use(&$values) { return $values['package_name']; },
     ':package_description'         => function () use(&$values) { return $values['package_description']; },
     'League\\Skeleton'             => function () use(&$values) { return $values['psr4_namespace']; },
 ];
