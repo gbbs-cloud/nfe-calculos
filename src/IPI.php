@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Gbbs\Impostos;
+namespace Gbbs\NfeCalculos;
 
 use Exception;
 
