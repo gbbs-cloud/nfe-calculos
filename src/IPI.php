@@ -8,6 +8,24 @@ use Exception;
 
 class IPI
 {
+    public $descCST;
+    public $clEnq;
+    public $CNPJProd;
+    public $cSelo;
+    public $qSelo;
+    public $cEnq;
+    public $CST;
+    public $vBC;
+    public $pIPI;
+    public $vIPI;
+    public $qUnid;
+    public $vUnid;
+    public $CodNCM;
+    public $REIDE;
+    public $SUFRAMA;
+    public $CSTNotaRef;
+    public $Zerar;
+
     /**
      * @param $IPI
      * @param $pIPI
@@ -16,7 +34,7 @@ class IPI
      * @return mixed
      * @throws Exception
      */
-    public static function calcular($IPI, $pIPI, $CST, $descricao)
+    public static function calcular(IPI $IPI, $pIPI, $CST, $descricao)
     {
         $IPI->pIPI = $pIPI;
 

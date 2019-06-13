@@ -8,13 +8,25 @@ use Exception;
 
 class COFINS
 {
+    public $CST;
+    public $vBC;
+    public $pCOFINS;
+    public $vCOFINS;
+    public $pRedBC;
+    public $vAliqProd;
+    public $qBCProd;
+    public $Desconto;
+    public $REIDE;
+    public $SUFRAMA;
+    public $Zerar;
+
     /**
      * @param $COFINS
      * @param $CST
      * @return mixed
      * @throws Exception
      */
-    public static function calcular($COFINS, $CST)
+    public static function calcular(COFINS $COFINS, $CST)
     {
         if ($COFINS->Zerar === 1) {
             $COFINS->pCOFINS = '0';

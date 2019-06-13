@@ -8,13 +8,25 @@ use Exception;
 
 class PIS
 {
+    public $CST;
+    public $vBC;
+    public $pPIS;
+    public $vPIS;
+    public $pRedBC;
+    public $Desconto;
+    public $vAliqProd;
+    public $qBCProd;
+    public $REIDE;
+    public $SUFRAMA;
+    public $Zerar;
+
     /**
-     * @param $PIS
+     * @param PIS $PIS
      * @param $CST
-     * @return mixed
+     * @return PIS|mixed
      * @throws Exception
      */
-    public static function calcular($PIS, $CST)
+    public static function calcular(PIS $PIS, $CST)
     {
         if ($PIS->Zerar === 1) {
             $PIS->pPIS = '0';

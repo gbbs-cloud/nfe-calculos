@@ -8,6 +8,45 @@ use Exception;
 
 class ICMS
 {
+    public $CFOP;
+    public $CodProIcms;
+    public $CodProEst;
+    public $regime;
+    public $orig;
+    public $descOrig;
+    public $CST;
+    public $descCST;
+    public $modBC;
+    public $pRedBC;
+    public $vBC;
+    public $pICMS;
+    public $vICMS;
+    public $modBCST;
+    public $pMVAST;
+    public $pRedBCST;
+    public $vBCST;
+    public $pICMSST;
+    public $vICMSST;
+    public $UFST;
+    public $pBCop;
+    public $vBCSTRet;
+    public $vICMSSTRet;
+    public $modDesICMS;
+    public $vBCSTDest;
+    public $vICMSSTDest;
+    public $pCredSN;
+    public $vCredICMSSN;
+    public $CRT;
+    public $CodRegCST;
+    public $REIDE;
+    public $SUFRAMA;
+    public $Desconto;
+    public $ClienteIE;
+    public $Zerar;
+    public $vICMSDeson;
+    public $motDesICMS;
+    public $CSTNotaRef;
+
     /**
      * @param $ICMS
      * @param $pICMSST
@@ -21,7 +60,7 @@ class ICMS
      * @return mixed
      * @throws Exception
      */
-    public static function calcular($ICMS, $pICMSST, $pMVAST, $pICMS, $reducao, $CST, $descCST, $CFOP, $modBCST = null)
+    public static function calcular(ICMS $ICMS, $pICMSST, $pMVAST, $pICMS, $reducao, $CST, $descCST, $CFOP, $modBCST = null)
     {
         $ST = 0;
 
