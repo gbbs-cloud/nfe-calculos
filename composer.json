@@ -25,12 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "gbbs\\nfe-calculos\\": "src"
+            "Gbbs\\NfeCalculos\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "gbbs\\nfe-calculos\\": "tests"
+            "Gbbs\\NfeCalculos\\": "tests"
         }
     },
     "scripts": {
@@ -40,7 +40,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0-dev"
+            "v1.0": "1.0-dev"
         }
     },
     "config": {
