@@ -4,16 +4,18 @@ declare(strict_types=1);
 
 namespace Gbbs\Impostos;
 
+use Exception;
+
 class COFINS
 {
-    public function __construct()
+    /**
+     * @param $COFINS
+     * @param $CST
+     * @return mixed
+     * @throws Exception
+     */
+    public static function calcular($COFINS, $CST)
     {
-    }
-
-    public function calcular($COFINS, $CodCli, $CodPro)
-    {
-        $dummy = new \stdClass();  // TODO retrieve data from correct source
-
         if ($COFINS->Zerar === 1) {
             $COFINS->pCOFINS = '0';
             $COFINS->vBC = '0';
@@ -22,115 +24,115 @@ class COFINS
             return $COFINS;
         }
 
-        $cliente = $dummy->getClienteUltimoCOFINS($CodCli, $CodPro);
-        if (sizeof($cliente) > 0) {
-            $COFINS->CST = $cliente[0]['CST'];
+        if (!($CST === null)) {
+            $COFINS->CST = $CST;
         }
         switch ($COFINS->CST) {
             /* Operação Tributável com Alíquota Básica */
             case '01':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '02':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '03':
-                return $this->calcAliqCST03($COFINS);
+                return self::calcAliqCST03($COFINS);
                 break;
             case '04':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '05':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '06':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '07':
-                return $this->calcIsentoDesconto($COFINS);
+                return self::calcIsentoDesconto($COFINS);
                 break;
             case '08':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '09':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '49':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '50':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '51':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '52':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '53':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '54':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '55':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '56':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '60':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '61':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '62':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '63':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '64':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '65':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '66':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '67':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '70':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
             case '71':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '72':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '73':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '74':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '75':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '98':
-                return $this->calcaCOFINS($COFINS);
+                return self::calcaCOFINS($COFINS);
                 break;
             case '99':
-                return $this->calcIsento($COFINS);
+                return self::calcIsento($COFINS);
                 break;
         }
+        throw new Exception();
     }
 
-    private function calcIsento($COFINS)
+    private static function calcIsento($COFINS)
     {
         $COFINS->pCOFINS = 3;
         if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
@@ -145,7 +147,7 @@ class COFINS
         return $COFINS;
     }
 
-    private function calcaCOFINS($COFINS)
+    private static function calcaCOFINS($COFINS)
     {
         $COFINS->pCOFINS = 3;
         $COFINS->pRedBC = 0;
@@ -158,7 +160,7 @@ class COFINS
         return $COFINS;
     }
 
-    private function calcIsentoDesconto($COFINS)
+    private static function calcIsentoDesconto($COFINS)
     {
         $COFINS->pCOFINS = 3;
         if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
@@ -175,7 +177,7 @@ class COFINS
         return $COFINS;
     }
 
-    private function calcAliqCST03($COFINS)
+    private static function calcAliqCST03($COFINS)
     {
         $COFINS->vBC = 0;
         $COFINS->pCOFINS = 0;
