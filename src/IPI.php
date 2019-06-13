@@ -111,7 +111,7 @@ class IPI
                 return self::calcIsento($IPI);
                 break;
         }
-        throw new Exception();
+        throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
     }
 
     /*

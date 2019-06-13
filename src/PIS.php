@@ -143,7 +143,7 @@ class PIS
             default:
                 break;
         }
-        throw new Exception();
+        throw new Exception('Erro ao calcular PIS' . print_r($PIS, true));
     }
 
     private static function calcIsento($PIS)

@@ -184,7 +184,7 @@ class ICMS
                 return self::calcCST90c($ICMS, $pMVAST, $modBCST);
                 break;
         }
-        throw new Exception();
+        throw new Exception('Erro ao calcular ICMS' . print_r($ICMS, true));
     }
 
     /*

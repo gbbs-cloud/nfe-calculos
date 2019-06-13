@@ -141,7 +141,7 @@ class COFINS
                 return self::calcIsento($COFINS);
                 break;
         }
-        throw new Exception();
+        throw new Exception('Erro ao calcular COFINS' . print_r($COFINS, true));
     }
 
     private static function calcIsento($COFINS)
