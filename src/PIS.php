@@ -22,11 +22,10 @@ class PIS
 
     /**
      * @param PIS $PIS
-     * @param $CST
      * @return PIS|mixed
      * @throws Exception
      */
-    public static function calcular(PIS $PIS, $CST)
+    public static function calcular(PIS $PIS)
     {
         if ($PIS->Zerar === 1) {
             $PIS->pPIS = '0';
@@ -36,9 +35,6 @@ class PIS
             return $PIS;
         }
 
-        if (!($CST === null)) {
-            $PIS->CST = $CST;
-        }
         switch ($PIS->CST) {
             /* Operação Tributável com Alíquota Básica */
             case '01':

@@ -53,14 +53,11 @@ class ICMS
      * @param $pMVAST
      * @param $pICMS
      * @param $reducao
-     * @param $CST
-     * @param $descCST
-     * @param $CFOP
      * @param null $modBCST
      * @return mixed
      * @throws Exception
      */
-    public static function calcular(ICMS $ICMS, $pICMSST, $pMVAST, $pICMS, $reducao, $CST, $descCST, $CFOP, $modBCST = null)
+    public static function calcular(ICMS $ICMS, $pICMSST, $pMVAST, $pICMS, $reducao, $modBCST = null)
     {
         $ST = 0;
 
@@ -74,48 +71,14 @@ class ICMS
         }
 
         //REDUÇÃO DO PERCENTUAL DA ALIQUOTA ICMS
-        //$reducao
-
-
-        //PEGA O PERCENTUAL DO ICMS PELA TABELA UF X UF
         if ($reducao > 0) {
             $ICMS->pICMS = $reducao;
             $ICMS->pICMSST = $reducao;
-        } else { //CASO NÃO HAJA REDUÇÃO, ELE IRÁ CALCULAR NORMALMENTE
-            if (!($CST === null) && !($descCST === null) && !($CFOP === null)) {
-                if ($ICMS->ClienteIE === "ISENTO") {
-                    $ICMS->pICMS = $pICMS;
-                    if ($ST === 0) {
-                        $pICMSST = 0;
-                    }
-                    $ICMS->pICMSST = $pICMSST;
-                } else {
-                    $ICMS->pICMS = $pICMS;
-                }
-                $ST = $pICMSST;
-                $ICMS->CST = $CST;
-                $ICMS->descCST = $descCST;
-                $ICMS->CFOP = $CFOP;
-            } else {
-                if ($ICMS->ClienteIE === "ISENTO") {
-                    $ICMS->pICMS = $pICMS;
-                    if ($ST === 0) {
-                        $pICMSST = 0;
-                    }
-                    $ICMS->pICMSST = $pICMSST;
-                } else {
-                    $ICMS->pICMS = $pICMS;
-                    if ($ST === 0) {
-                        $pICMSST = 0;
-                    }
-                    $ICMS->pICMSST = $pICMSST;
-                }
-            }
+        } else {  // CASO NÃO HAJA REDUÇÃO, ELE IRÁ CALCULAR NORMALMENTE
+            $ICMS->pICMS = $pICMS;
+            $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         }
 
-        if ($ST === 0) {
-            $pICMSST = 0;
-        }
         switch ($ICMS->CST) {
             case "101":
                 return self::calcCSOSN101($ICMS);
@@ -127,13 +90,13 @@ class ICMS
                 return $ICMS;
                 break;
             case "201":
-                return self::calcCSOSN201($ICMS, $pICMSST, $pMVAST);
+                return self::calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "202":
-                return self::calcCSOSN202($ICMS, $pICMSST, $pMVAST);
+                return self::calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "203":
-                return self::calcCSOSN203($ICMS, $pICMSST, $pMVAST);
+                return self::calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "300":
                 return $ICMS;
@@ -145,7 +108,7 @@ class ICMS
                 return self::calcCSOSN500($ICMS);
                 break;
             case "900":
-                return self::calcCSOSN900($ICMS, $pICMSST, $pMVAST);
+                return self::calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "00":
                 return self::calcCST00($ICMS);
@@ -160,7 +123,7 @@ class ICMS
                 return self::calcCST20($ICMS);
                 break;
             case "30":
-                return self::calcCST30($ICMS, $pICMSST, $pMVAST);
+                return self::calcCST30($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "40":
                 return self::calcCST40($ICMS);
@@ -178,7 +141,7 @@ class ICMS
                 return self::calcCST60($ICMS);
                 break;
             case "70":
-                return self::calcCST70($ICMS, $pICMSST, $pMVAST);
+                return self::calcCST70($ICMS, $pICMSST, $pMVAST, $ST);
                 break;
             case "90":
                 return self::calcCST90c($ICMS, $pMVAST, $modBCST);
@@ -282,24 +245,24 @@ class ICMS
         return $ICMS;
     }
 
-    private static function calcCSOSN201($ICMS, $pICMSST, $pMVAST)
+    private static function calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST)
     {
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
         return $ICMS;
     }
 
-    private static function calcCSOSN202($ICMS, $pICMSST, $pMVAST)
+    private static function calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST)
     {
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
         return $ICMS;
     }
 
-    private static function calcCSOSN203($ICMS, $pICMSST, $pMVAST)
+    private static function calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST)
     {
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
         return $ICMS;
     }
@@ -313,9 +276,9 @@ class ICMS
         return $ICMS;
     }
 
-    private static function calcCSOSN900($ICMS, $pICMSST, $pMVAST)
+    private static function calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST)
     {
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
         $ICMS->vICMS = (self::calcvICMS($ICMS));
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
@@ -370,10 +333,10 @@ class ICMS
         return $ICMS;
     }
 
-    private static function calcCST30($ICMS, $pICMSST, $pMVAST)
+    private static function calcCST30($ICMS, $pICMSST, $pMVAST, $ST)
     {
         $ICMS->vBCST = self::calcRedBCST($ICMS);
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
         return $ICMS;
     }
@@ -454,11 +417,11 @@ class ICMS
         return $ICMS;
     }
 
-    private static function calcCST70($ICMS, $pICMSST, $pMVAST)
+    private static function calcCST70($ICMS, $pICMSST, $pMVAST, $ST)
     {
         $ICMS->vBCST = self::calcRedBCST($ICMS);
         $ICMS->vBC = self::calcRedBC($ICMS);
-        $ICMS->pICMSST = $pICMSST;
+        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vICMS = (self::calcvICMS($ICMS));
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
 

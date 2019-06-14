@@ -29,12 +29,10 @@ class IPI
     /**
      * @param $IPI
      * @param $pIPI
-     * @param $CST
-     * @param $descricao
      * @return mixed
      * @throws Exception
      */
-    public static function calcular(IPI $IPI, $pIPI, $CST, $descricao)
+    public static function calcular(IPI $IPI, $pIPI)
     {
         $IPI->pIPI = $pIPI;
 
@@ -43,13 +41,7 @@ class IPI
             if ($IPI->vIPI === 0) {
                 $IPI->pIPI = 0;
             }
-
             return $IPI;
-        }
-
-        if (!($CST === null) && !($descricao === null)) {
-            $IPI->CST = $CST;
-            $IPI->descCST = $descricao;
         }
 
         switch ($IPI->CST) {

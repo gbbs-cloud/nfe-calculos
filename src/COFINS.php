@@ -22,11 +22,10 @@ class COFINS
 
     /**
      * @param $COFINS
-     * @param $CST
      * @return mixed
      * @throws Exception
      */
-    public static function calcular(COFINS $COFINS, $CST)
+    public static function calcular(COFINS $COFINS)
     {
         if ($COFINS->Zerar === 1) {
             $COFINS->pCOFINS = '0';
@@ -36,9 +35,6 @@ class COFINS
             return $COFINS;
         }
 
-        if (!($CST === null)) {
-            $COFINS->CST = $CST;
-        }
         switch ($COFINS->CST) {
             /* Operação Tributável com Alíquota Básica */
             case '01':
