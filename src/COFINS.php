@@ -8,7 +8,7 @@ use Exception;
 
 class COFINS
 {
-    public $CST;
+    private $CST;
     public $vBC;
     public $pCOFINS;
     public $vCOFINS;
@@ -193,5 +193,21 @@ class COFINS
         $COFINS->Desconto = 0;
 
         return $COFINS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCST(): string
+    {
+        return $this->CST;
+    }
+
+    /**
+     * @param string $CST
+     */
+    public function setCST(string $CST): void
+    {
+        $this->CST = $CST;
     }
 }

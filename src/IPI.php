@@ -14,7 +14,7 @@ class IPI
     public $cSelo;
     public $qSelo;
     public $cEnq;
-    public $CST;
+    private $CST;
     public $vBC;
     public $pIPI;
     public $vIPI;
@@ -44,64 +44,48 @@ class IPI
             return $IPI;
         }
 
-        switch ($IPI->CST) {
+        if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
-            case 00:
-                return self::calcAliquotaAdValoren($IPI);
-                break;
+            return self::calcAliquotaAdValoren($IPI);
+        } elseif ($IPI->getCST() === '49') {
             /* OUTRAS ENTRADAS */
-            case 49:
-                return self::calcRetornoIsentoValorOutros($IPI);
-                break;
+            return self::calcRetornoIsentoValorOutros($IPI);
+        } elseif ($IPI->getCST() === '50') {
             /* SAÍDA TRIBUTADA */
-            case 50:
-                return self::calcAliquotaAdValoren($IPI);
-                break;
+            return self::calcAliquotaAdValoren($IPI);
+        } elseif ($IPI->getCST() === '99') {
             /* OUTRAS SAÍDAS */
-            case 99:
-                return self::calcAliquotaAdValoren($IPI);
-                break;
-
+            return self::calcAliquotaAdValoren($IPI);
+        } elseif ($IPI->getCST() === '01') {
             /* 01 ENTRADA TRIBUTADA COM ALICOTA ZERO */
-            case 01:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '02') {
             /* ENTRADA ISENTA */
-            case 02:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '03') {
             /* ENTRADA NÃO TRIBUTADA */
-            case 03:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '04') {
             /* ENTRADA IMUNE */
-            case 04:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '05') {
             /* ENTRADA COM SUSPENSAO */
-            case 05:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '51') {
             /* SAÍDA TRIBUTADA COM ALICOTA ZERO */
-            case 51:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '52') {
             /* SAÍDA ISENTA */
-            case 52:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '53') {
             /* SAÍDA NÃO-TRIBUTADA */
-            case 53:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '54') {
             /* SAÍDA IMUNE */
-            case 54:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '55') {
             /* SAÍDA COM SUSPENSAO */
-            case 55:
-                return self::calcIsento($IPI);
-                break;
+            return self::calcIsento($IPI);
         }
         throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
     }
@@ -137,5 +121,21 @@ class IPI
         } else {
             return self::calcIsento($IPI);
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function getCST(): string
+    {
+        return $this->CST;
+    }
+
+    /**
+     * @param string $CST
+     */
+    public function setCST(string $CST): void
+    {
+        $this->CST = $CST;
     }
 }

@@ -14,7 +14,6 @@ class ICMS
     public $regime;
     public $orig;
     public $descOrig;
-    public $CST;
     public $descCST;
     public $modBC;
     public $pRedBC;
@@ -29,6 +28,7 @@ class ICMS
     public $vICMSST;
     public $UFST;
     public $pBCop;
+    private $CST;
     public $vBCSTRet;
     public $vICMSSTRet;
     public $modDesICMS;
@@ -79,73 +79,50 @@ class ICMS
             $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         }
 
-        switch ($ICMS->CST) {
-            case "101":
-                return self::calcCSOSN101($ICMS);
-                break;
-            case "102":
-                return self::calcCSOSN102($ICMS);
-                break;
-            case "103":
-                return $ICMS;
-                break;
-            case "201":
-                return self::calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "202":
-                return self::calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "203":
-                return self::calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "300":
-                return $ICMS;
-                break;
-            case "400":
-                return $ICMS;
-                break;
-            case "500":
-                return self::calcCSOSN500($ICMS);
-                break;
-            case "900":
-                return self::calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "00":
-                return self::calcCST00($ICMS);
-                break;
-            case "200":
-                return self::calcCST200($ICMS);
-                break;
-            case "10":
-                return self::calcCST10($ICMS, $pMVAST, $modBCST);
-                break;
-            case "20":
-                return self::calcCST20($ICMS);
-                break;
-            case "30":
-                return self::calcCST30($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "40":
-                return self::calcCST40($ICMS);
-                break;
-            case "41":
-                return self::calcCST41($ICMS);
-                break;
-            case "50":
-                return self::calcCST50($ICMS);
-                break;
-            case "51":
-                return self::calcCST51($ICMS, $pICMS);
-                break;
-            case "60":
-                return self::calcCST60($ICMS);
-                break;
-            case "70":
-                return self::calcCST70($ICMS, $pICMSST, $pMVAST, $ST);
-                break;
-            case "90":
-                return self::calcCST90c($ICMS, $pMVAST, $modBCST);
-                break;
+        if ($ICMS->getCST() === '00') {
+            return self::calcCST00($ICMS);
+        } elseif ($ICMS->getCST() === '10') {
+            return self::calcCST10($ICMS, $pMVAST, $modBCST);
+        } elseif ($ICMS->getCST() === '20') {
+            return self::calcCST20($ICMS);
+        } elseif ($ICMS->getCST() === '30') {
+            return self::calcCST30($ICMS, $pICMSST, $pMVAST, $ST);
+        } elseif ($ICMS->getCST() === '40') {
+            return self::calcCST40($ICMS);
+        } elseif ($ICMS->getCST() === '41') {
+            return self::calcCST41($ICMS);
+        } elseif ($ICMS->getCST() === '50') {
+            return self::calcCST50($ICMS);
+        } elseif ($ICMS->getCST() === '51') {
+            return self::calcCST51($ICMS, $pICMS);
+        } elseif ($ICMS->getCST() === '60') {
+            return self::calcCST60($ICMS);
+        } elseif ($ICMS->getCST() === '70') {
+            return self::calcCST70($ICMS, $pICMSST, $pMVAST, $ST);
+        } elseif ($ICMS->getCST() === '90') {
+            return self::calcCST90c($ICMS, $pMVAST, $modBCST);
+        } elseif ($ICMS->getCST() === '101') {
+            return self::calcCSOSN101($ICMS);
+        } elseif ($ICMS->getCST() === '102') {
+            return self::calcCSOSN102($ICMS);
+        } elseif ($ICMS->getCST() === '103') {
+            return $ICMS;
+        } elseif ($ICMS->getCST() === '200') {
+            return self::calcCST200($ICMS);
+        } elseif ($ICMS->getCST() === '201') {
+            return self::calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST);
+        } elseif ($ICMS->getCST() === '202') {
+            return self::calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST);
+        } elseif ($ICMS->getCST() === '203') {
+            return self::calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST);
+        } elseif ($ICMS->getCST() === '300') {
+            return $ICMS;
+        } elseif ($ICMS->getCST() === '400') {
+            return $ICMS;
+        } elseif ($ICMS->getCST() === '500') {
+            return self::calcCSOSN500($ICMS);
+        } elseif ($ICMS->getCST() === '900') {
+            return self::calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST);
         }
         throw new Exception('Erro ao calcular ICMS' . print_r($ICMS, true));
     }
@@ -438,5 +415,21 @@ class ICMS
         }
         $ICMS->vICMSDeson = self::calcvICMSDesonIsento($ICMS);
         return $ICMS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCST(): string
+    {
+        return $this->CST;
+    }
+
+    /**
+     * @param string $CST
+     */
+    public function setCST(string $CST): void
+    {
+        $this->CST = $CST;
     }
 }

@@ -8,7 +8,7 @@ use Exception;
 
 class PIS
 {
-    public $CST;
+    private $CST;
     public $vBC;
     public $pPIS;
     public $vPIS;
@@ -192,5 +192,21 @@ class PIS
         $PIS->pPIS = 0;
         $PIS->vPIS = round((($PIS->vAliqProd) * ($PIS->qBCProd)), 2);
         return $PIS;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCST(): string
+    {
+        return $this->CST;
+    }
+
+    /**
+     * @param string $CST
+     */
+    public function setCST(string $CST): void
+    {
+        $this->CST = $CST;
     }
 }
