@@ -35,107 +35,73 @@ class COFINS
             return $COFINS;
         }
 
-        switch ($COFINS->CST) {
+        if ($COFINS->getCST() === '01') {
             /* Operação Tributável com Alíquota Básica */
-            case '01':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '02':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '03':
-                return self::calcAliqCST03($COFINS);
-                break;
-            case '04':
-                return self::calcIsento($COFINS);
-                break;
-            case '05':
-                return self::calcIsento($COFINS);
-                break;
-            case '06':
-                return self::calcIsento($COFINS);
-                break;
-            case '07':
-                return self::calcIsentoDesconto($COFINS);
-                break;
-            case '08':
-                return self::calcIsento($COFINS);
-                break;
-            case '09':
-                return self::calcIsento($COFINS);
-                break;
-            case '49':
-                return self::calcIsento($COFINS);
-                break;
-            case '50':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '51':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '52':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '53':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '54':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '55':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '56':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '60':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '61':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '62':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '63':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '64':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '65':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '66':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '67':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '70':
-                return self::calcIsento($COFINS);
-                break;
-            case '71':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '72':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '73':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '74':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '75':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '98':
-                return self::calcaCOFINS($COFINS);
-                break;
-            case '99':
-                return self::calcIsento($COFINS);
-                break;
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '02') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '03') {
+            return self::calcAliqCST03($COFINS);
+        } elseif ($COFINS->getCST() === '04') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '05') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '06') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '07') {
+            return self::calcIsentoDesconto($COFINS);
+        } elseif ($COFINS->getCST() === '08') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '09') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '49') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '50') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '51') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '52') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '53') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '54') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '55') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '56') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '60') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '61') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '62') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '63') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '64') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '65') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '66') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '67') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '70') {
+            return self::calcIsento($COFINS);
+        } elseif ($COFINS->getCST() === '71') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '72') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '73') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '74') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '75') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '98') {
+            return self::calcaCOFINS($COFINS);
+        } elseif ($COFINS->getCST() === '99') {
+            return self::calcIsento($COFINS);
         }
         throw new Exception('Erro ao calcular COFINS' . print_r($COFINS, true));
     }
