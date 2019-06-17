@@ -13,7 +13,7 @@ class ICMSTest extends TestCase
      */
     public function testFailingNullArgument()
     {
-        ICMS::calcular(null, null, null, null, null);
+        ICMS::calcular(null, null, null, null);
     }
 
     /**
@@ -114,7 +114,8 @@ class ICMSTest extends TestCase
     {
         $icms = $this->instantiateICMS();
         $icms->setCST('00000');
-        ICMS::calcular($icms, null, null, null, null);
+
+        ICMS::calcular($icms, null, null, null);
     }
 
     /**
@@ -129,7 +130,7 @@ class ICMSTest extends TestCase
         $icms->setVBC(1000);
         $icms->setPICMS(12);
 
-        ICMS::calcular($icms, null, null, null, null);
+        ICMS::calcular($icms, null, null, null);
 
         $this->assertSame('0', $icms->getOrig());
         $this->assertSame('00', $icms->getCST());

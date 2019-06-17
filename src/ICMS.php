@@ -52,13 +52,11 @@ class ICMS
     /**
      * @param $ICMS
      * @param $pICMSST
-     * @param $pMVAST
      * @param $reducao
-     * @param $modBCST
      * @return ICMS
      * @throws Exception
      */
-    public static function calcular(self $ICMS, $pICMSST, $pMVAST, $reducao, $modBCST): self
+    public static function calcular(self $ICMS, $pICMSST, $reducao): self
     {
         $ST = 0;
 
@@ -75,11 +73,11 @@ class ICMS
         if ($ICMS->getCST() === '00') {
             self::calcCST00($ICMS);
         } elseif ($ICMS->getCST() === '10') {
-            self::calcCST10($ICMS, $pMVAST, $modBCST);
+            self::calcCST10($ICMS);
         } elseif ($ICMS->getCST() === '20') {
             self::calcCST20($ICMS);
         } elseif ($ICMS->getCST() === '30') {
-            self::calcCST30($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCST30($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '40') {
             self::calcCST40($ICMS);
         } elseif ($ICMS->getCST() === '41') {
@@ -91,9 +89,9 @@ class ICMS
         } elseif ($ICMS->getCST() === '60') {
             self::calcCST60($ICMS);
         } elseif ($ICMS->getCST() === '70') {
-            self::calcCST70($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCST70($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '90') {
-            self::calcCST90c($ICMS, $pMVAST, $modBCST);
+            self::calcCST90c($ICMS);
         } elseif ($ICMS->getCST() === '101') {
             self::calcCSOSN101($ICMS);
         } elseif ($ICMS->getCST() === '102') {
@@ -103,11 +101,11 @@ class ICMS
         } elseif ($ICMS->getCST() === '200') {
             self::calcCST200($ICMS);
         } elseif ($ICMS->getCST() === '201') {
-            self::calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCSOSN201($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '202') {
-            self::calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCSOSN202($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '203') {
-            self::calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCSOSN203($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '300') {
             // FIXME Do nothing?
         } elseif ($ICMS->getCST() === '400') {
@@ -115,7 +113,7 @@ class ICMS
         } elseif ($ICMS->getCST() === '500') {
             self::calcCSOSN500($ICMS);
         } elseif ($ICMS->getCST() === '900') {
-            self::calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST);
+            self::calcCSOSN900($ICMS, $pICMSST, $ST);
         } else {
             throw new Exception('Erro ao calcular ICMS' . print_r($ICMS, true));
         }
@@ -130,33 +128,30 @@ class ICMS
         return ($ICMS->vBC * $ICMS->pCredSN) / 100;
     }
 
-    /*
-     * @Calcula o Valor do ICMS
+    /**
+     * Calcula o Valor do ICMS
+     * @param $ICMS
+     * @return float
      */
-    private static function calcvICMS($ICMS)
+    private static function calcvICMS(self $ICMS): float
     {
-        return $ICMS->vBC * ($ICMS->pICMS / 100);
+        return $ICMS->getVBC() * ($ICMS->getPICMS() / 100);
     }
 
-    /*
-     * @Calcula o Valor do ICMSST
+    /**
+     * Calcula o Valor do ICMSST
+     * @param $ICMS
+     * @return float
      */
-    private static function calcvICMSST($ICMS, $pMVAST, $modBCST = null)
+    private static function calcvICMSST(self $ICMS): float
     {
-        if ($modBCST === '6') {
-            $ICMS->vICMS = self::calcvICMS($ICMS);
-            return $ICMS->vBCST * ($ICMS->pICMSST / 100) - $ICMS->vICMS;
+        if ($ICMS->getPMVAST() === 0.0) {
+            return 0.0;
         }
 
-        $ICMS->pMVAST = $pMVAST;
-
-        if ($ICMS->pMVAST === '0') {
-            return '0';
-        }
-
-        $ICMS->vICMS = self::calcvICMS($ICMS);
-        $ICMS->vBCST = $ICMS->vBCST * (1 + ($ICMS->pMVAST / 100)); // VERIFICAR AQUI OQUE ESTÃO ACONTECENDO
-        return ((($ICMS->vBCST - ($ICMS->vBCST * ((float)$ICMS->pRedBCST / 100)))) * ($ICMS->pICMSST / 100)) - $ICMS->vICMS;
+        $ICMS->setVICMS(self::calcvICMS($ICMS));
+        $ICMS->setVBCST($ICMS->getVBCST() * (1 + ($ICMS->getPMVAST() / 100))); // VERIFICAR AQUI OQUE ESTÃO ACONTECENDO
+        return ((($ICMS->getVBCST() - ($ICMS->getVBCST() * ($ICMS->getPRedBCST() / 100)))) * ($ICMS->getPICMSST() / 100)) - $ICMS->getVICMS();
     }
 
     private static function calcvICMSDesonIsento($ICMS)
@@ -174,22 +169,24 @@ class ICMS
         return $ICMS->vICMSDeson;
     }
 
-    /*
-     * @Calcula  a redução na base de culculo do ICMS
+    /**
+     * Calcula  a redução na base de culculo do ICMS
+     * @param $ICMS
+     * @return float
      */
-    private static function calcRedBC($ICMS)
+    private static function calcRedBC(self $ICMS): float
     {
-        $ICMS->vBC = $ICMS->vBC - ($ICMS->vBC * ((float)$ICMS->pRedBC / 100));
-        return $ICMS->vBC;
+        return $ICMS->getVBC() - ($ICMS->getVBC() * ($ICMS->getPRedBC() / 100));
     }
 
-    /*
-     * @Calcula  a redução na base de culculo do ICMSST
+    /**
+     * Calcula a redução na base de culculo do ICMSST
+     * @param $ICMS
+     * @return float
      */
     private static function calcRedBCST(self $ICMS): float
     {
-        $ICMS->vBCST = $ICMS->vBCST - ($ICMS->vBCST * ((float)$ICMS->pRedBCST / 100));
-        return $ICMS->vBCST;
+        return $ICMS->getVBCST() - ($ICMS->getVBCST() * ($ICMS->getPRedBCST() / 100));
     }
 
     /* /// SIMPLES NACIONAL /// */
@@ -207,23 +204,52 @@ class ICMS
         $ICMS->vICMSSTRet = null;
     }
 
-    private static function calcCSOSN201($ICMS, $pICMSST, $pMVAST, $ST)
+    /**
+     * @param $ICMS
+     * @throws Exception
+     */
+    private static function calcCST00(self $ICMS): void
+    {
+        if ($ICMS->getModBC() === 0) {
+            $ICMS->setVICMS(self::calcvICMS($ICMS));
+        } else {
+            throw new Exception('Not implemented');
+        }
+    }
+
+    /**
+     * @param $ICMS
+     * @throws Exception
+     */
+    private static function calcCST10(self $ICMS): void
+    {
+        if ($ICMS->getModBCST() === 4) {
+            $ICMS->setVBCST(self::calcRedBCST($ICMS));
+            $ICMS->setVBC(self::calcRedBC($ICMS));
+            $ICMS->setVICMS(self::calcvICMS($ICMS));
+            $ICMS->setVICMSST(self::calcvICMSST($ICMS));
+        } else {
+            throw new Exception('Not implemented');
+        }
+    }
+
+    private static function calcCSOSN201($ICMS, $pICMSST, $ST)
     {
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
-    private static function calcCSOSN202($ICMS, $pICMSST, $pMVAST, $ST)
+    private static function calcCSOSN202($ICMS, $pICMSST, $ST)
     {
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
-    private static function calcCSOSN203($ICMS, $pICMSST, $pMVAST, $ST)
+    private static function calcCSOSN203($ICMS, $pICMSST, $ST)
     {
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
     private static function calcCSOSN500($ICMS)
@@ -234,27 +260,14 @@ class ICMS
         $ICMS->vICMSST = null;
     }
 
-    private static function calcCSOSN900($ICMS, $pICMSST, $pMVAST, $ST)
+    private static function calcCSOSN900($ICMS, $pICMSST, $ST)
     {
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
         $ICMS->vICMS = (self::calcvICMS($ICMS));
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
-    /**
-     * --- FUNCOES CALCULOS POR CST DO REGIME NORMAL ---
-     * @param $ICMS
-     * @throws Exception
-     */
-    private static function calcCST00(self $ICMS)
-    {
-        if ($ICMS->getModBC() === 0) {
-            $ICMS->setVICMS(self::calcvICMS($ICMS));
-        } else {
-            throw new Exception('Not implemented');
-        }
-    }
 
     private static function calcCST200($ICMS)
     {
@@ -263,15 +276,6 @@ class ICMS
         $ICMS->vBCST = 0;
         $ICMS->pMVAST = 0;
         $ICMS->pICMSST = 0;
-    }
-
-    private static function calcCST10($ICMS, $pMVAST, $modBCST)
-    {
-        $ICMS->vBCST = self::calcRedBCST($ICMS);
-        $ICMS->vBC = self::calcRedBC($ICMS);
-
-        $ICMS->vICMS = self::calcvICMS($ICMS);
-        $ICMS->vICMSST = self::calcvICMSST($ICMS, $pMVAST, $modBCST);
     }
 
     private static function calcCST20($ICMS)
@@ -286,11 +290,11 @@ class ICMS
         $ICMS->pICMSST = 0;
     }
 
-    private static function calcCST30($ICMS, $pICMSST, $pMVAST, $ST)
+    private static function calcCST30($ICMS, $pICMSST, $ST)
     {
         $ICMS->vBCST = self::calcRedBCST($ICMS);
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
     private static function calcCST40($ICMS)
@@ -359,20 +363,20 @@ class ICMS
         $ICMS->pICMSST = 0;
     }
 
-    private static function calcCST70($ICMS, $pICMSST, $pMVAST, $ST)
+    private static function calcCST70($ICMS, $pICMSST, $ST)
     {
         $ICMS->vBCST = self::calcRedBCST($ICMS);
         $ICMS->vBC = self::calcRedBC($ICMS);
         $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         $ICMS->vICMS = (self::calcvICMS($ICMS));
-        $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
+        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
     }
 
-    private static function calcCST90c($ICMS, $pMVAST, $modBCST)
+    private static function calcCST90c($ICMS)
     {
         if ($ICMS->CSTNotaRef === '10') {
             $ICMS->vICMS = (self::calcvICMS($ICMS));
-            $ICMS->vICMSST = self::calcvICMSST($ICMS, $pMVAST, $modBCST);
+            $ICMS->vICMSST = self::calcvICMSST($ICMS);
         } else {
             $ICMS->vICMS = (self::calcvICMS($ICMS));
         }
@@ -514,6 +518,12 @@ class ICMS
 
     /**
      * @param int $modBCST
+     * 0 - Preço tabelado ou máximo sugerido;
+     * 1 - Lista Negativa (valor);
+     * 2 - Lista Positiva (valor);
+     * 3 - Lista Neutra (valor);
+     * 4 - Margem Valor Agregado (%);
+     * 5 - Pauta (valor).
      */
     public function setModBCST(int $modBCST): void
     {
@@ -531,7 +541,7 @@ class ICMS
     /**
      * @param float $pMVAST
      */
-    public function setPMVAST(float $pMVAST): void
+    public function setPMVAST(?float $pMVAST): void
     {
         $this->pMVAST = $pMVAST;
     }
@@ -571,7 +581,7 @@ class ICMS
     /**
      * @return float
      */
-    public function getPICMSST(): float
+    public function getPICMSST(): ?float
     {
         return $this->pICMSST;
     }
