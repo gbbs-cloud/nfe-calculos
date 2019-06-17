@@ -10,7 +10,6 @@ class ICMS
 {
     private $SUFRAMA;  // TODO not a tag
     private $Desconto;  // TODO not a tag
-    private $Zerar;  // TODO not a tag
     private $CSTNotaRef;  // TODO not a tag
 
     private $orig;  //  Origem da mercadoria
@@ -62,15 +61,6 @@ class ICMS
     public static function calcular(self $ICMS, $pICMSST, $pMVAST, $reducao, $modBCST): self
     {
         $ST = 0;
-
-        //ZERAR IMPOSTO CASO ELE VENHA COM A FLAG ZERAR retorna 0
-        if ($ICMS->Zerar === 1) {
-            $ICMS->vICMSST = 0;
-            $ICMS->vBCST = 0;
-            $ICMS->pMVAST = 0;
-            $ICMS->pICMSST = 0;
-            return $ICMS;
-        }
 
         //REDUÇÃO DO PERCENTUAL DA ALIQUOTA ICMS
         if ($reducao > 0 and $ICMS->getCST() === '51') {
