@@ -10,21 +10,22 @@ class IPI
 {
     public $descCST;
     public $clEnq;
-    public $CNPJProd;
-    public $cSelo;
-    public $qSelo;
-    public $cEnq;
-    private $CST;
-    public $vBC;
-    public $pIPI;
-    public $vIPI;
-    public $qUnid;
-    public $vUnid;
     public $CodNCM;
     public $REIDE;
     public $SUFRAMA;
     public $CSTNotaRef;
     public $Zerar;
+
+    private $CNPJProd;
+    private $cSelo;
+    private $qSelo;
+    private $cEnq;
+    private $CST;
+    private $vBC;
+    private $pIPI;
+    private $vIPI;
+    private $qUnid;
+    private $vUnid;
 
     /**
      * @param $IPI
@@ -126,6 +127,70 @@ class IPI
     /**
      * @return string
      */
+    public function getCNPJProd(): string
+    {
+        return $this->CNPJProd;
+    }
+
+    /**
+     * @param string $CNPJProd
+     */
+    public function setCNPJProd(string $CNPJProd): void
+    {
+        $this->CNPJProd = $CNPJProd;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCSelo(): string
+    {
+        return $this->cSelo;
+    }
+
+    /**
+     * @param string $cSelo
+     */
+    public function setCSelo(string $cSelo): void
+    {
+        $this->cSelo = $cSelo;
+    }
+
+    /**
+     * @return float
+     */
+    public function getQSelo(): float
+    {
+        return $this->qSelo;
+    }
+
+    /**
+     * @param float $qSelo
+     */
+    public function setQSelo(float $qSelo): void
+    {
+        $this->qSelo = $qSelo;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCEnq(): string
+    {
+        return $this->cEnq;
+    }
+
+    /**
+     * @param string $cEnq
+     */
+    public function setCEnq(string $cEnq): void
+    {
+        $this->cEnq = $cEnq;
+    }
+
+    /**
+     * @return string
+     */
     public function getCST(): string
     {
         return $this->CST;
@@ -137,5 +202,85 @@ class IPI
     public function setCST(string $CST): void
     {
         $this->CST = $CST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBC(): float
+    {
+        return $this->vBC;
+    }
+
+    /**
+     * @param float $vBC
+     */
+    public function setVBC(float $vBC): void
+    {
+        $this->vBC = $vBC;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPIPI(): float
+    {
+        return $this->pIPI;
+    }
+
+    /**
+     * @param float $pIPI
+     */
+    public function setPIPI(float $pIPI): void
+    {
+        $this->pIPI = $pIPI;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVIPI(): float
+    {
+        return $this->vIPI;
+    }
+
+    /**
+     * @param float $vIPI
+     */
+    public function setVIPI(float $vIPI): void
+    {
+        $this->vIPI = $vIPI;
+    }
+
+    /**
+     * @return float
+     */
+    public function getQUnid(): float
+    {
+        return $this->qUnid;
+    }
+
+    /**
+     * @param float $qUnid
+     */
+    public function setQUnid(float $qUnid): void
+    {
+        $this->qUnid = $qUnid;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVUnid(): float
+    {
+        return $this->vUnid;
+    }
+
+    /**
+     * @param float $vUnid
+     */
+    public function setVUnid(float $vUnid): void
+    {
+        $this->vUnid = $vUnid;
     }
 }
