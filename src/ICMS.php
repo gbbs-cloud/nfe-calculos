@@ -54,13 +54,12 @@ class ICMS
      * @param $ICMS
      * @param $pICMSST
      * @param $pMVAST
-     * @param $pICMS
      * @param $reducao
      * @param $modBCST
      * @return ICMS
      * @throws Exception
      */
-    public static function calcular(self $ICMS, $pICMSST, $pMVAST, $pICMS, $reducao, $modBCST = null): self
+    public static function calcular(self $ICMS, $pICMSST, $pMVAST, $reducao, $modBCST): self
     {
         $ST = 0;
 
@@ -74,11 +73,12 @@ class ICMS
         }
 
         //REDUÇÃO DO PERCENTUAL DA ALIQUOTA ICMS
-        if ($reducao > 0) {
+        if ($reducao > 0 and $ICMS->getCST() === '51') {
             $ICMS->pICMS = $reducao;
+        }
+        if ($reducao > 0) {
             $ICMS->pICMSST = $reducao;
         } else {  // CASO NÃO HAJA REDUÇÃO, ELE IRÁ CALCULAR NORMALMENTE
-            $ICMS->pICMS = $pICMS;
             $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
         }
 
@@ -97,7 +97,7 @@ class ICMS
         } elseif ($ICMS->getCST() === '50') {
             self::calcCST50($ICMS);
         } elseif ($ICMS->getCST() === '51') {
-            self::calcCST51($ICMS, $pICMS);
+            self::calcCST51($ICMS);
         } elseif ($ICMS->getCST() === '60') {
             self::calcCST60($ICMS);
         } elseif ($ICMS->getCST() === '70') {
@@ -343,10 +343,9 @@ class ICMS
         $ICMS->pICMSST = 0;
     }
 
-    private static function calcCST51($ICMS, $pICMS)
+    private static function calcCST51($ICMS)
     {
         $ICMS->vBC = self::calcRedBC($ICMS);
-        $ICMS->pICMS = $pICMS;
         $ICMS->vICMS = (self::calcvICMS($ICMS));
 
         $ICMS->vICMSST = 0;
