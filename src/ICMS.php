@@ -252,14 +252,18 @@ class ICMS
         $ICMS->vICMSST = (self::calcvICMSST($ICMS, $pMVAST));
     }
 
-    /* --- FUNCOES CALCULOS POR CST DO REGIME NORMAL --- */
-    private static function calcCST00($ICMS)
+    /**
+     * --- FUNCOES CALCULOS POR CST DO REGIME NORMAL ---
+     * @param $ICMS
+     * @throws Exception
+     */
+    private static function calcCST00(self $ICMS)
     {
-        $ICMS->vICMS = self::calcvICMS($ICMS);
-        $ICMS->vICMSST = 0;
-        $ICMS->vBCST = 0;
-        $ICMS->pMVAST = 0;
-        $ICMS->pICMSST = 0;
+        if ($ICMS->getModBC() === 0) {
+            $ICMS->setVICMS(self::calcvICMS($ICMS));
+        } else {
+            throw new Exception('Not implemented');
+        }
     }
 
     private static function calcCST200($ICMS)

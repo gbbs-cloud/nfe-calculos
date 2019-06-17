@@ -140,6 +140,23 @@ class ICMSTest extends TestCase
     }
 
     /**
+     * Test CST 00 with modBC !== 0
+     * modBC === 1, modBC === 2 and modBC === 3 aren't implemented
+     * @expectedException \Exception
+     */
+    public function testCST00ModBCDifferentThan1()
+    {
+        $icms = $this->instantiateICMS();
+        $icms->setOrig('0');
+        $icms->setCST('00');
+        $icms->setModBC(1);
+        $icms->setVBC(1000);
+        $icms->setPICMS(12);
+
+        ICMS::calcular($icms, null, null, null, null);
+    }
+
+    /**
      * Instantiate and return an ICMS object
      */
     private function instantiateICMS()
