@@ -8,30 +8,47 @@ use Exception;
 
 class ICMS
 {
-    public $pRedBC;
-    public $vBC;
-    public $pICMS;
-    public $vICMS;
-    public $modBC;  // FIXME
+    private $SUFRAMA;  // TODO not a tag
+    private $Desconto;  // TODO not a tag
+    private $Zerar;  // TODO not a tag
+    private $CSTNotaRef;  // TODO not a tag
 
-    public $pMVAST;
-    public $pRedBCST;
-    public $vBCST;
-    public $pICMSST;
-    public $vICMSST;
-    public $modBCST;  // FIXME
-
-    public $vBCSTRet;
-    public $vICMSSTRet;
-    public $pCredSN;
-    public $vCredICMSSN;
-    public $SUFRAMA;
-    public $Desconto;
-    public $Zerar;
-    public $vICMSDeson;
-    public $CSTNotaRef;
-
-    private $CST;
+    private $orig;  //  Origem da mercadoria
+    private $CST;  // Tributação do ICMS
+    private $modBC;  // Modalidade de determinação da BC do ICMS
+    private $pRedBC;  // Percentual da Redução de BC
+    private $vBC;  // Valor da BC do ICMS
+    private $pICMS;  // Alíquota do imposto
+    private $vICMS;  // Valor do ICMS
+    private $modBCST;  // Modalidade de determinação da BC do ICMS ST
+    private $pMVAST;  // Percentual da margem de valor Adicionado do ICMS ST
+    private $pRedBCST;  // Percentual da Redução de BC do ICMS ST
+    private $vBCST;  // Valor da BC do ICMS ST
+    private $pICMSST;  // Alíquota do imposto do ICMS ST
+    private $vICMSST;  // Valor do ICMS ST
+    private $UFST;  // UF para qual é devido o ICMS ST
+    private $pBCop;  // Percentual da BC operação própria
+    private $vBCSTRet;  // Valor da BC do ICMS Retido Anteriormente
+    private $vICMSSTRet;  // Valor do ICMS Retido Anteriormente
+    private $motDesICMS;  // Motivo da desoneração do ICMS
+    private $vBCSTDest;  // Valor da BC do ICMS ST da UF destino
+    private $vICMSSTDest;  // Valor do ICMS ST da UF destino
+    private $pCredSN;  // Alíquota aplicável de cálculo do crédito (Simples Nacional)
+    private $vCredICMSSN;  // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL)
+    private $vICMSDeson;  // Valor do ICMS da desoneração
+    private $vICMSOp;  // Valor do ICMS da Operação
+    private $pDif;  // percentual do diferimento
+    private $vICMSDif;  // Valor do ICMS Diferido
+    private $vBCFCP;  // Valor da Base de Cálculo do FCP
+    private $pFCP;  // Percentual do FCP
+    private $vFCP;  // Valor do FCP
+    private $vBCFCPST;  // Valor da Base de Cálculo do FCP retido por Substituição Tributária
+    private $pFCPST;  // Percentual do FCP retido por Substituição Tributária.
+    private $vFCPST;  // Valor do FCP retido por Substituição Tributária
+    private $vBCFCPSTRet;  // Valor da BC do FCP retido anteriormente por Substituição Tributária
+    private $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
+    private $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
+    private $pST;  // Alíquota suportada pelo Consumidor Final
 
     /**
      * @param $ICMS
@@ -372,6 +389,31 @@ class ICMS
     /**
      * @return string
      */
+    public function getOrig(): string
+    {
+        return $this->orig;
+    }
+
+    /**
+     * @param string $orig
+     * 0 - Nacional, exceto as indicadas nos códigos 3, 4, 5 e 8;
+     * 1 - Estrangeira - Importação direta, exceto a indicada no código 6;
+     * 2 - Estrangeira - Adquirida no mercado interno, exceto a indicada no código 7;
+     * 3 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 40% e inferior ou igual a 70%;
+     * 4 - Nacional, cuja produção tenha sido feita em conformidade com os processos produtivos básicos de que tratam as legislações citadas nos Ajustes;
+     * 5 - Nacional, mercadoria ou bem com Conteúdo de Importação inferior ou igual a 40%;
+     * 6 - Estrangeira - Importação direta, sem similar nacional, constante em lista da CAMEX e gás natural;
+     * 7 - Estrangeira - Adquirida no mercado interno, sem similar nacional, constante em lista da CAMEX e gás natural.
+     * 8 - Nacional, mercadoria ou bem com Conteúdo de Importação superior a 70%;
+     */
+    public function setOrig(string $orig): void
+    {
+        $this->orig = $orig;
+    }
+
+    /**
+     * @return string
+     */
     public function getCST(): string
     {
         return $this->CST;
@@ -383,5 +425,553 @@ class ICMS
     public function setCST(string $CST): void
     {
         $this->CST = $CST;
+    }
+
+    /**
+     * @return int
+     * 0 - Margem Valor Agregado (%);
+     * 1 - Pauta (valor);
+     * 2 - Preço Tabelado Máximo (valor);
+     * 3 - Valor da Operação.
+     */
+    public function getModBC(): int
+    {
+        return $this->modBC;
+    }
+
+    /**
+     * @param int $modBC
+     */
+    public function setModBC(int $modBC): void
+    {
+        $this->modBC = $modBC;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPRedBC(): float
+    {
+        return $this->pRedBC;
+    }
+
+    /**
+     * @param float $pRedBC
+     */
+    public function setPRedBC(float $pRedBC): void
+    {
+        $this->pRedBC = $pRedBC;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBC(): float
+    {
+        return $this->vBC;
+    }
+
+    /**
+     * @param float $vBC
+     */
+    public function setVBC(float $vBC): void
+    {
+        $this->vBC = $vBC;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPICMS(): float
+    {
+        return $this->pICMS;
+    }
+
+    /**
+     * @param float $pICMS
+     */
+    public function setPICMS(float $pICMS): void
+    {
+        $this->pICMS = $pICMS;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMS(): float
+    {
+        return $this->vICMS;
+    }
+
+    /**
+     * @param float $vICMS
+     */
+    public function setVICMS(float $vICMS): void
+    {
+        $this->vICMS = $vICMS;
+    }
+
+    /**
+     * @return int
+     */
+    public function getModBCST(): int
+    {
+        return $this->modBCST;
+    }
+
+    /**
+     * @param int $modBCST
+     */
+    public function setModBCST(int $modBCST): void
+    {
+        $this->modBCST = $modBCST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPMVAST(): float
+    {
+        return $this->pMVAST;
+    }
+
+    /**
+     * @param float $pMVAST
+     */
+    public function setPMVAST(float $pMVAST): void
+    {
+        $this->pMVAST = $pMVAST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPRedBCST(): float
+    {
+        return $this->pRedBCST;
+    }
+
+    /**
+     * @param float $pRedBCST
+     */
+    public function setPRedBCST(float $pRedBCST): void
+    {
+        $this->pRedBCST = $pRedBCST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCST(): float
+    {
+        return $this->vBCST;
+    }
+
+    /**
+     * @param float $vBCST
+     */
+    public function setVBCST(float $vBCST): void
+    {
+        $this->vBCST = $vBCST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPICMSST(): float
+    {
+        return $this->pICMSST;
+    }
+
+    /**
+     * @param float $pICMSST
+     */
+    public function setPICMSST(float $pICMSST): void
+    {
+        $this->pICMSST = $pICMSST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSST(): float
+    {
+        return $this->vICMSST;
+    }
+
+    /**
+     * @param mixed $vICMSST
+     */
+    public function setVICMSST(float $vICMSST): void
+    {
+        $this->vICMSST = $vICMSST;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUFST(): string
+    {
+        return $this->UFST;
+    }
+
+    /**
+     * @param string $UFST
+     */
+    public function setUFST(string $UFST): void
+    {
+        $this->UFST = $UFST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPBCop(): float
+    {
+        return $this->pBCop;
+    }
+
+    /**
+     * @param float $pBCop
+     */
+    public function setPBCop(float $pBCop): void
+    {
+        $this->pBCop = $pBCop;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCSTRet(): float
+    {
+        return $this->vBCSTRet;
+    }
+
+    /**
+     * @param float $vBCSTRet
+     */
+    public function setVBCSTRet(float $vBCSTRet): void
+    {
+        $this->vBCSTRet = $vBCSTRet;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSSTRet(): float
+    {
+        return $this->vICMSSTRet;
+    }
+
+    /**
+     * @param float $vICMSSTRet
+     */
+    public function setVICMSSTRet(float $vICMSSTRet): void
+    {
+        $this->vICMSSTRet = $vICMSSTRet;
+    }
+
+    /**
+     * @return int
+     */
+    public function getMotDesICMS(): int
+    {
+        return $this->motDesICMS;
+    }
+
+    /**
+     * @param int $motDesICMS
+     */
+    public function setMotDesICMS(int $motDesICMS): void
+    {
+        $this->motDesICMS = $motDesICMS;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCSTDest(): float
+    {
+        return $this->vBCSTDest;
+    }
+
+    /**
+     * @param float $vBCSTDest
+     */
+    public function setVBCSTDest(float $vBCSTDest): void
+    {
+        $this->vBCSTDest = $vBCSTDest;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSSTDest(): float
+    {
+        return $this->vICMSSTDest;
+    }
+
+    /**
+     * @param float $vICMSSTDest
+     */
+    public function setVICMSSTDest(float $vICMSSTDest): void
+    {
+        $this->vICMSSTDest = $vICMSSTDest;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPCredSN(): float
+    {
+        return $this->pCredSN;
+    }
+
+    /**
+     * @param float $pCredSN
+     */
+    public function setPCredSN(float $pCredSN): void
+    {
+        $this->pCredSN = $pCredSN;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVCredICMSSN(): float
+    {
+        return $this->vCredICMSSN;
+    }
+
+    /**
+     * @param float $vCredICMSSN
+     */
+    public function setVCredICMSSN(float $vCredICMSSN): void
+    {
+        $this->vCredICMSSN = $vCredICMSSN;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSDeson(): float
+    {
+        return $this->vICMSDeson;
+    }
+
+    /**
+     * @param float $vICMSDeson
+     */
+    public function setVICMSDeson(float $vICMSDeson): void
+    {
+        $this->vICMSDeson = $vICMSDeson;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSOp(): float
+    {
+        return $this->vICMSOp;
+    }
+
+    /**
+     * @param float $vICMSOp
+     */
+    public function setVICMSOp(float $vICMSOp): void
+    {
+        $this->vICMSOp = $vICMSOp;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPDif(): float
+    {
+        return $this->pDif;
+    }
+
+    /**
+     * @param float $pDif
+     */
+    public function setPDif(float $pDif): void
+    {
+        $this->pDif = $pDif;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVICMSDif(): float
+    {
+        return $this->vICMSDif;
+    }
+
+    /**
+     * @param float $vICMSDif
+     */
+    public function setVICMSDif(float $vICMSDif): void
+    {
+        $this->vICMSDif = $vICMSDif;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCFCP(): float
+    {
+        return $this->vBCFCP;
+    }
+
+    /**
+     * @param float $vBCFCP
+     */
+    public function setVBCFCP(float $vBCFCP): void
+    {
+        $this->vBCFCP = $vBCFCP;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPFCP(): float
+    {
+        return $this->pFCP;
+    }
+
+    /**
+     * @param float $pFCP
+     */
+    public function setPFCP(float $pFCP): void
+    {
+        $this->pFCP = $pFCP;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVFCP(): float
+    {
+        return $this->vFCP;
+    }
+
+    /**
+     * @param float $vFCP
+     */
+    public function setVFCP(float $vFCP): void
+    {
+        $this->vFCP = $vFCP;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCFCPST(): float
+    {
+        return $this->vBCFCPST;
+    }
+
+    /**
+     * @param float $vBCFCPST
+     */
+    public function setVBCFCPST(float $vBCFCPST): void
+    {
+        $this->vBCFCPST = $vBCFCPST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPFCPST(): float
+    {
+        return $this->pFCPST;
+    }
+
+    /**
+     * @param float $pFCPST
+     */
+    public function setPFCPST(float $pFCPST): void
+    {
+        $this->pFCPST = $pFCPST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVFCPST(): float
+    {
+        return $this->vFCPST;
+    }
+
+    /**
+     * @param float $vFCPST
+     */
+    public function setVFCPST(float $vFCPST): void
+    {
+        $this->vFCPST = $vFCPST;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVBCFCPSTRet(): float
+    {
+        return $this->vBCFCPSTRet;
+    }
+
+    /**
+     * @param float $vBCFCPSTRet
+     */
+    public function setVBCFCPSTRet(float $vBCFCPSTRet): void
+    {
+        $this->vBCFCPSTRet = $vBCFCPSTRet;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPFCPSTRet(): float
+    {
+        return $this->pFCPSTRet;
+    }
+
+    /**
+     * @param float $pFCPSTRet
+     */
+    public function setPFCPSTRet(float $pFCPSTRet): void
+    {
+        $this->pFCPSTRet = $pFCPSTRet;
+    }
+
+    /**
+     * @return float
+     */
+    public function getVFCPSTRet(): float
+    {
+        return $this->vFCPSTRet;
+    }
+
+    /**
+     * @param float $vFCPSTRet
+     */
+    public function setVFCPSTRet(float $vFCPSTRet): void
+    {
+        $this->vFCPSTRet = $vFCPSTRet;
+    }
+
+    /**
+     * @return float
+     */
+    public function getPST(): float
+    {
+        return $this->pST;
+    }
+
+    /**
+     * @param float $pST
+     */
+    public function setPST(float $pST): void
+    {
+        $this->pST = $pST;
     }
 }
