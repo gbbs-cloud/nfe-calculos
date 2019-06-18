@@ -67,6 +67,24 @@ class IPITest extends TestCase
     }
 
     /**
+     * Test CST 00
+     */
+    public function testCST00()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('00');
+        $ipi->setVBC(1000.0);
+        $ipi->setPIPI(12.0);
+
+        IPI::calcular($ipi);
+
+        $this->assertSame('00', $ipi->getCST());
+        $this->assertSame(1000.0, $ipi->getVBC());
+        $this->assertSame(12.0, $ipi->getPIPI());
+        $this->assertSame(120.0, $ipi->getVIPI());
+    }
+
+    /**
      * Instantiate and return an IPI object
      */
     private function instantiateIPI()
