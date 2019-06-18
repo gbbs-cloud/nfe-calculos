@@ -13,7 +13,7 @@ class IPITest extends TestCase
      */
     public function testFailingNullArgument()
     {
-        IPI::calcular(null, null);
+        IPI::calcular(null);
     }
 
     /**
@@ -52,6 +52,18 @@ class IPITest extends TestCase
         $this->assertIsFloat($ipi->getVIPI());
         $this->assertIsFloat($ipi->getQUnid());
         $this->assertIsFloat($ipi->getVUnid());
+    }
+
+    /**
+     * Test invalid CST
+     * @expectedException \Exception
+     */
+    public function testInvalidCST()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('00000');
+
+        IPI::calcular($ipi);
     }
 
     /**

@@ -14,7 +14,6 @@ class IPI
     public $REIDE;
     public $SUFRAMA;
     public $CSTNotaRef;
-    public $Zerar;
 
     private $CNPJProd;
     private $cSelo;
@@ -29,22 +28,11 @@ class IPI
 
     /**
      * @param $IPI
-     * @param $pIPI
      * @return mixed
      * @throws Exception
      */
-    public static function calcular(IPI $IPI, $pIPI)
+    public static function calcular(IPI $IPI): void
     {
-        $IPI->pIPI = $pIPI;
-
-        if ($IPI->Zerar === 1) {
-            $IPI->vBC = '0';
-            if ($IPI->vIPI === 0) {
-                $IPI->pIPI = 0;
-            }
-            return $IPI;
-        }
-
         if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
             return self::calcAliquotaAdValoren($IPI);
