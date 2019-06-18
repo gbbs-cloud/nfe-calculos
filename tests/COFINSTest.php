@@ -26,6 +26,18 @@ class COFINSTest extends TestCase
     }
 
     /**
+     * Test invalid CST
+     * @expectedException \Exception
+     */
+    public function testInvalidCST()
+    {
+        $cofins = $this->instantiateCOFINS();
+        $cofins->setCST('00000');
+
+        COFINS::calcular($cofins);
+    }
+
+    /**
      * Test CST 01
      * @expectedException \Exception
      */
