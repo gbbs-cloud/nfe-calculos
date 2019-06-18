@@ -35,25 +35,32 @@ class IPI
     {
         if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
-            self::calcAliquotaAdValoren($IPI);
+            throw new Exception('Not implemented');
+//            self::calcAliquotaAdValoren($IPI);
         } elseif ($IPI->getCST() === '01') {
             /* 01 ENTRADA TRIBUTADA COM ALICOTA ZERO */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '02') {
             /* ENTRADA ISENTA */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '03') {
             /* ENTRADA NÃO TRIBUTADA */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '04') {
             /* ENTRADA IMUNE */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '05') {
             /* ENTRADA COM SUSPENSAO */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '49') {
             /* OUTRAS ENTRADAS */
-            self::calcRetornoIsentoValorOutros($IPI);
+            throw new Exception('Not implemented');
+//            self::calcRetornoIsentoValorOutros($IPI);
         } elseif ($IPI->getCST() === '50') {
             /* SAÍDA TRIBUTADA */
             self::calcAliquotaAdValoren($IPI);
@@ -62,56 +69,60 @@ class IPI
             self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '52') {
             /* SAÍDA ISENTA */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '53') {
             /* SAÍDA NÃO-TRIBUTADA */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '54') {
             /* SAÍDA IMUNE */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '55') {
             /* SAÍDA COM SUSPENSAO */
-            self::calcIsento($IPI);
+            throw new Exception('Not implemented');
+//            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '99') {
             /* OUTRAS SAÍDAS */
-            self::calcAliquotaAdValoren($IPI);
+            throw new Exception('Not implemented');
+//            self::calcAliquotaAdValoren($IPI);
         } else {
             throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
         }
     }
 
-    /*
-     * @ISENTO
+    /**
+     * ISENTO
+     * @param $IPI
      */
-    private static function calcIsento($IPI)
+    private static function calcIsento(self $IPI): void
     {
-        $IPI->vIPI = '0';
-        $IPI->vBC = '0';
-        $IPI->pIPI = '0';
-        $IPI->qUnid = null;
-        $IPI->vUnid = null;
-        return $IPI;
+        $IPI->setVIPI(0.0);
+        $IPI->setVBC(0.0);
+        $IPI->setPIPI(0.0);
+        $IPI->setQUnid(null);
+        $IPI->setVUnid(null);
     }
 
-    /*
-     * @Calcula o Valor IPI Ad Valoren
+    /**
+     * Calcula o Valor IPI Ad Valoren
+     * @param $IPI
      */
-    private static function calcAliquotaAdValoren($IPI)
+    private static function calcAliquotaAdValoren(self $IPI): void
     {
-        $IPI->vIPI = ($IPI->vBC * ($IPI->pIPI / 100));
-        return $IPI;
+        $IPI->setVIPI($IPI->getVBC() * ($IPI->getPIPI() / 100));
     }
 
-    private static function calcRetornoIsentoValorOutros($IPI)
-    {
-        if ($IPI->CSTNotaRef === '00' || $IPI->CSTNotaRef === '50' || $IPI->CSTNotaRef === '99') {
-            $IPI->vIPI = ($IPI->vBC * ($IPI->pIPI / 100));
-            $IPI->pIPI = 0;
-            return $IPI;
-        } else {
-            return self::calcIsento($IPI);
-        }
-    }
+//    private static function calcRetornoIsentoValorOutros($IPI)
+//    {
+//        if ($IPI->CSTNotaRef === '00' || $IPI->CSTNotaRef === '50' || $IPI->CSTNotaRef === '99') {
+//            $IPI->vIPI = ($IPI->vBC * ($IPI->pIPI / 100));
+//            $IPI->pIPI = 0;
+//        } else {
+//            self::calcIsento($IPI);
+//        }
+//    }
 
     /**
      * @return string
@@ -252,7 +263,7 @@ class IPI
     /**
      * @param float $qUnid
      */
-    public function setQUnid(float $qUnid): void
+    public function setQUnid(?float $qUnid): void
     {
         $this->qUnid = $qUnid;
     }
@@ -268,7 +279,7 @@ class IPI
     /**
      * @param float $vUnid
      */
-    public function setVUnid(float $vUnid): void
+    public function setVUnid(?float $vUnid): void
     {
         $this->vUnid = $vUnid;
     }

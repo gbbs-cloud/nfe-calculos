@@ -68,20 +68,170 @@ class IPITest extends TestCase
 
     /**
      * Test CST 00
+     * @expectedException \Exception
      */
     public function testCST00()
     {
         $ipi = $this->instantiateIPI();
         $ipi->setCST('00');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 01
+     * @expectedException \Exception
+     */
+    public function testCST01()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('01');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 02
+     * @expectedException \Exception
+     */
+    public function testCST02()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('02');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 03
+     * @expectedException \Exception
+     */
+    public function testCST03()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('03');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 04
+     * @expectedException \Exception
+     */
+    public function testCST04()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('04');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 05
+     * @expectedException \Exception
+     */
+    public function testCST05()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('05');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 49
+     * @expectedException \Exception
+     */
+    public function testCST49()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('49');
+
+        IPI::calcular($ipi);
+    }
+
+    public function testCST50()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('50');
         $ipi->setVBC(1000.0);
         $ipi->setPIPI(12.0);
 
         IPI::calcular($ipi);
 
-        $this->assertSame('00', $ipi->getCST());
+        $this->assertSame('50', $ipi->getCST());
         $this->assertSame(1000.0, $ipi->getVBC());
         $this->assertSame(12.0, $ipi->getPIPI());
-        $this->assertSame(120.0, $ipi->getVIPI());
+    }
+
+    public function testCST51()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('51');
+
+        IPI::calcular($ipi);
+
+        $this->assertSame('51', $ipi->getCST());
+    }
+
+    /**
+     * Test CST 52
+     * @expectedException \Exception
+     */
+    public function testCST52()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('52');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 53
+     * @expectedException \Exception
+     */
+    public function testCST53()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('53');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 54
+     * @expectedException \Exception
+     */
+    public function testCST54()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('54');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 55
+     * @expectedException \Exception
+     */
+    public function testCST55()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('55');
+
+        IPI::calcular($ipi);
+    }
+
+    /**
+     * Test CST 99
+     * @expectedException \Exception
+     */
+    public function testCST99()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->setCST('99');
+
+        IPI::calcular($ipi);
     }
 
     /**
