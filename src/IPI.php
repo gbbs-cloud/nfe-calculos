@@ -35,48 +35,49 @@ class IPI
     {
         if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
-            return self::calcAliquotaAdValoren($IPI);
-        } elseif ($IPI->getCST() === '49') {
-            /* OUTRAS ENTRADAS */
-            return self::calcRetornoIsentoValorOutros($IPI);
-        } elseif ($IPI->getCST() === '50') {
-            /* SAÍDA TRIBUTADA */
-            return self::calcAliquotaAdValoren($IPI);
-        } elseif ($IPI->getCST() === '99') {
-            /* OUTRAS SAÍDAS */
-            return self::calcAliquotaAdValoren($IPI);
+            self::calcAliquotaAdValoren($IPI);
         } elseif ($IPI->getCST() === '01') {
             /* 01 ENTRADA TRIBUTADA COM ALICOTA ZERO */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '02') {
             /* ENTRADA ISENTA */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '03') {
             /* ENTRADA NÃO TRIBUTADA */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '04') {
             /* ENTRADA IMUNE */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '05') {
             /* ENTRADA COM SUSPENSAO */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '49') {
+            /* OUTRAS ENTRADAS */
+            self::calcRetornoIsentoValorOutros($IPI);
+        } elseif ($IPI->getCST() === '50') {
+            /* SAÍDA TRIBUTADA */
+            self::calcAliquotaAdValoren($IPI);
         } elseif ($IPI->getCST() === '51') {
             /* SAÍDA TRIBUTADA COM ALICOTA ZERO */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '52') {
             /* SAÍDA ISENTA */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '53') {
             /* SAÍDA NÃO-TRIBUTADA */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '54') {
             /* SAÍDA IMUNE */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '55') {
             /* SAÍDA COM SUSPENSAO */
-            return self::calcIsento($IPI);
+            self::calcIsento($IPI);
+        } elseif ($IPI->getCST() === '99') {
+            /* OUTRAS SAÍDAS */
+            self::calcAliquotaAdValoren($IPI);
+        } else {
+            throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
         }
-        throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
     }
 
     /*
