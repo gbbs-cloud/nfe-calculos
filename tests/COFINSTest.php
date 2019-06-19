@@ -39,7 +39,6 @@ class COFINSTest extends TestCase
 
     /**
      * Test CST 01
-     * @expectedException \Exception
      */
     public function testCST01()
     {
@@ -49,7 +48,6 @@ class COFINSTest extends TestCase
         COFINS::calcular($cofins);
 
         $this->assertSame('01', $cofins->getCST());
-        $this->assertSame(true, false);
     }
 
     /**
