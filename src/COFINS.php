@@ -17,9 +17,8 @@ class COFINS
     public $vAliqProd;
     public $qBCProd;
     public $Desconto;
-    public $REIDE;
-    public $SUFRAMA;
-    public $Zerar;
+//    public $REIDI;
+//    public $SUFRAMA;
 
     /**
      * @param $COFINS
@@ -134,7 +133,7 @@ class COFINS
 //    private static function calcIsento($COFINS)
 //    {
 //        $COFINS->pCOFINS = 3;
-//        if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
+//        if ($COFINS->REIDI === 1 || $COFINS->SUFRAMA === 1) {
 //            $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
 //        } else {
 //            $COFINS->Desconto = 0;
@@ -151,18 +150,18 @@ class COFINS
         $COFINS->pCOFINS = 3;
         $COFINS->pRedBC = 0;
         $COFINS->vCOFINS = (($COFINS->vBC - ($COFINS->vBC * ($COFINS->pRedBC / 100))) * ($COFINS->pCOFINS / 100));
-        if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
-            $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
-        } else {
-            $COFINS->Desconto = 0;
-        }
+//        if ($COFINS->REIDI === 1 || $COFINS->SUFRAMA === 1) {
+//            $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
+//        } else {
+        $COFINS->Desconto = 0;
+//        }
         return $COFINS;
     }
 
 //    private static function calcIsentoDesconto($COFINS)
 //    {
 //        $COFINS->pCOFINS = 3;
-//        if ($COFINS->REIDE === 1 || $COFINS->SUFRAMA === 1) {
+//        if ($COFINS->REIDI === 1 || $COFINS->SUFRAMA === 1) {
 //            $COFINS->Desconto = $COFINS->vBC * ($COFINS->pCOFINS / 100);
 //        } else {
 //            $COFINS->Desconto = 0;

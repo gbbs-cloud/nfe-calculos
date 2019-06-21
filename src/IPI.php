@@ -12,8 +12,8 @@ class IPI
     public $descCST;
     public $clEnq;
     public $CodNCM;
-    public $REIDE;
-    public $SUFRAMA;
+//    public $REIDI;
+//    public $SUFRAMA;
     public $CSTNotaRef;
 
     private $CNPJProd;

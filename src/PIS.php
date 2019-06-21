@@ -17,8 +17,8 @@ class PIS
     public $Desconto;
     public $vAliqProd;
     public $qBCProd;
-    public $REIDE;
-    public $SUFRAMA;
+//    public $REIDI;
+//    public $SUFRAMA;
 
     /**
      * @param PIS $PIS
@@ -133,7 +133,7 @@ class PIS
 //    private static function calcIsento($PIS)
 //    {
 //        $PIS->pPIS = 0.65;
-//        if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
+//        if ($PIS->REIDI === 1 || $PIS->SUFRAMA === 1) {
 //            $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
 //        } else {
 //            $PIS->Desconto = 0;
@@ -148,11 +148,11 @@ class PIS
     private static function calcaPIS($PIS)
     {
         $PIS->pPIS = 0.65;
-        if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
-            $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
-        } else {
-            $PIS->Desconto = 0;
-        }
+//        if ($PIS->REIDI === 1 || $PIS->SUFRAMA === 1) {
+//            $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
+//        } else {
+        $PIS->Desconto = 0;
+//        }
         $PIS->pRedBC = 0;
         $PIS->vPIS = (($PIS->vBC - ($PIS->vBC * ($PIS->pRedBC / 100))) * ($PIS->pPIS / 100));
         return $PIS;
@@ -161,7 +161,7 @@ class PIS
 //    private static function calcIsentoDesconto($PIS)
 //    {
 //        $PIS->pPIS = 0.65;
-//        if ($PIS->REIDE === 1 || $PIS->SUFRAMA === 1) {
+//        if ($PIS->REIDI === 1 || $PIS->SUFRAMA === 1) {
 //            $PIS->Desconto = $PIS->vBC * ($PIS->pPIS / 100);
 //        } else {
 //            $PIS->Desconto = 0;
