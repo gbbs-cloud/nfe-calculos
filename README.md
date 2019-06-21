@@ -9,8 +9,8 @@
 
 **Note:** Replace ```Mário Sérgio Silvera``` ```dermarios``` ```https://about.me/dermarios``` ```dermarios@gmail.com``` ```gbbs``` ```nfe-calculos``` ```Cálculos de NFe``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can run `$ php prefill.php` in the command line to make all replacements at once. Delete the file prefill.php as well.
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what
-PSRs you support to avoid any confusion with users and contributors.
+É aqui que sua descrição deve ir. Tente limitá-lo a um ou dois parágrafos e, talvez, faça uma menção do que
+PSRs que você suporta para evitar qualquer confusão com usuários e colaboradores.
 
 ## Structure
 
