@@ -7,8 +7,6 @@
 [![Quality Score][ico-code-quality]][link-code-quality]
 [![Total Downloads][ico-downloads]][link-downloads]
 
-**Note:** Replace ```Mário Sérgio Silvera``` ```dermarios``` ```https://about.me/dermarios``` ```dermarios@gmail.com``` ```gbbs``` ```nfe-calculos``` ```Cálculos de NFe``` with their correct values in [README.md](README.md), [CHANGELOG.md](CHANGELOG.md), [CONTRIBUTING.md](CONTRIBUTING.md), [LICENSE.md](LICENSE.md) and [composer.json](composer.json) files, then delete this line. You can run `$ php prefill.php` in the command line to make all replacements at once. Delete the file prefill.php as well.
-
 É aqui que sua descrição deve ir. Tente limitá-lo a um ou dois parágrafos e, talvez, faça uma menção do que
 PSRs que você suporta para evitar qualquer confusão com usuários e colaboradores.
 
@@ -65,14 +63,14 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [ico-version]: https://img.shields.io/packagist/v/gbbs/nfe-calculos.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
 [ico-travis]: https://img.shields.io/travis/gbbs/nfe-calculos/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/gbbs/nfe-calculos.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/gbbs/nfe-calculos.svg?style=flat-square
+[ico-scrutinizer]: https://scrutinizer-ci.com/b/alaskasul/nfe-calculos/badges/coverage.png?b=master
+[ico-code-quality]: https://scrutinizer-ci.com/b/alaskasul/nfe-calculos/badges/quality-score.png?b=master
 [ico-downloads]: https://img.shields.io/packagist/dt/gbbs/nfe-calculos.svg?style=flat-square
 
 [link-packagist]: https://packagist.org/packages/gbbs/nfe-calculos
 [link-travis]: https://travis-ci.org/gbbs/nfe-calculos
-[link-scrutinizer]: https://scrutinizer-ci.com/g/gbbs/nfe-calculos/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/gbbs/nfe-calculos
+[link-scrutinizer]: https://scrutinizer-ci.com/b/alaskasul/nfe-calculos/?branch=master
+[link-code-quality]: https://scrutinizer-ci.com/b/alaskasul/nfe-calculos/?branch=master
 [link-downloads]: https://packagist.org/packages/gbbs/nfe-calculos
 [link-author]: https://bitbucket.org/dermarios
 [link-contributors]: ../../contributors
