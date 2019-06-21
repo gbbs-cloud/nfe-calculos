@@ -5,6 +5,13 @@ build:
                 override: true
             tests:
                 override: [php-scrutinizer-run]
+        coverage:
+            tests:
+                override:
+                    - command: composer test
+                      coverage:
+                          file: build/coverage.txt
+                          format: clover
 
 filter:
     excluded_paths: [tests/*]
