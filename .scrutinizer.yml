@@ -8,9 +8,9 @@ build:
         coverage:
             tests:
                 override:
-                    - command: composer test
+                    - command: vendor/bin/phpunit --coverage-clover clover
                       coverage:
-                          file: build/coverage.txt
+                          file: clover
                           format: clover
 
 filter:
@@ -32,7 +32,7 @@ checks:
         fix_identation_4spaces: true
         fix_doc_comments: true
 
-tools:
-    external_code_coverage:
-        timeout: 600
-        runs: 3
+#tools:
+#    external_code_coverage:
+#        timeout: 600
+#        runs: 3
