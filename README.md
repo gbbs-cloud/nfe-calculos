@@ -74,5 +74,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-scrutinizer]: https://scrutinizer-ci.com/g/gbbs/nfe-calculos/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/gbbs/nfe-calculos
 [link-downloads]: https://packagist.org/packages/gbbs/nfe-calculos
-[link-author]: https://github.com/dermarios
+[link-author]: https://bitbucket.org/dermarios
 [link-contributors]: ../../contributors
