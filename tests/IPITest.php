@@ -56,7 +56,7 @@ class IPITest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
@@ -68,7 +68,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 00
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST00()
     {
@@ -80,7 +80,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 01
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST01()
     {
@@ -92,7 +92,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 02
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST02()
     {
@@ -104,7 +104,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 03
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST03()
     {
@@ -116,7 +116,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 04
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST04()
     {
@@ -128,7 +128,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 05
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST05()
     {
@@ -140,7 +140,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 49
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST49()
     {
@@ -176,7 +176,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 52
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST52()
     {
@@ -188,7 +188,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 53
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST53()
     {
@@ -200,7 +200,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 54
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST54()
     {
@@ -212,7 +212,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 55
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST55()
     {
@@ -224,7 +224,7 @@ class IPITest extends TestCase
 
     /**
      * Test CST 99
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST99()
     {

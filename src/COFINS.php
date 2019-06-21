@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Gbbs\NfeCalculos;
 
-use Exception;
+use Gbbs\NfeCalculos\Exception\InvalidCSTException;
+use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class COFINS
 {
@@ -23,7 +24,7 @@ class COFINS
     /**
      * @param $COFINS
      * @return mixed
-     * @throws Exception
+     * @throws NotImplementedCSTException|InvalidCSTException
      */
     public static function calcular(COFINS $COFINS)
     {
@@ -31,103 +32,103 @@ class COFINS
         if ($COFINS->getCST() === '01') {
             return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '02') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '03') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcAliqCST03($COFINS);
         } elseif ($COFINS->getCST() === '04') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '05') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '06') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '07') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsentoDesconto($COFINS);
         } elseif ($COFINS->getCST() === '08') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '09') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '49') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '50') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '51') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '52') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '53') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '54') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '55') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '56') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '60') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '61') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '62') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '63') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '64') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '65') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '66') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '67') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '70') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         } elseif ($COFINS->getCST() === '71') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '72') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '73') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '74') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '75') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '98') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcaCOFINS($COFINS);
         } elseif ($COFINS->getCST() === '99') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($COFINS->getCST());
 //            return self::calcIsento($COFINS);
         }
-        throw new Exception('Erro ao calcular COFINS' . print_r($COFINS, true));
+        throw new InvalidCSTException($COFINS->getCST());
     }
 
 //    private static function calcIsento($COFINS)

@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Gbbs\NfeCalculos;
 
-use Exception;
+use Gbbs\NfeCalculos\Exception\InvalidCSTException;
+use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class IPI
 {
@@ -29,37 +30,37 @@ class IPI
     /**
      * @param $IPI
      * @return mixed
-     * @throws Exception
+     * @throws NotImplementedCSTException|InvalidCSTException
      */
     public static function calcular(IPI $IPI): void
     {
         if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcAliquotaAdValoren($IPI);
         } elseif ($IPI->getCST() === '01') {
             /* 01 ENTRADA TRIBUTADA COM ALICOTA ZERO */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '02') {
             /* ENTRADA ISENTA */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '03') {
             /* ENTRADA NÃO TRIBUTADA */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '04') {
             /* ENTRADA IMUNE */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '05') {
             /* ENTRADA COM SUSPENSAO */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '49') {
             /* OUTRAS ENTRADAS */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcRetornoIsentoValorOutros($IPI);
         } elseif ($IPI->getCST() === '50') {
             /* SAÍDA TRIBUTADA */
@@ -69,26 +70,26 @@ class IPI
             self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '52') {
             /* SAÍDA ISENTA */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '53') {
             /* SAÍDA NÃO-TRIBUTADA */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '54') {
             /* SAÍDA IMUNE */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '55') {
             /* SAÍDA COM SUSPENSAO */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcIsento($IPI);
         } elseif ($IPI->getCST() === '99') {
             /* OUTRAS SAÍDAS */
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($IPI->getCST());
 //            self::calcAliquotaAdValoren($IPI);
         } else {
-            throw new Exception('Erro ao calcular IPI' . print_r($IPI, true));
+            throw new InvalidCSTException($IPI->getCST());
         }
     }
 

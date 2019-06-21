@@ -108,7 +108,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
@@ -254,7 +254,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 20
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST20()
     {
@@ -265,7 +265,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 30
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST30()
     {
@@ -277,7 +277,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 40
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST40()
     {
@@ -288,7 +288,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 41
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST41()
     {
@@ -299,7 +299,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 50
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST50()
     {
@@ -310,7 +310,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 51
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST51()
     {
@@ -321,7 +321,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 60
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST60()
     {
@@ -332,7 +332,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 70
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST70()
     {
@@ -344,7 +344,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 90
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST90()
     {
@@ -355,7 +355,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 101
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST101()
     {
@@ -366,7 +366,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 102
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST102()
     {
@@ -377,7 +377,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 103
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST103()
     {
@@ -388,7 +388,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 200
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST200()
     {
@@ -399,7 +399,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 201
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST201()
     {
@@ -411,7 +411,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 202
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST202()
     {
@@ -423,7 +423,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 203
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST203()
     {
@@ -435,7 +435,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 300
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST300()
     {
@@ -446,7 +446,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 400
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST400()
     {
@@ -457,7 +457,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 500
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST500()
     {
@@ -468,7 +468,7 @@ class ICMSTest extends TestCase
 
     /**
      * Test CST 900
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST900()
     {

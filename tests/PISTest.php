@@ -27,7 +27,7 @@ class PISTest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
@@ -52,7 +52,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 02
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST02()
     {
@@ -64,7 +64,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 03
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST03()
     {
@@ -76,7 +76,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 04
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST04()
     {
@@ -88,7 +88,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 05
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST05()
     {
@@ -100,7 +100,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 06
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST06()
     {
@@ -112,7 +112,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 07
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST07()
     {
@@ -124,7 +124,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 08
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST08()
     {
@@ -136,7 +136,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 09
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST09()
     {
@@ -148,7 +148,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 49
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST49()
     {
@@ -160,7 +160,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 50
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST50()
     {
@@ -172,7 +172,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 51
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST51()
     {
@@ -184,7 +184,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 52
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST52()
     {
@@ -196,7 +196,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 53
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST53()
     {
@@ -208,7 +208,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 54
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST54()
     {
@@ -220,7 +220,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 55
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST55()
     {
@@ -232,7 +232,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 56
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST56()
     {
@@ -244,7 +244,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 60
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST60()
     {
@@ -256,7 +256,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 61
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST61()
     {
@@ -268,7 +268,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 62
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST62()
     {
@@ -280,7 +280,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 63
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST63()
     {
@@ -292,7 +292,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 64
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST64()
     {
@@ -304,7 +304,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 65
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST65()
     {
@@ -316,7 +316,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 66
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST66()
     {
@@ -328,7 +328,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 67
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST67()
     {
@@ -340,7 +340,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 70
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST70()
     {
@@ -352,7 +352,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 71
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST71()
     {
@@ -364,7 +364,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 72
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST72()
     {
@@ -376,7 +376,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 73
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST73()
     {
@@ -388,7 +388,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 74
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST74()
     {
@@ -400,7 +400,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 75
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST75()
     {
@@ -412,7 +412,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 98
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST98()
     {
@@ -424,7 +424,7 @@ class PISTest extends TestCase
 
     /**
      * Test CST 99
-     * @expectedException \Exception
+     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST99()
     {

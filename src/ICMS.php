@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Gbbs\NfeCalculos;
 
 use Exception;
+use Gbbs\NfeCalculos\Exception\InvalidCSTException;
+use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class ICMS
 {
@@ -50,7 +52,7 @@ class ICMS
      * @param $pICMSST
      * @param $reducao
      * @return ICMS
-     * @throws Exception
+     * @throws NotImplementedCSTException|InvalidCSTException|Exception
      */
     public static function calcular(self $ICMS, $pICMSST, $reducao): self
     {
@@ -71,67 +73,67 @@ class ICMS
         } elseif ($ICMS->getCST() === '10') {
             self::calcCST10($ICMS);
         } elseif ($ICMS->getCST() === '20') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST20($ICMS);
         } elseif ($ICMS->getCST() === '30') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST30($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '40') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST40($ICMS);
         } elseif ($ICMS->getCST() === '41') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST41($ICMS);
         } elseif ($ICMS->getCST() === '50') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST50($ICMS);
         } elseif ($ICMS->getCST() === '51') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST51($ICMS);
         } elseif ($ICMS->getCST() === '60') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST60($ICMS);
         } elseif ($ICMS->getCST() === '70') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST70($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '90') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST90c($ICMS);
         } elseif ($ICMS->getCST() === '101') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN101($ICMS);
         } elseif ($ICMS->getCST() === '102') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN102($ICMS);
         } elseif ($ICMS->getCST() === '103') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //             FIXME Do nothing?
         } elseif ($ICMS->getCST() === '200') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST200($ICMS);
         } elseif ($ICMS->getCST() === '201') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN201($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '202') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN202($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '203') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN203($ICMS, $pICMSST, $ST);
         } elseif ($ICMS->getCST() === '300') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //             FIXME Do nothing?
         } elseif ($ICMS->getCST() === '400') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //             FIXME Do nothing?
         } elseif ($ICMS->getCST() === '500') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN500($ICMS);
         } elseif ($ICMS->getCST() === '900') {
-            throw new Exception('Not implemented');
+            throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCSOSN900($ICMS, $pICMSST, $ST);
         } else {
-            throw new Exception('Erro ao calcular ICMS' . print_r($ICMS, true));
+            throw new InvalidCSTException($ICMS->getCST());
         }
         return $ICMS;
     }
@@ -229,7 +231,7 @@ class ICMS
         if ($ICMS->getModBC() === 0) {
             $ICMS->setVICMS(self::calcvICMS($ICMS));
         } else {
-            throw new Exception('Not implemented');
+            throw new Exception('modBC '.$ICMS->getModBC(). ' not implemented');
         }
     }
 
@@ -244,7 +246,7 @@ class ICMS
             $ICMS->setVICMS(self::calcvICMS($ICMS));
             $ICMS->setVICMSST(self::calcvICMSST($ICMS));
         } else {
-            throw new Exception('Not implemented');
+            throw new Exception('modBCST '.$ICMS->getModBCST(). ' not implemented');
         }
     }
 
