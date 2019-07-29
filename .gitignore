@@ -1,7 +1,7 @@
+.idea
+*.code-workspace
 build
 composer.lock
 vendor
 phpcs.xml
 phpunit.xml
-
-.idea
