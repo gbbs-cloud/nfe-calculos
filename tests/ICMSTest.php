@@ -9,10 +9,11 @@ use PHPUnit\Framework\TestCase;
 class ICMSTest extends TestCase
 {
     /**
-     * @expectedException \TypeError
+     * Test null argument
      */
     public function testFailingNullArgument()
     {
+        $this->expectException('\TypeError');
         ICMS::calcular(null, null, null);
     }
 
@@ -36,13 +37,11 @@ class ICMSTest extends TestCase
         $icms->setModBC(1);
         $icms->setPRedBC(1.0);
         $icms->setVBC(1.0);
-        $icms->setPICMS(1.0);
         $icms->setVICMS(1.0);
         $icms->setModBCST(1);
         $icms->setPMVAST(1.0);
         $icms->setPRedBCST(1.0);
         $icms->setVBCST(1.0);
-        $icms->setPICMSST(1.0);
         $icms->setVICMSST(1.0);
         $icms->setUFST('');
         $icms->setPBCop(1.0);
@@ -73,13 +72,11 @@ class ICMSTest extends TestCase
         $this->assertIsInt($icms->getModBC());
         $this->assertIsFloat($icms->getPRedBC());
         $this->assertIsFloat($icms->getVBC());
-        $this->assertIsFloat($icms->getPICMS());
         $this->assertIsFloat($icms->getVICMS());
         $this->assertIsInt($icms->getModBCST());
         $this->assertIsFloat($icms->getPMVAST());
         $this->assertIsFloat($icms->getPRedBCST());
         $this->assertIsFloat($icms->getVBCST());
-        $this->assertIsFloat($icms->getPICMSST());
         $this->assertIsFloat($icms->getVICMSST());
         $this->assertIsString($icms->getUFST());
         $this->assertIsFloat($icms->getPBCop());
@@ -108,14 +105,14 @@ class ICMSTest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('00000');
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
@@ -128,33 +125,31 @@ class ICMSTest extends TestCase
         $icms->setCST('00');
         $icms->setModBC(0);
         $icms->setVBC(1000);
-        $icms->setPICMS(12);
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
 
         $this->assertSame('0', $icms->getOrig());
         $this->assertSame('00', $icms->getCST());
         $this->assertSame(0, $icms->getModBC());
         $this->assertSame(1000.0, $icms->getVBC());
-        $this->assertSame(12.0, $icms->getPICMS());
-        $this->assertSame(120.0, $icms->getVICMS());
+        $this->assertSame(17.0, $icms->getPICMS());
+        $this->assertSame(170.0, $icms->getVICMS());
     }
 
     /**
      * Test CST 00 with modBC !== 0
      * modBC === 1, modBC === 2 and modBC === 3 aren't implemented
-     * @expectedException \Exception
      */
     public function testCST00ModBCDifferentThan1()
     {
+        $this->expectException('\Exception');
         $icms = $this->instantiateICMS();
         $icms->setOrig('0');
         $icms->setCST('00');
         $icms->setModBC(1);
         $icms->setVBC(1000);
-        $icms->setPICMS(12);
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
@@ -170,27 +165,25 @@ class ICMSTest extends TestCase
         $icms->setCST('10');
         $icms->setModBC(0);
         $icms->setVBC(100);
-        $icms->setPICMS(1);
         $icms->setModBCST(4);
         $icms->setPMVAST(10.0);
         $icms->setPRedBCST(1);
         $icms->setVBCST(1);
-        $icms->setPICMSST(1);
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
 
         $this->assertSame('0', $icms->getOrig());
         $this->assertSame('10', $icms->getCST());
         $this->assertSame(0, $icms->getModBC());
         $this->assertSame(100.0, $icms->getVBC());
-        $this->assertSame(1.0, $icms->getPICMS());
-        $this->assertSame(1.0, $icms->getVICMS());
+        $this->assertSame(17.0, $icms->getPICMS());
+        $this->assertSame(17.0, $icms->getVICMS());
         $this->assertSame(4, $icms->getModBCST());
         $this->assertSame(10.0, $icms->getPMVAST());
         $this->assertSame(1.0, $icms->getPRedBCST());
         $this->assertSame(1.089, $icms->getVBCST());
-        $this->assertSame(null, $icms->getPICMSST());
-        $this->assertSame(-1.0, $icms->getVICMSST());
+        $this->assertSame(17.0, $icms->getPICMSST());
+        $this->assertSame(-16.8167213, $icms->getVICMSST());
     }
 
     /**
@@ -206,26 +199,24 @@ class ICMSTest extends TestCase
         $icms->setCST('10');
         $icms->setModBC(0);
         $icms->setVBC(100);
-        $icms->setPICMS(1);
         $icms->setModBCST(4);
         $icms->setPMVAST(0.0);
         $icms->setPRedBCST(0);
         $icms->setVBCST(1);
-        $icms->setPICMSST(1);
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
 
         $this->assertSame('0', $icms->getOrig());
         $this->assertSame('10', $icms->getCST());
         $this->assertSame(0, $icms->getModBC());
         $this->assertSame(100.0, $icms->getVBC());
-        $this->assertSame(1.0, $icms->getPICMS());
-        $this->assertSame(1.0, $icms->getVICMS());
+        $this->assertSame(17.0, $icms->getPICMS());
+        $this->assertSame(17.0, $icms->getVICMS());
         $this->assertSame(4, $icms->getModBCST());
         $this->assertSame(0.0, $icms->getPMVAST());
         $this->assertSame(0.0, $icms->getPRedBCST());
         $this->assertSame(1.0, $icms->getVBCST());
-        $this->assertSame(null, $icms->getPICMSST());
+        $this->assertSame(17.0, $icms->getPICMSST());
         $this->assertSame(0.0, $icms->getVICMSST());
     }
 
@@ -233,249 +224,247 @@ class ICMSTest extends TestCase
      * Test CST 10
      * modBCST !== 4
      * modBCST === 0, modBCST === 1, modBCST === 2, modBCST === 3 and modBCST === 5 aren't implemented
-     * @expectedException \Exception
      */
     public function testCST10ModBCSTDifferentThan4()
     {
+        $this->expectException('\Exception');
         $icms = $this->instantiateICMS();
         $icms->setOrig('0');
         $icms->setCST('10');
         $icms->setModBC(0);
         $icms->setVBC(100);
-        $icms->setPICMS(1);
         $icms->setModBCST(0);
         $icms->setPMVAST(0.0);
         $icms->setPRedBCST(0);
         $icms->setVBCST(1);
-        $icms->setPICMSST(1);
 
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 20
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST20()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('20');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 30
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST30()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('30');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 40
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST40()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('40');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 41
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST41()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('41');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 50
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST50()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('50');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 51
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST51()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('51');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 60
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST60()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('60');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 70
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST70()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('70');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 90
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST90()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('90');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 101
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST101()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('101');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 102
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST102()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('102');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 103
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST103()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('103');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 200
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST200()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('200');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 201
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST201()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('201');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 202
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST202()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('202');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 203
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST203()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('203');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 300
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST300()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('300');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 400
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST400()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('400');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 500
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST500()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('500');
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**
      * Test CST 900
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST900()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->setCST('900');
         $icms->setModBCST(4);
-        ICMS::calcular($icms, null, null);
+        ICMS::calcular($icms, '11', '11');
     }
 
     /**

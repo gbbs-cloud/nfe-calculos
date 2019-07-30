@@ -48,24 +48,19 @@ class ICMS
     private $pST;  // Alíquota suportada pelo Consumidor Final
 
     /**
-     * @param $ICMS
-     * @param $pICMSST
-     * @param $reducao
-     * @return ICMS
+     * @param self $ICMS
+     * @param string $ufOrigem
+     * @param string $ufDestino
+     * @param float $reducao
      * @throws NotImplementedCSTException|InvalidCSTException|Exception
      */
-    public static function calcular(self $ICMS, $pICMSST, $reducao): self
+    public static function calcular(self $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): void
     {
-        $ST = 0;
-
-        //REDUÇÃO DO PERCENTUAL DA ALIQUOTA ICMS
-        if ($reducao > 0 and $ICMS->getCST() === '51') {
-            $ICMS->pICMS = $reducao;
-        }
-        if ($reducao > 0) {
-            $ICMS->pICMSST = $reducao;
-        } else {  // CASO NÃO HAJA REDUÇÃO, ELE IRÁ CALCULAR NORMALMENTE
-            $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+        if ($reducao === null) {
+            $ICMS->setPICMS($ufOrigem, $ufDestino);
+            $ICMS->setPICMSST($ufOrigem, $ufDestino);
+        } else {
+            $ICMS->setReducao($reducao);
         }
 
         if ($ICMS->getCST() === '00') {
@@ -77,7 +72,7 @@ class ICMS
 //            self::calcCST20($ICMS);
         } elseif ($ICMS->getCST() === '30') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCST30($ICMS, $pICMSST, $ST);
+//            self::calcCST30($ICMS, $pICMSST);
         } elseif ($ICMS->getCST() === '40') {
             throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST40($ICMS);
@@ -95,7 +90,7 @@ class ICMS
 //            self::calcCST60($ICMS);
         } elseif ($ICMS->getCST() === '70') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCST70($ICMS, $pICMSST, $ST);
+//            self::calcCST70($ICMS, $pICMSST);
         } elseif ($ICMS->getCST() === '90') {
             throw new NotImplementedCSTException($ICMS->getCST());
 //            self::calcCST90c($ICMS);
@@ -113,13 +108,13 @@ class ICMS
 //            self::calcCST200($ICMS);
         } elseif ($ICMS->getCST() === '201') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCSOSN201($ICMS, $pICMSST, $ST);
+//            self::calcCSOSN201($ICMS, $pICMSST);
         } elseif ($ICMS->getCST() === '202') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCSOSN202($ICMS, $pICMSST, $ST);
+//            self::calcCSOSN202($ICMS, $pICMSST);
         } elseif ($ICMS->getCST() === '203') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCSOSN203($ICMS, $pICMSST, $ST);
+//            self::calcCSOSN203($ICMS, $pICMSST);
         } elseif ($ICMS->getCST() === '300') {
             throw new NotImplementedCSTException($ICMS->getCST());
 //             FIXME Do nothing?
@@ -131,11 +126,10 @@ class ICMS
 //            self::calcCSOSN500($ICMS);
         } elseif ($ICMS->getCST() === '900') {
             throw new NotImplementedCSTException($ICMS->getCST());
-//            self::calcCSOSN900($ICMS, $pICMSST, $ST);
+//            self::calcCSOSN900($ICMS, $pICMSST);
         } else {
             throw new InvalidCSTException($ICMS->getCST());
         }
-        return $ICMS;
     }
 
 //    /*
@@ -250,22 +244,22 @@ class ICMS
         }
     }
 
-//    private static function calcCSOSN201($ICMS, $pICMSST, $ST)
+//    private static function calcCSOSN201($ICMS, $pICMSST)
 //    {
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
 //    }
 //
-//    private static function calcCSOSN202($ICMS, $pICMSST, $ST)
+//    private static function calcCSOSN202($ICMS, $pICMSST)
 //    {
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
 //    }
 //
-//    private static function calcCSOSN203($ICMS, $pICMSST, $ST)
+//    private static function calcCSOSN203($ICMS, $pICMSST)
 //    {
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
 //    }
 //
@@ -277,9 +271,9 @@ class ICMS
 //        $ICMS->vICMSST = null;
 //    }
 //
-//    private static function calcCSOSN900($ICMS, $pICMSST, $ST)
+//    private static function calcCSOSN900($ICMS, $pICMSST)
 //    {
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vCredICMSSN = self::calcvCredICMSSN($ICMS);
 //        $ICMS->vICMS = (self::calcvICMS($ICMS));
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
@@ -308,10 +302,10 @@ class ICMS
 //        $ICMS->pICMSST = 0;
 //    }
 //
-//    private static function calcCST30($ICMS, $pICMSST, $ST)
+//    private static function calcCST30($ICMS, $pICMSST)
 //    {
 //        $ICMS->vBCST = self::calcRedBCST($ICMS);
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
 //    }
 //
@@ -381,11 +375,11 @@ class ICMS
 //        $ICMS->pICMSST = 0;
 //    }
 //
-//    private static function calcCST70($ICMS, $pICMSST, $ST)
+//    private static function calcCST70($ICMS, $pICMSST)
 //    {
 //        $ICMS->vBCST = self::calcRedBCST($ICMS);
 //        $ICMS->vBC = self::calcRedBC($ICMS);
-//        $ICMS->pICMSST = $ST > 0 ? $ST : $pICMSST;
+//        $ICMS->pICMSST = $pICMSST;
 //        $ICMS->vICMS = (self::calcvICMS($ICMS));
 //        $ICMS->vICMSST = (self::calcvICMSST($ICMS));
 //    }
@@ -400,6 +394,15 @@ class ICMS
 //        }
 //        $ICMS->vICMSDeson = self::calcvICMSDesonIsento($ICMS);
 //    }
+
+    /**
+     * @param float $reducao
+     */
+    public function setReducao(float $reducao): void
+    {
+        $this->pICMS = $reducao;
+        $this->pICMSST = $reducao;
+    }
 
     /**
      * @return string
@@ -497,17 +500,25 @@ class ICMS
     /**
      * @return float
      */
-    public function getPICMS(): float
+    public function getPICMS(): ?float
     {
         return $this->pICMS;
     }
 
     /**
-     * @param float $pICMS
+     * @param string $ufOrigem
+     * @param string $ufDestino
      */
-    public function setPICMS(float $pICMS): void
+    public function setPICMS(string $ufOrigem, string $ufDestino): void
     {
-        $this->pICMS = $pICMS;
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $picmsFile = file_get_contents($path . 'picms.json');
+        $picmsList = json_decode($picmsFile, true);
+        foreach ($picmsList as $picms) {
+            if ($picms['uf'] === $ufOrigem) {
+                $this->pICMS = (float) $picms['uf' . $ufDestino];
+            }
+        }
     }
 
     /**
@@ -605,11 +616,19 @@ class ICMS
     }
 
     /**
-     * @param float $pICMSST
+     * @param string $ufOrigem
+     * @param string $ufDestino
      */
-    public function setPICMSST(float $pICMSST): void
+    public function setPICMSST(string $ufOrigem, string $ufDestino): void
     {
-        $this->pICMSST = $pICMSST;
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $picmsstFile = file_get_contents($path . 'picmsst.json');
+        $picmsstList = json_decode($picmsstFile, true);
+        foreach ($picmsstList as $picmsst) {
+            if ($picmsst['uf'] === $ufOrigem) {
+                $this->pICMSST = (float) $picmsst['uf' . $ufDestino];
+            }
+        }
     }
 
     /**
