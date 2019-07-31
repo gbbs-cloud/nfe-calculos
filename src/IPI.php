@@ -6,16 +6,10 @@ namespace Gbbs\NfeCalculos;
 
 use Gbbs\NfeCalculos\Exception\InvalidCSTException;
 use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
+use \Exception;
 
 class IPI
 {
-    public $descCST;
-    public $clEnq;
-    public $CodNCM;
-//    public $REIDI;
-//    public $SUFRAMA;
-    public $CSTNotaRef;
-
     private $CNPJProd;
     private $cSelo;
     private $qSelo;
@@ -28,12 +22,12 @@ class IPI
     private $vUnid;
 
     /**
-     * @param $IPI
-     * @return mixed
+     * @param self $IPI
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    public static function calcular(IPI $IPI): void
+    public static function calcular(self $IPI, string $ncm): void
     {
+        $IPI->setPIPI($ncm);
         if ($IPI->getCST() === '00') {
             /* ENTRADA COM RECUPERAÇÃO DE CRÉDITO */
             throw new NotImplementedCSTException($IPI->getCST());
@@ -95,20 +89,20 @@ class IPI
 
     /**
      * ISENTO
-     * @param $IPI
+     * @param self $IPI
      */
     private static function calcIsento(self $IPI): void
     {
         $IPI->setVIPI(0.0);
         $IPI->setVBC(0.0);
-        $IPI->setPIPI(0.0);
+        $IPI->pIPI = 0.0;
         $IPI->setQUnid(null);
         $IPI->setVUnid(null);
     }
 
     /**
      * Calcula o Valor IPI Ad Valoren
-     * @param $IPI
+     * @param self $IPI
      */
     private static function calcAliquotaAdValoren(self $IPI): void
     {
@@ -230,11 +224,22 @@ class IPI
     }
 
     /**
-     * @param float $pIPI
+     * @param string $ncm
+     * @throws Exception
      */
-    public function setPIPI(float $pIPI): void
+    public function setPIPI(string $ncm): void
     {
-        $this->pIPI = $pIPI;
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $tipiFile = file_get_contents($path . 'tipi.json');
+        if ($tipiFile === false) {
+            throw new Exception('File tipi.json not found.');
+        }
+        $tipiList = json_decode($tipiFile, true);
+        foreach ($tipiList as $tipi) {
+            if ($tipi['NCMNum'] === $ncm) {
+                $this->pIPI = (float) ($tipi['NCMAli'] === 'NT'? 0 : $tipi['NCMAli']);
+            }
+        }
     }
 
     /**

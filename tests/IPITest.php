@@ -2,20 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Gbbs\NfeCalculos;
+namespace Gbbs\NfeCalculos\Tests;
 
 use PHPUnit\Framework\TestCase;
+use Gbbs\NfeCalculos\IPI;
 
 class IPITest extends TestCase
 {
-    /**
-     * @expectedException \TypeError
-     */
-    public function testFailingNullArgument()
-    {
-        IPI::calcular(null);
-    }
-
     /**
      * Test that object is Instance of IPI
      */
@@ -37,7 +30,6 @@ class IPITest extends TestCase
         $ipi->setCEnq('');
         $ipi->setCST('');
         $ipi->setVBC(1.0);
-        $ipi->setPIPI(1.0);
         $ipi->setVIPI(1.0);
         $ipi->setQUnid(1.0);
         $ipi->setVUnid(1.0);
@@ -48,7 +40,6 @@ class IPITest extends TestCase
         $this->assertIsString($ipi->getCEnq());
         $this->assertIsString($ipi->getCST());
         $this->assertIsFloat($ipi->getVBC());
-        $this->assertIsFloat($ipi->getPIPI());
         $this->assertIsFloat($ipi->getVIPI());
         $this->assertIsFloat($ipi->getQUnid());
         $this->assertIsFloat($ipi->getVUnid());
@@ -56,98 +47,98 @@ class IPITest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('00000');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 00
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST00()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('00');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 01
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST01()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('01');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 02
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST02()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('02');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 03
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST03()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('03');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 04
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST04()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('04');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 05
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST05()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('05');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 49
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST49()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('49');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     public function testCST50()
@@ -155,13 +146,12 @@ class IPITest extends TestCase
         $ipi = $this->instantiateIPI();
         $ipi->setCST('50');
         $ipi->setVBC(1000.0);
-        $ipi->setPIPI(12.0);
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
 
         $this->assertSame('50', $ipi->getCST());
         $this->assertSame(1000.0, $ipi->getVBC());
-        $this->assertSame(12.0, $ipi->getPIPI());
+        $this->assertSame(0.0, $ipi->getPIPI());
     }
 
     public function testCST51()
@@ -169,69 +159,69 @@ class IPITest extends TestCase
         $ipi = $this->instantiateIPI();
         $ipi->setCST('51');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
 
         $this->assertSame('51', $ipi->getCST());
     }
 
     /**
      * Test CST 52
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST52()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('52');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 53
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST53()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('53');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 54
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST54()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('54');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 55
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST55()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('55');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
      * Test CST 99
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST99()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
         $ipi->setCST('99');
 
-        IPI::calcular($ipi);
+        IPI::calcular($ipi, '02075100');
     }
 
     /**
