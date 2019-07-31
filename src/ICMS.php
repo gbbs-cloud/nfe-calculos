@@ -10,42 +10,42 @@ use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class ICMS
 {
-    private $orig;  //  Origem da mercadoria
-    private $CST;  // Tributação do ICMS
-    private $modBC;  // Modalidade de determinação da BC do ICMS
-    private $pRedBC;  // Percentual da Redução de BC
-    private $vBC;  // Valor da BC do ICMS
-    private $pICMS;  // Alíquota do imposto
-    private $vICMS;  // Valor do ICMS
-    private $modBCST;  // Modalidade de determinação da BC do ICMS ST
-    private $pMVAST;  // Percentual da margem de valor Adicionado do ICMS ST
-    private $pRedBCST;  // Percentual da Redução de BC do ICMS ST
-    private $vBCST;  // Valor da BC do ICMS ST
-    private $pICMSST;  // Alíquota do imposto do ICMS ST
-    private $vICMSST;  // Valor do ICMS ST
-    private $UFST;  // UF para qual é devido o ICMS ST
-    private $pBCop;  // Percentual da BC operação própria
-    private $vBCSTRet;  // Valor da BC do ICMS Retido Anteriormente
-    private $vICMSSTRet;  // Valor do ICMS Retido Anteriormente
-    private $motDesICMS;  // Motivo da desoneração do ICMS
-    private $vBCSTDest;  // Valor da BC do ICMS ST da UF destino
-    private $vICMSSTDest;  // Valor do ICMS ST da UF destino
-    private $pCredSN;  // Alíquota aplicável de cálculo do crédito (Simples Nacional)
-    private $vCredICMSSN;  // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL)
-    private $vICMSDeson;  // Valor do ICMS da desoneração
-    private $vICMSOp;  // Valor do ICMS da Operação
-    private $pDif;  // percentual do diferimento
-    private $vICMSDif;  // Valor do ICMS Diferido
-    private $vBCFCP;  // Valor da Base de Cálculo do FCP
-    private $pFCP;  // Percentual do FCP
-    private $vFCP;  // Valor do FCP
-    private $vBCFCPST;  // Valor da Base de Cálculo do FCP retido por Substituição Tributária
-    private $pFCPST;  // Percentual do FCP retido por Substituição Tributária.
-    private $vFCPST;  // Valor do FCP retido por Substituição Tributária
-    private $vBCFCPSTRet;  // Valor da BC do FCP retido anteriormente por Substituição Tributária
-    private $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
-    private $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
-    private $pST;  // Alíquota suportada pelo Consumidor Final
+    public $orig;  //  Origem da mercadoria
+    public $CST;  // Tributação do ICMS
+    public $modBC;  // Modalidade de determinação da BC do ICMS
+    public $pRedBC;  // Percentual da Redução de BC
+    public $vBC;  // Valor da BC do ICMS
+    public $pICMS;  // Alíquota do imposto
+    public $vICMS;  // Valor do ICMS
+    public $modBCST;  // Modalidade de determinação da BC do ICMS ST
+    public $pMVAST;  // Percentual da margem de valor Adicionado do ICMS ST
+    public $pRedBCST;  // Percentual da Redução de BC do ICMS ST
+    public $vBCST;  // Valor da BC do ICMS ST
+    public $pICMSST;  // Alíquota do imposto do ICMS ST
+    public $vICMSST;  // Valor do ICMS ST
+    public $UFST;  // UF para qual é devido o ICMS ST
+    public $pBCop;  // Percentual da BC operação própria
+    public $vBCSTRet;  // Valor da BC do ICMS Retido Anteriormente
+    public $vICMSSTRet;  // Valor do ICMS Retido Anteriormente
+    public $motDesICMS;  // Motivo da desoneração do ICMS
+    public $vBCSTDest;  // Valor da BC do ICMS ST da UF destino
+    public $vICMSSTDest;  // Valor do ICMS ST da UF destino
+    public $pCredSN;  // Alíquota aplicável de cálculo do crédito (Simples Nacional)
+    public $vCredICMSSN;  // Valor crédito do ICMS que pode ser aproveitado nos termos do art. 23 da LC 123 (SIMPLES NACIONAL)
+    public $vICMSDeson;  // Valor do ICMS da desoneração
+    public $vICMSOp;  // Valor do ICMS da Operação
+    public $pDif;  // percentual do diferimento
+    public $vICMSDif;  // Valor do ICMS Diferido
+    public $vBCFCP;  // Valor da Base de Cálculo do FCP
+    public $pFCP;  // Percentual do FCP
+    public $vFCP;  // Valor do FCP
+    public $vBCFCPST;  // Valor da Base de Cálculo do FCP retido por Substituição Tributária
+    public $pFCPST;  // Percentual do FCP retido por Substituição Tributária.
+    public $vFCPST;  // Valor do FCP retido por Substituição Tributária
+    public $vBCFCPSTRet;  // Valor da BC do FCP retido anteriormente por Substituição Tributária
+    public $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
+    public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
+    public $pST;  // Alíquota suportada pelo Consumidor Final
 
     /**
      * @param self $ICMS

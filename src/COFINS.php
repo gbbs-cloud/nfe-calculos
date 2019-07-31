@@ -9,16 +9,12 @@ use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class COFINS
 {
-    private $CST;
+    public $CST;
     public $vBC;
     public $pCOFINS;
     public $vCOFINS;
-    public $pRedBC;
-    public $vAliqProd;
     public $qBCProd;
-    public $Desconto;
-//    public $REIDI;
-//    public $SUFRAMA;
+    public $vAliqProd;
 
     /**
      * @param $COFINS

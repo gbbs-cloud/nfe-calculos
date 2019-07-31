@@ -9,16 +9,12 @@ use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class PIS
 {
-    private $CST;
+    public $CST;
     public $vBC;
     public $pPIS;
     public $vPIS;
-    public $pRedBC;
-    public $Desconto;
-    public $vAliqProd;
     public $qBCProd;
-//    public $REIDI;
-//    public $SUFRAMA;
+    public $vAliqProd;
 
     /**
      * @param PIS $PIS

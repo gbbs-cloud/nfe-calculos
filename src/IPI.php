@@ -10,16 +10,16 @@ use \Exception;
 
 class IPI
 {
-    private $CNPJProd;
-    private $cSelo;
-    private $qSelo;
-    private $cEnq;
-    private $CST;
-    private $vBC;
-    private $pIPI;
-    private $vIPI;
-    private $qUnid;
-    private $vUnid;
+    public $CNPJProd;
+    public $cSelo;
+    public $qSelo;
+    public $cEnq;
+    public $CST;
+    public $vBC;
+    public $pIPI;
+    public $vIPI;
+    public $qUnid;
+    public $vUnid;
 
     /**
      * @param self $IPI
