@@ -9,14 +9,6 @@ use PHPUnit\Framework\TestCase;
 class PISTest extends TestCase
 {
     /**
-     * @expectedException \TypeError
-     */
-    public function testFailingNullArgument()
-    {
-        PIS::calcular(null);
-    }
-
-    /**
      * Test that object is Instance of PIS
      */
     public function testIsInstancePIS()
@@ -27,14 +19,14 @@ class PISTest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('00000');
+        $pis->CST = '00000';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
@@ -43,395 +35,399 @@ class PISTest extends TestCase
     public function testCST01()
     {
         $pis = $this->instantiatePIS();
-        $pis->setCST('01');
+        $pis->CST = '01';
+        $pis->vBC = 1000;
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
 
-        $this->assertSame('01', $pis->getCST());
+        $this->assertSame('01', $calculado->CST);
+        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(0.65, $calculado->pPIS);
+        $this->assertSame(6.5, $calculado->vPIS);
     }
 
     /**
      * Test CST 02
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST02()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('02');
+        $pis->CST = '02';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 03
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST03()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('03');
+        $pis->CST = '03';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 04
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST04()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('04');
+        $pis->CST = '04';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 05
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST05()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('05');
+        $pis->CST = '05';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 06
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST06()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('06');
+        $pis->CST = '06';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 07
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST07()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('07');
+        $pis->CST = '07';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 08
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST08()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('08');
+        $pis->CST = '08';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 09
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST09()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('09');
+        $pis->CST = '09';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 49
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST49()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('49');
+        $pis->CST = '49';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 50
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST50()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('50');
+        $pis->CST = '50';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 51
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST51()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('51');
+        $pis->CST = '51';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 52
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST52()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('52');
+        $pis->CST = '52';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 53
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST53()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('53');
+        $pis->CST = '53';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 54
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST54()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('54');
+        $pis->CST = '54';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 55
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST55()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('55');
+        $pis->CST = '55';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 56
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST56()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('56');
+        $pis->CST = '56';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 60
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST60()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('60');
+        $pis->CST = '60';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 61
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST61()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('61');
+        $pis->CST = '61';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 62
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST62()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('62');
+        $pis->CST = '62';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 63
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST63()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('63');
+        $pis->CST = '63';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 64
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST64()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('64');
+        $pis->CST = '64';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 65
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST65()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('65');
+        $pis->CST = '65';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 66
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST66()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('66');
+        $pis->CST = '66';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 67
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST67()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('67');
+        $pis->CST = '67';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 70
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST70()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('70');
+        $pis->CST = '70';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 71
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST71()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('71');
+        $pis->CST = '71';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 72
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST72()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('72');
+        $pis->CST = '72';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 73
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST73()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('73');
+        $pis->CST = '73';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 74
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST74()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('74');
+        $pis->CST = '74';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 75
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST75()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('75');
+        $pis->CST = '75';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 98
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST98()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('98');
+        $pis->CST = '98';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
      * Test CST 99
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST99()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $pis = $this->instantiatePIS();
-        $pis->setCST('99');
+        $pis->CST = '99';
 
-        PIS::calcular($pis);
+        $calculado = calcularPIS($pis);
     }
 
     /**
