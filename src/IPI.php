@@ -24,6 +24,7 @@ class IPI
 
 /**
  * @param IPI $IPI
+ * @return IPI
  * @throws NotImplementedCSTException|InvalidCSTException
  */
 function calcularIPI(IPI $IPI): IPI
@@ -46,6 +47,7 @@ function calcularIPI(IPI $IPI): IPI
 /**
  * ISENTO
  * @param IPI $IPI
+ * @return IPI
  */
 function calcIsentoIPI(IPI $IPI): IPI
 {
@@ -60,6 +62,7 @@ function calcIsentoIPI(IPI $IPI): IPI
 /**
  * Calcula o Valor IPI Ad Valoren
  * @param IPI $IPI
+ * @return IPI
  */
 function adValoremIPI(IPI $IPI): IPI
 {
@@ -73,6 +76,8 @@ function adValoremIPI(IPI $IPI): IPI
 
 /**
  * @param string $ncm
+ * @return float
+ * @throws Exception
  */
 function pIPIFromNCM(string $ncm): float
 {

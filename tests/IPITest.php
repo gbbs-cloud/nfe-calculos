@@ -39,11 +39,7 @@ class IPITest extends TestCase
     public function testInvalidNCM()
     {
         $this->expectException('\Exception');
-        $ipi = $this->instantiateIPI();
-        $ipi->CST = '00';
-        $ipi->pIPI = pIPIFromNCM('020750100');
-
-        $calculado = calcularIPI($ipi);
+        pIPIFromNCM('020750100');
     }
 
     /**
