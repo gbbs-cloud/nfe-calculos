@@ -22,7 +22,7 @@ class PIS
  * @return PIS
  * @throws NotImplementedCSTException|InvalidCSTException
  */
-function calcularPIS(PIS $PIS)
+function calcularPIS(PIS $PIS): PIS
 {
     $adValorem = ['01'];
     $notImplemented = [
@@ -43,7 +43,7 @@ function calcularPIS(PIS $PIS)
  * @param PIS $PIS
  * @return PIS
  */
-function adValoremPIS(PIS $PIS)
+function adValoremPIS(PIS $PIS): PIS
 {
     $pPIS = 0.65;
     $calculado = new PIS();

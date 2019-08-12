@@ -9,14 +9,6 @@ use PHPUnit\Framework\TestCase;
 class COFINSTest extends TestCase
 {
     /**
-     * @expectedException \TypeError
-     */
-    public function testFailingNullArgument()
-    {
-        COFINS::calcular(null);
-    }
-
-    /**
      * Test that object is Instance of COFINS
      */
     public function testIsInstanceCOFINS()
@@ -27,14 +19,14 @@ class COFINSTest extends TestCase
 
     /**
      * Test invalid CST
-     * @expectedException \Gbbs\NfeCalculos\Exception\InvalidCSTException
      */
     public function testInvalidCST()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('00000');
+        $cofins->CST = '00000';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
@@ -43,395 +35,399 @@ class COFINSTest extends TestCase
     public function testCST01()
     {
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('01');
+        $cofins->CST = '01';
+        $cofins->vBC = 1000;
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
 
-        $this->assertSame('01', $cofins->getCST());
+        $this->assertSame('01', $calculado->CST);
+        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(3, $calculado->pCOFINS);
+        $this->assertSame(30.0, $calculado->vCOFINS);
     }
 
     /**
      * Test CST 02
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST02()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('02');
+        $cofins->CST = '02';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 03
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST03()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('03');
+        $cofins->CST = '03';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 04
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST04()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('04');
+        $cofins->CST = '04';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 05
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST05()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('05');
+        $cofins->CST = '05';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 06
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST06()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('06');
+        $cofins->CST = '06';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 07
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST07()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('07');
+        $cofins->CST = '07';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 08
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST08()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('08');
+        $cofins->CST = '08';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 09
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST09()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('09');
+        $cofins->CST = '09';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 49
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST49()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('49');
+        $cofins->CST = '49';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 50
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST50()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('50');
+        $cofins->CST = '50';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 51
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST51()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('51');
+        $cofins->CST = '51';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 52
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST52()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('52');
+        $cofins->CST = '52';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 53
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST53()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('53');
+        $cofins->CST = '53';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 54
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST54()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('54');
+        $cofins->CST = '54';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 55
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST55()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('55');
+        $cofins->CST = '55';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 56
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST56()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('56');
+        $cofins->CST = '56';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 60
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST60()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('60');
+        $cofins->CST = '60';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 61
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST61()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('61');
+        $cofins->CST = '61';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 62
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST62()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('62');
+        $cofins->CST = '62';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 63
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST63()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('63');
+        $cofins->CST = '63';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 64
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST64()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('64');
+        $cofins->CST = '64';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 65
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST65()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('65');
+        $cofins->CST = '65';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 66
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST66()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('66');
+        $cofins->CST = '66';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 67
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST67()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('67');
+        $cofins->CST = '67';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 70
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST70()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('70');
+        $cofins->CST = '70';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 71
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST71()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('71');
+        $cofins->CST = '71';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 72
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST72()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('72');
+        $cofins->CST = '72';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 73
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST73()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('73');
+        $cofins->CST = '73';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 74
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST74()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('74');
+        $cofins->CST = '74';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 75
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST75()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('75');
+        $cofins->CST = '75';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 98
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST98()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('98');
+        $cofins->CST = '98';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
      * Test CST 99
-     * @expectedException \Gbbs\NfeCalculos\Exception\NotImplementedCSTException
      */
     public function testCST99()
     {
+        $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $cofins = $this->instantiateCOFINS();
-        $cofins->setCST('99');
+        $cofins->CST = '99';
 
-        COFINS::calcular($cofins);
+        $calculado = calcularCOFINS($cofins);
     }
 
     /**
