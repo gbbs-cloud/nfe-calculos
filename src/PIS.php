@@ -24,72 +24,16 @@ class PIS
  */
 function calcularPIS(PIS $PIS)
 {
-    /* Operação Tributável com Alíquota Básica */
-    if ($PIS->CST === '01') {
+    $adValorem = ['01'];
+    $notImplemented = [
+        '02', '03', '04', '05', '06', '07', '08', '09', '49', '50', '51', '52', '53',
+        '54', '55', '56', '60', '61', '62', '63', '64', '65', '66', '67', '70', '71',
+        '72', '73', '74', '75', '98', '99'
+    ];
+
+    if (in_array($PIS->CST, $adValorem, true)) {
         return adValoremPIS($PIS);
-    } elseif ($PIS->CST === '02') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '03') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '04') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '05') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '06') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '07') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '08') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '09') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '49') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '50') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '51') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '52') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '53') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '54') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '55') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '56') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '60') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '61') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '62') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '63') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '64') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '65') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '66') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '67') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '70') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '71') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '72') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '73') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '74') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '75') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '98') {
-        throw new NotImplementedCSTException($PIS->CST);
-    } elseif ($PIS->CST === '99') {
+    } elseif (in_array($PIS->CST, $notImplemented, true)) {
         throw new NotImplementedCSTException($PIS->CST);
     }
     throw new InvalidCSTException($PIS->CST);
