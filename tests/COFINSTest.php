@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gbbs\NfeCalculos;
+namespace Gbbs\NfeCalculos\Tests;
 
+use Gbbs\NfeCalculos\COFINS;
 use PHPUnit\Framework\TestCase;
+
+use function Gbbs\NfeCalculos\calcularCOFINS;
 
 class COFINSTest extends TestCase
 {

@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Gbbs\NfeCalculos;
+namespace Gbbs\NfeCalculos\Tests;
 
+use Gbbs\NfeCalculos\PIS;
 use PHPUnit\Framework\TestCase;
+
+use function Gbbs\NfeCalculos\calcularPIS;
 
 class PISTest extends TestCase
 {
