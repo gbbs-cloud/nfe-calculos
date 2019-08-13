@@ -29,7 +29,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '00000';
 
-        $calculado = calcularPIS($pis);
+        calcularPIS($pis);
     }
 
     /**
@@ -50,7 +50,7 @@ class PISTest extends TestCase
     }
 
     /**
-     * Test CST not implemented
+     * Test not implemented CST
      */
     public function testNotImplementedCST()
     {

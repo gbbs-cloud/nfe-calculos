@@ -50,7 +50,7 @@ class COFINSTest extends TestCase
     }
 
     /**
-     * Test CST not implemented
+     * Test not implemented CST
      */
     public function testNotImplementedCST()
     {
