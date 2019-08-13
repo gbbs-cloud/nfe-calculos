@@ -53,7 +53,7 @@ class ICMS
  * @param string $ufOrigem
  * @param string $ufDestino
  * @param float $reducao
- * @returm ICMS
+ * @return ICMS
  * @throws NotImplementedCSTException|InvalidCSTException|Exception
  */
 function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
