@@ -10,7 +10,7 @@ use Gbbs\NfeCalculos\Exception\NotImplementedCSTException;
 
 class ICMS
 {
-    public $orig;  //  Origem da mercadoria
+    public $orig;  // Origem da mercadoria
     public $CST;  // Tributação do ICMS
     public $modBC;  // Modalidade de determinação da BC do ICMS
     public $pRedBC;  // Percentual da Redução de BC
@@ -87,33 +87,7 @@ function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $re
  */
 function calcvICMS(ICMS $ICMS): float
 {
-    return $ICMS->vBC * ($ICMS->pICMS / 100);
-}
-
-/**
- * Calcula o Valor do ICMSST
- * @param $ICMS
- * @return float
- */
-function calcvICMSST(ICMS $ICMS): float
-{
-    if ($ICMS->pMVAST === 0.0) {
-        return 0.0;
-    }
-
-    $ICMS->vICMS = calcvICMS($ICMS);
-    $ICMS->vBCST = $ICMS->vBCST * (1 + ($ICMS->pMVAST / 100)); // VERIFICAR AQUI O QUE ESTÃO ACONTECENDO
-    return ((($ICMS->vBCST - ($ICMS->vBCST * ($ICMS->pRedBCST / 100)))) * ($ICMS->pICMSST / 100)) - $ICMS->vICMS;
-}
-
-/**
- * Calcula a redução na base de culculo do ICMSST
- * @param $ICMS
- * @return float
- */
-function calcRedBCST(ICMS $ICMS): float
-{
-    return $ICMS->vBCST - ($ICMS->vBCST * ($ICMS->pRedBCST / 100));
+    return round($ICMS->vBC * $ICMS->pICMS / 100, 2);
 }
 
 /**
@@ -139,10 +113,29 @@ function calcCST00(ICMS $ICMS): ICMS
 function calcCST10(ICMS $ICMS): ICMS
 {
     if ($ICMS->modBCST === 4) {
-        $ICMS->vBCST = calcRedBCST($ICMS);
-        $ICMS->vICMS = calcvICMS($ICMS);
-        $ICMS->vICMSST = calcvICMSST($ICMS);
-        return $ICMS;
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->modBCST = $ICMS->modBCST;
+        $calculado->pMVAST = $ICMS->pMVAST;
+        $calculado->pRedBCST = $ICMS->pRedBCST;
+        $calculado->pICMSST = $ICMS->pICMSST;
+
+        $calculado->vICMS = calcvICMS($ICMS);
+        $calculado->vBCST = $ICMS->vBC - $ICMS->vBC * $ICMS->pRedBCST / 100;
+        if ($ICMS->pMVAST === 0.0) {
+            $calculado->vICMSST = 0.0;
+            return $calculado;
+        }
+        $calculado->vBCST *= 1 + $ICMS->pMVAST / 100;
+        $calculado->vICMSST = round(
+            ($calculado->vBCST - $calculado->vBCST * $ICMS->pRedBCST / 100) * $ICMS->pICMSST / 100 - $calculado->vICMS,
+            2
+        );
+        return $calculado;
     } else {
         throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');
     }

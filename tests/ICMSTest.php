@@ -26,7 +26,7 @@ class ICMSTest extends TestCase
         $icms = $this->instantiateICMS();
         $icms->CST = '00000';
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
     }
 
     /**
@@ -58,14 +58,14 @@ class ICMSTest extends TestCase
         $icms->modBC = 0;
         $icms->vBC = 1000;
 
-        calcularICMS($icms, '11', '11', 10.0);
+        $calculado = calcularICMS($icms, '11', '11', 10.0);
 
-        $this->assertSame('0', $icms->orig);
-        $this->assertSame('00', $icms->CST);
-        $this->assertSame(0, $icms->modBC);
-        $this->assertSame(1000, $icms->vBC);
-        $this->assertSame(10.0, $icms->pICMS);
-        $this->assertSame(100.0, $icms->vICMS);
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('00', $calculado->CST);
+        $this->assertSame(0, $calculado->modBC);
+        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(10.0, $calculado->pICMS);
+        $this->assertSame(100.0, $calculado->vICMS);
     }
 
     /**
@@ -79,14 +79,14 @@ class ICMSTest extends TestCase
         $icms->modBC = 0;
         $icms->vBC = 1000;
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
 
-        $this->assertSame('0', $icms->orig);
-        $this->assertSame('00', $icms->CST);
-        $this->assertSame(0, $icms->modBC);
-        $this->assertSame(1000, $icms->vBC);
-        $this->assertSame(17.0, $icms->pICMS);
-        $this->assertSame(170.0, $icms->vICMS);
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('00', $calculado->CST);
+        $this->assertSame(0, $calculado->modBC);
+        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(170.0, $calculado->vICMS);
     }
 
     /**
@@ -102,48 +102,47 @@ class ICMSTest extends TestCase
         $icms->modBC = 1;
         $icms->vBC = 1000;
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
     }
 
     /**
      * Test CST 10
      * modBCST === 4
      * pRedBCST === 1.0
-     * pMVAST === 10.0
+     * pMVAST === 0.0
      */
     public function testCST10ModBCST4PRedBCST1()
     {
         $icms = $this->instantiateICMS();
-        $icms->orig = ('0');
+        $icms->orig = '0';
         $icms->CST = '10';
-        $icms->modBC = (0);
-        $icms->vBC = (100);
-        $icms->modBCST = (4);
-        $icms->pMVAST = (10.0);
-        $icms->pRedBCST = (1);
-        $icms->pBCST = (1);
+        $icms->modBC = 0;
+        $icms->vBC = 100.0;
+        $icms->modBCST = 4;
+        $icms->pMVAST = 0.0;
+        $icms->pRedBCST = 1;
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
 
-        $this->assertSame('0', $icms->orig);
-        $this->assertSame('10', $icms->CST);
-        $this->assertSame(0, $icms->modBC);
-        $this->assertSame(100, $icms->vBC);
-        $this->assertSame(17.0, $icms->pICMS);
-        $this->assertSame(17.0, $icms->vICMS);
-        $this->assertSame(4, $icms->modBCST);
-        $this->assertSame(10.0, $icms->pMVAST);
-        $this->assertSame(1, $icms->pRedBCST);
-        $this->assertSame(0.0, $icms->vBCST);
-        $this->assertSame(17.0, $icms->pICMSST);
-        $this->assertSame(-17.0, $icms->vICMSST);
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('10', $calculado->CST);
+        $this->assertSame(0, $calculado->modBC);
+        $this->assertSame(100.0, $calculado->vBC);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(17.0, $calculado->vICMS);
+        $this->assertSame(4, $calculado->modBCST);
+        $this->assertSame(0.0, $calculado->pMVAST);
+        $this->assertSame(1, $calculado->pRedBCST);
+        $this->assertSame(99.0, $calculado->vBCST);
+        $this->assertSame(17.0, $calculado->pICMSST);
+        $this->assertSame(0.0, $calculado->vICMSST);
     }
 
     /**
      * Test CST 10
      * modBCST === 4
      * pRedBCST === 0.0
-     * pMVAST === 0.0
+     * pMVAST === 37.0
      */
     public function testCST10ModBCST4PRedBCST()
     {
@@ -151,26 +150,25 @@ class ICMSTest extends TestCase
         $icms->orig = '0';
         $icms->CST = '10';
         $icms->modBC = 0;
-        $icms->vBC = 100;
+        $icms->vBC = 144.0;
         $icms->modBCST = 4;
-        $icms->pMVAST = 0.0;
-        $icms->pRedBCST = 0;
-        $icms->vBCST = 1;
+        $icms->pMVAST = 37.0;
+        $icms->pRedBCST = 0.0;
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '43', '43');
 
-        $this->assertSame('0', $icms->orig);
-        $this->assertSame('10', $icms->CST);
-        $this->assertSame(0, $icms->modBC);
-        $this->assertSame(100, $icms->vBC);
-        $this->assertSame(17.0, $icms->pICMS);
-        $this->assertSame(17.0, $icms->vICMS);
-        $this->assertSame(4, $icms->modBCST);
-        $this->assertSame(0.0, $icms->pMVAST);
-        $this->assertSame(0, $icms->pRedBCST);
-        $this->assertSame(1.0, $icms->vBCST);
-        $this->assertSame(17.0, $icms->pICMSST);
-        $this->assertSame(0.0, $icms->vICMSST);
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('10', $calculado->CST);
+        $this->assertSame(0, $calculado->modBC);
+        $this->assertSame(144.0, $calculado->vBC);
+        $this->assertSame(18.0, $calculado->pICMS);
+        $this->assertSame(25.92, $calculado->vICMS);
+        $this->assertSame(4, $calculado->modBCST);
+        $this->assertSame(37.0, $calculado->pMVAST);
+        $this->assertSame(0.0, $calculado->pRedBCST);
+        $this->assertSame(197.28, $calculado->vBCST);
+        $this->assertSame(18.0, $calculado->pICMSST);
+        $this->assertSame(9.59, $calculado->vICMSST);
     }
 
     /**
@@ -182,16 +180,16 @@ class ICMSTest extends TestCase
     {
         $this->expectException('\Exception');
         $icms = $this->instantiateICMS();
-        $icms->orig = ('0');
+        $icms->orig = '0';
         $icms->CST = '10';
-        $icms->modBC = (0);
-        $icms->vBC = (100);
-        $icms->modBCST = (0);
-        $icms->pMVAST = (0.0);
-        $icms->pRedBCST = (0);
-        $icms->vBCST = (1);
+        $icms->modBC = 0;
+        $icms->vBC = 100;
+        $icms->modBCST = 0;
+        $icms->pMVAST = 0.0;
+        $icms->pRedBCST = 0;
+        $icms->vBCST = 1;
 
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
     }
 
     /**
@@ -202,7 +200,7 @@ class ICMSTest extends TestCase
         $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $icms = $this->instantiateICMS();
         $icms->CST = '20';
-        calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '11', '11');
     }
 
     /**
