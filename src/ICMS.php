@@ -98,8 +98,15 @@ function calcvICMS(ICMS $ICMS): float
 function calcCST00(ICMS $ICMS): ICMS
 {
     if ($ICMS->modBC === 0) {
-        $ICMS->vICMS = calcvICMS($ICMS);
-        return $ICMS;
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+
+        $calculado->vICMS = calcvICMS($ICMS);
+        return $calculado;
     } else {
         throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
     }
