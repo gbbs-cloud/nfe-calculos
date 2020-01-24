@@ -52,6 +52,7 @@ function calcularIPI(IPI $IPI): IPI
 function calcIsentoIPI(IPI $IPI): IPI
 {
     $calculado = new IPI();
+    $calculado->cEnq = $IPI->cEnq;
     $calculado->CST = $IPI->CST;
     $calculado->vBC = 0.0;
     $calculado->pIPI = 0.0;
@@ -67,6 +68,7 @@ function calcIsentoIPI(IPI $IPI): IPI
 function adValoremIPI(IPI $IPI): IPI
 {
     $calculado = new IPI();
+    $calculado->cEnq = $IPI->cEnq;
     $calculado->CST = $IPI->CST;
     $calculado->vBC = $IPI->vBC;
     $calculado->vIPI = $IPI->vBC * ($IPI->pIPI / 100);
@@ -86,7 +88,7 @@ function pIPIFromNCM(string $ncm): float
     $tipiList = json_decode($tipiFile, true);
     foreach ($tipiList as $tipi) {
         if ($tipi['NCMNum'] === $ncm) {
-            return (float) ($tipi['NCMAli'] === 'NT'? 0 : $tipi['NCMAli']);
+            return (float) ($tipi['NCMAli'] === 'NT' ? 0 : $tipi['NCMAli']);
         }
     }
     throw new Exception('NCM inexistente: ' . $ncm);
