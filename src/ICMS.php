@@ -59,7 +59,7 @@ class ICMS
 function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
 {
     $notImplemented = [
-        '20', '30', '40', '41', '50', '51', '60', '70', '90', '101', '102', '103',
+        '20', '30', '40', '41', '50', '51', '60', '70', '90', '101', '103',
         '200', '201', '202', '203', '300', '400', '500', '900'
     ];
     if ($reducao === null) {
@@ -72,9 +72,14 @@ function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $re
 
     if ($ICMS->CST === '00') {
         return calcCST00($ICMS);
-    } elseif ($ICMS->CST === '10') {
+    }
+    if ($ICMS->CST === '10') {
         return calcCST10($ICMS);
-    } elseif (in_array($ICMS->CST, $notImplemented, true)) {
+    }
+    if ($ICMS->CST === '102') {
+        return calcCSOSN102($ICMS);
+    }
+    if (in_array($ICMS->CST, $notImplemented, true)) {
         throw new NotImplementedCSTException($ICMS->CST);
     }
     throw new InvalidCSTException($ICMS->CST);
@@ -146,6 +151,18 @@ function calcCST10(ICMS $ICMS): ICMS
     } else {
         throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');
     }
+}
+
+/**
+ * @param $ICMS
+ * @return ICMS
+ */
+function calcCSOSN102(ICMS $ICMS): ICMS
+{
+    $calculado = new ICMS();
+    $calculado->orig = $ICMS->orig;
+    $calculado->CST = $ICMS->CST;
+    return $calculado;
 }
 
 /**

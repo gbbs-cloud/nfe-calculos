@@ -193,6 +193,21 @@ class ICMSTest extends TestCase
     }
 
     /**
+     * Test CST 102
+     */
+    public function testCST102()
+    {
+        $icms = $this->instantiateICMS();
+        $icms->orig = '0';
+        $icms->CST = '102';
+
+        $calculado = calcularICMS($icms, '11', '11');
+
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('102', $calculado->CST);
+    }
+
+    /**
      * Test not implemented CST
      */
     public function testNotImplementedCST()
