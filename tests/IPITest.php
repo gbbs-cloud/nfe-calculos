@@ -54,29 +54,42 @@ class IPITest extends TestCase
         calcularIPI($ipi);
     }
 
-    public function testCST50()
+    /**
+     * Test CST with adValoremIPI
+     */
+    public function testAdValoremIPI()
     {
         $ipi = $this->instantiateIPI();
+        $ipi->cEnq = '999';
         $ipi->CST = '50';
         $ipi->vBC = 1000.0;
         $ipi->pIPI = pIPIFromNCM('02075100');
-
         $calculado = calcularIPI($ipi);
 
+        $this->assertSame('999', $calculado->cEnq);
         $this->assertSame('50', $calculado->CST);
         $this->assertSame(1000.0, $calculado->vBC);
         $this->assertSame(0.0, $calculado->pIPI);
+        $this->assertSame(0.0, $calculado->vIPI);
     }
 
-    public function testCST51()
+    /**
+     * Test CST with isentoIPI
+     */
+    public function testIsentoIPI()
     {
         $ipi = $this->instantiateIPI();
+        $ipi->cEnq = '999';
         $ipi->CST = '51';
         $ipi->pIPI = pIPIFromNCM('02075100');
 
         $calculado = calcularIPI($ipi);
 
+        $this->assertSame('999', $calculado->cEnq);
         $this->assertSame('51', $calculado->CST);
+        $this->assertSame(0.0, $calculado->vBC);
+        $this->assertSame(0.0, $calculado->pIPI);
+        $this->assertSame(0.0, $calculado->vIPI);
     }
 
     /**

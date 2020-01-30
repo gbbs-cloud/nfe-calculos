@@ -30,15 +30,17 @@ class IPI
 function calcularIPI(IPI $IPI): IPI
 {
     $adValorem = ['50'];
-    $isento = ['51'];
+    $isento = ['51', '53'];
     $notImplemented = [
-        '00', '01', '02', '03', '04', '05', '49', '52', '53', '54', '55', '99'
+        '00', '01', '02', '03', '04', '05', '49', '52', '54', '55', '99'
     ];
     if (in_array($IPI->CST, $adValorem, true)) {
         return adValoremIPI($IPI);
-    } elseif (in_array($IPI->CST, $isento, true)) {
-        return calcIsentoIPI($IPI);
-    } elseif (in_array($IPI->CST, $notImplemented, true)) {
+    }
+    if (in_array($IPI->CST, $isento, true)) {
+        return isentoIPI($IPI);
+    }
+    if (in_array($IPI->CST, $notImplemented, true)) {
         throw new NotImplementedCSTException($IPI->CST);
     }
     throw new InvalidCSTException($IPI->CST);
@@ -49,7 +51,7 @@ function calcularIPI(IPI $IPI): IPI
  * @param IPI $IPI
  * @return IPI
  */
-function calcIsentoIPI(IPI $IPI): IPI
+function isentoIPI(IPI $IPI): IPI
 {
     $calculado = new IPI();
     $calculado->cEnq = $IPI->cEnq;
@@ -71,8 +73,8 @@ function adValoremIPI(IPI $IPI): IPI
     $calculado->cEnq = $IPI->cEnq;
     $calculado->CST = $IPI->CST;
     $calculado->vBC = $IPI->vBC;
-    $calculado->vIPI = $IPI->vBC * ($IPI->pIPI / 100);
     $calculado->pIPI = $IPI->pIPI;
+    $calculado->vIPI = $IPI->vBC * ($IPI->pIPI / 100);
     return $calculado;
 }
 

@@ -33,9 +33,9 @@ class PISTest extends TestCase
     }
 
     /**
-     * Test CST with adValorem
+     * Test CST with adValoremPIS
      */
-    public function testAdValorem()
+    public function testAdValoremPIS()
     {
         $pis = $this->instantiatePIS();
         $pis->CST = '01';
@@ -47,6 +47,22 @@ class PISTest extends TestCase
         $this->assertSame(1000, $calculado->vBC);
         $this->assertSame(0.65, $calculado->pPIS);
         $this->assertSame(6.5, $calculado->vPIS);
+    }
+
+    /**
+     * Test CST with isentoPIS
+     */
+    public function testIsentoPIS()
+    {
+        $pis = $this->instantiatePIS();
+        $pis->CST = '99';
+
+        $calculado = calcularPIS($pis);
+
+        $this->assertSame('99', $calculado->CST);
+        $this->assertSame(0.0, $calculado->vBC);
+        $this->assertSame(0.0, $calculado->pPIS);
+        $this->assertSame(0.0, $calculado->vPIS);
     }
 
     /**

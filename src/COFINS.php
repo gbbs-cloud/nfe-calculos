@@ -26,12 +26,17 @@ function calcularCOFINS(COFINS $COFINS): COFINS
 {
     $adValorem = [
         '01', '02', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62',
-        '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98', '99'
+        '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98'
     ];
+    $isento = ['99'];
     $notImplemented = ['03', '04', '05', '06', '07', '08', '09'];
     if (in_array($COFINS->CST, $adValorem, true)) {
         return adValoremCOFINS($COFINS);
-    } elseif (in_array($COFINS->CST, $notImplemented, true)) {
+    }
+    if (in_array($COFINS->CST, $isento, true)) {
+        return isentoCOFINS($COFINS);
+    }
+    if (in_array($COFINS->CST, $notImplemented, true)) {
         throw new NotImplementedCSTException($COFINS->CST);
     }
     throw new InvalidCSTException($COFINS->CST);
@@ -49,5 +54,19 @@ function adValoremCOFINS(COFINS $COFINS): COFINS
     $calculado->vBC = $COFINS->vBC;
     $calculado->pCOFINS = $pCOFINS;
     $calculado->vCOFINS = $COFINS->vBC * ($pCOFINS / 100);
+    return $calculado;
+}
+
+/**
+ * @param COFINS $COFINS
+ * @return COFINS
+ */
+function isentoCOFINS($COFINS): COFINS
+{
+    $calculado = new COFINS();
+    $calculado->CST = $COFINS->CST;
+    $calculado->vBC = 0.0;
+    $calculado->pCOFINS = 0.0;
+    $calculado->vCOFINS = 0.0;
     return $calculado;
 }

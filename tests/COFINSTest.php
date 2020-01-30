@@ -33,9 +33,9 @@ class COFINSTest extends TestCase
     }
 
     /**
-     * Test CST with adValorem
+     * Test CST with adValoremCOFINS
      */
-    public function testAdValorem()
+    public function testAdValoremCOFINS()
     {
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '01';
@@ -47,6 +47,22 @@ class COFINSTest extends TestCase
         $this->assertSame(1000, $calculado->vBC);
         $this->assertSame(3, $calculado->pCOFINS);
         $this->assertSame(30.0, $calculado->vCOFINS);
+    }
+
+    /**
+     * Test CST with isentoCOFINS
+     */
+    public function testIsentoCOFINS()
+    {
+        $cofins = $this->instantiateCOFINS();
+        $cofins->CST = '99';
+
+        $calculado = calcularCOFINS($cofins);
+
+        $this->assertSame('99', $calculado->CST);
+        $this->assertSame(0.0, $calculado->vBC);
+        $this->assertSame(0.0, $calculado->pCOFINS);
+        $this->assertSame(0.0, $calculado->vCOFINS);
     }
 
     /**
