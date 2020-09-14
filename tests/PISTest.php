@@ -50,6 +50,19 @@ class PISTest extends TestCase
     }
 
     /**
+    * Test CST with zeradoPIS
+    */
+    public function testZeradoPIS()
+    {
+        $pis = $this->instantiatePIS();
+        $pis->CST = '08';
+
+        $calculado = calcularPIS($pis);
+
+        $this->assertSame('08', $calculado->CST);
+    }
+
+    /**
      * Test CST with isentoPIS
      */
     public function testIsentoPIS()

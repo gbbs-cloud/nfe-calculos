@@ -50,6 +50,19 @@ class COFINSTest extends TestCase
     }
 
     /**
+    * Test CST with zeradoCOFINS
+    */
+    public function testZeradoCOFINS()
+    {
+        $cofins = $this->instantiateCOFINS();
+        $cofins->CST = '08';
+
+        $calculado = calcularCOFINS($cofins);
+
+        $this->assertSame('08', $calculado->CST);
+    }
+
+    /**
      * Test CST with isentoCOFINS
      */
     public function testIsentoCOFINS()
