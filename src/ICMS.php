@@ -86,6 +86,16 @@ function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $re
 }
 
 /**
+ * Subtrai do valor da BC do ICMS ST o percentual da redução de BC do ICMS ST
+ * @param $ICMS
+ * @return float
+ */
+function calcularReducaoValorBCST(ICMS $ICMS): float
+{
+    return $ICMS->vBCST * (1 - $ICMS->pRedBCST / 100);
+}
+
+/**
  * Calcula o Valor do ICMS
  * @param $ICMS
  * @return float
@@ -137,16 +147,15 @@ function calcCST10(ICMS $ICMS): ICMS
         $calculado->pICMSST = $ICMS->pICMSST;
 
         $calculado->vICMS = calcvICMS($ICMS);
-        $calculado->vBCST = $ICMS->vBC - $ICMS->vBC * $ICMS->pRedBCST / 100;
+        $calculado->vBCST = calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100);
         if ($ICMS->pMVAST === 0.0) {
             $calculado->vICMSST = 0.0;
-            return $calculado;
+        } else {
+            $calculado->vICMSST = round(
+                ($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS,
+                2
+            );
         }
-        $calculado->vBCST *= 1 + $ICMS->pMVAST / 100;
-        $calculado->vICMSST = round(
-            ($calculado->vBCST - $calculado->vBCST * $ICMS->pRedBCST / 100) * $ICMS->pICMSST / 100 - $calculado->vICMS,
-            2
-        );
         return $calculado;
     } else {
         throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');

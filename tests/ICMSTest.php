@@ -119,6 +119,7 @@ class ICMSTest extends TestCase
         $icms->modBC = 0;
         $icms->vBC = 100.0;
         $icms->modBCST = 4;
+        $icms->vBCST = 100.0;
         $icms->pMVAST = 0.0;
         $icms->pRedBCST = 1;
 
@@ -152,6 +153,7 @@ class ICMSTest extends TestCase
         $icms->modBC = 0;
         $icms->vBC = 144.0;
         $icms->modBCST = 4;
+        $icms->vBCST = 144.0;
         $icms->pMVAST = 37.0;
         $icms->pRedBCST = 0.0;
 
