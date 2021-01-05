@@ -112,19 +112,18 @@ function calcvICMS(ICMS $ICMS): float
  */
 function calcCST00(ICMS $ICMS): ICMS
 {
-    if ($ICMS->modBC === 0) {
-        $calculado = new ICMS();
-        $calculado->orig = $ICMS->orig;
-        $calculado->CST = $ICMS->CST;
-        $calculado->modBC = $ICMS->modBC;
-        $calculado->vBC = $ICMS->vBC;
-        $calculado->pICMS = $ICMS->pICMS;
-
-        $calculado->vICMS = calcvICMS($ICMS);
-        return $calculado;
-    } else {
+    if ($ICMS->modBC !== 0) {
         throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
     }
+    $calculado = new ICMS();
+    $calculado->orig = $ICMS->orig;
+    $calculado->CST = $ICMS->CST;
+    $calculado->modBC = $ICMS->modBC;
+    $calculado->vBC = $ICMS->vBC;
+    $calculado->pICMS = $ICMS->pICMS;
+    $calculado->vICMS = calcvICMS($ICMS);
+
+    return $calculado;
 }
 
 /**
@@ -134,32 +133,26 @@ function calcCST00(ICMS $ICMS): ICMS
  */
 function calcCST10(ICMS $ICMS): ICMS
 {
-    if ($ICMS->modBCST === 4) {
-        $calculado = new ICMS();
-        $calculado->orig = $ICMS->orig;
-        $calculado->CST = $ICMS->CST;
-        $calculado->modBC = $ICMS->modBC;
-        $calculado->vBC = $ICMS->vBC;
-        $calculado->pICMS = $ICMS->pICMS;
-        $calculado->modBCST = $ICMS->modBCST;
-        $calculado->pMVAST = $ICMS->pMVAST;
-        $calculado->pRedBCST = $ICMS->pRedBCST;
-        $calculado->pICMSST = $ICMS->pICMSST;
-
-        $calculado->vICMS = calcvICMS($ICMS);
-        $calculado->vBCST = calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100);
-        if ($ICMS->pMVAST === 0.0) {
-            $calculado->vICMSST = 0.0;
-        } else {
-            $calculado->vICMSST = round(
-                ($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS,
-                2
-            );
-        }
-        return $calculado;
-    } else {
+    if ($ICMS->modBCST !== 4) {
         throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');
     }
+    $calculado = new ICMS();
+    $calculado->orig = $ICMS->orig;
+    $calculado->CST = $ICMS->CST;
+    $calculado->modBC = $ICMS->modBC;
+    $calculado->vBC = $ICMS->vBC;
+    $calculado->pICMS = $ICMS->pICMS;
+    $calculado->modBCST = $ICMS->modBCST;
+    $calculado->pMVAST = $ICMS->pMVAST;
+    $calculado->pRedBCST = $ICMS->pRedBCST;
+    $calculado->pICMSST = $ICMS->pICMSST;
+    $calculado->vICMS = calcvICMS($ICMS);
+    $calculado->vBCST = calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100);
+    $calculado->vICMSST = $ICMS->pMVAST === 0.0
+        ? 0.0
+        : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
+
+    return $calculado;
 }
 
 /**
