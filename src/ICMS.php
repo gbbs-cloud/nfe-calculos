@@ -59,7 +59,7 @@ class ICMS
 function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
 {
     $notImplemented = [
-        '20', '30', '40', '41', '50', '51', '60', '70', '90', '101', '103',
+        '20', '30', '40', '41', '50', '60', '70', '90', '101', '103',
         '200', '201', '202', '203', '300', '400', '500', '900'
     ];
     if ($reducao === null) {
@@ -75,6 +75,9 @@ function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $re
     }
     if ($ICMS->CST === '10') {
         return calcCST10($ICMS);
+    }
+    if ($ICMS->CST === '51') {
+        return calcCST51($ICMS);
     }
     if ($ICMS->CST === '102') {
         return calcCSOSN102($ICMS);
@@ -151,6 +154,29 @@ function calcCST10(ICMS $ICMS): ICMS
     $calculado->vICMSST = $ICMS->pMVAST === 0.0
         ? 0.0
         : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
+
+    return $calculado;
+}
+
+/**
+ * @param $ICMS
+ * @return ICMS
+ * @throws Exception
+ */
+function calcCST51(ICMS $ICMS): ICMS
+{
+    if ($ICMS->modBC !== 0) {
+        throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
+    }
+    $calculado = new ICMS();
+    $calculado->orig = '0';
+    $calculado->CST = $ICMS->CST;
+    $calculado->modBC = $ICMS->modBC;
+    $calculado->vBC = 0.00;
+    $calculado->pICMS = $ICMS->pICMS;
+    $calculado->vICMS = 0.0;
+    $calculado->pDif = 100;
+    $calculado->vICMSDif = 0.0;
 
     return $calculado;
 }
