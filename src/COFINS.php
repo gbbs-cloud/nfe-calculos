@@ -57,7 +57,7 @@ function adValoremCOFINS(COFINS $COFINS): COFINS
     $calculado->CST = $COFINS->CST;
     $calculado->vBC = $COFINS->vBC;
     $calculado->pCOFINS = $pCOFINS;
-    $calculado->vCOFINS = $COFINS->vBC * ($pCOFINS / 100);
+    $calculado->vCOFINS = (float)number_format($COFINS->vBC * ($pCOFINS / 100), 2);
     return $calculado;
 }
 
@@ -76,9 +76,9 @@ function isentoCOFINS($COFINS): COFINS
 }
 
 /**
-* @param COFINS $COFINS
-* @return COFINS
-*/
+ * @param COFINS $COFINS
+ * @return COFINS
+ */
 function zeradoCOFINS($COFINS): COFINS
 {
     $calculado = new COFINS();

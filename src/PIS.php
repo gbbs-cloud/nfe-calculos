@@ -58,7 +58,7 @@ function adValoremPIS(PIS $PIS): PIS
     $calculado->CST = $PIS->CST;
     $calculado->vBC = $PIS->vBC;
     $calculado->pPIS = $pPIS;
-    $calculado->vPIS = $PIS->vBC * ($pPIS / 100);
+    $calculado->vPIS = (float)number_format($PIS->vBC * ($pPIS / 100), 2);
     return $calculado;
 }
 

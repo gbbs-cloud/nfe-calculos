@@ -50,8 +50,8 @@ class COFINSTest extends TestCase
     }
 
     /**
-    * Test CST with zeradoCOFINS
-    */
+     * Test CST with zeradoCOFINS
+     */
     public function testZeradoCOFINS()
     {
         $cofins = $this->instantiateCOFINS();
