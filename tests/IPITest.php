@@ -49,7 +49,7 @@ class IPITest extends TestCase
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
         $ipi = $this->instantiateIPI();
-        $ipi->CST = '00';
+        $ipi->CST = '01';
 
         calcularIPI($ipi);
     }
