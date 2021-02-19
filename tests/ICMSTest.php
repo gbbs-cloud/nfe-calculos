@@ -251,6 +251,28 @@ class ICMSTest extends TestCase
     }
 
     /**
+     * Test CST 90
+     */
+    public function testCST90()
+    {
+        $icms = $this->instantiateICMS();
+        $icms->orig = '0';
+        $icms->CST = '90';
+        $icms->modBC = 3;
+        $icms->vBC = 152.0;
+        $icms->motDesICMS = 9;
+
+        $calculado = calcularICMS($icms, '11', '11');
+
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('90', $calculado->CST);
+        $this->assertSame(3, $calculado->modBC);
+        $this->assertSame(152.0, $calculado->vBC);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(25.84, $calculado->vICMS);
+    }
+
+    /**
      * Test CST 102
      */
     public function testCST102()
