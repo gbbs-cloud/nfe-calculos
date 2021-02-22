@@ -30,9 +30,9 @@ class IPI
 function calcularIPI(IPI $IPI): IPI
 {
     $adValorem = ['00', '50'];
-    $isento = ['03', '51', '53'];
+    $isento = ['01', '03', '51', '53'];
     $notImplemented = [
-        '01', '02', '04', '05', '49', '52', '54', '55', '99'
+        '02', '04', '05', '49', '52', '54', '55', '99'
     ];
     if (in_array($IPI->CST, $adValorem, true)) {
         return adValoremIPI($IPI);
