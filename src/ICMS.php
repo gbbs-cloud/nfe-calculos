@@ -166,6 +166,8 @@ function calcCST41(ICMS $ICMS): ICMS
     $calculado = new ICMS();
     $calculado->orig = $ICMS->orig;
     $calculado->CST = $ICMS->CST;
+    $calculado->vICMS = 0.0;
+    $calculado->pICMS = 0.0;
     $calculado->vICMSDeson = $ICMS->vBC * ($ICMS->pICMS / 100);
     $calculado->motDesICMS = $ICMS->motDesICMS;
 
