@@ -236,6 +236,9 @@ function pICMSFromUFs(string $ufOrigem, string $ufDestino): float
     $path = realpath(__DIR__ . '/../storage') . '/';
     $picmsFile = file_get_contents($path . 'picms.json');
     $picmsList = json_decode($picmsFile, true);
+    if ($ufDestino === '99') {
+        return 0.0;
+    }
     foreach ($picmsList as $picms) {
         if ($picms['uf'] === $ufOrigem) {
             return (float) $picms['uf' . $ufDestino];
@@ -255,6 +258,9 @@ function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
     $path = realpath(__DIR__ . '/../storage') . '/';
     $picmsstFile = file_get_contents($path . 'picmsst.json');
     $picmsstList = json_decode($picmsstFile, true);
+    if ($ufDestino === '99') {
+        return 0.0;
+    }
     foreach ($picmsstList as $picmsst) {
         if ($picmsst['uf'] === $ufOrigem) {
             return (float) $picmsst['uf' . $ufDestino];
