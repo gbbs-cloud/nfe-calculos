@@ -250,7 +250,7 @@ class ICMSTest extends TestCase
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(100.0, $calculado->vBC);
         $this->assertSame(12.0001, $calculado->pICMS);
-        $this->assertSame(5.5, $calculado->vICMS);
+        $this->assertSame(12.0, $calculado->vICMS);
         $this->assertSame(31.428, $calculado->pDif);
         $this->assertSame(5.4999, $calculado->vICMSDif);
     }
