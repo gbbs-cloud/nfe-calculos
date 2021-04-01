@@ -212,9 +212,8 @@ function calcCST51(ICMS $ICMS): ICMS
     $calculado->orig = '0';
     $calculado->CST = $ICMS->CST;
     $calculado->modBC = $ICMS->modBC;
-    $calculado->vBC = 0.00;
-    $calculado->pICMS = $ICMS->pICMS;
-    $calculado->vICMS = 0.0;
+    $calculado->vBC = $ICMS->vBC;
+    $calculado->pICMS = $ICMS->pICMS - ($ICMS->pICMS * $ICMS->pDif) / 100;
     $calculado->pDif = $ICMS->pDif;
     $calculado->vICMSDif = calcvICMSDif($ICMS);
     $calculado->vICMS = calcvICMSCompDif($ICMS, calcvICMSDif($ICMS));
