@@ -239,18 +239,20 @@ class ICMSTest extends TestCase
     {
         $icms = $this->instantiateICMS();
         $icms->CST = '51';
+        $icms->vBC = 100.0;
         $icms->modBC = 0;
+        $icms->pDif = 31.428;
 
-        $calculado = calcularICMS($icms, '11', '11');
+        $calculado = calcularICMS($icms, '43', '43');
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('51', $calculado->CST);
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(0.0, $calculado->vBC);
-        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(17.5, $calculado->pICMS);
         $this->assertSame(0.0, $calculado->vICMS);
-        $this->assertSame(100, $calculado->pDif);
-        $this->assertSame(0.0, $calculado->vICMSDif);
+        $this->assertSame(31.428, $calculado->pDif);
+        $this->assertSame(5.4999, $calculado->vICMSDif);
     }
 
     /**
