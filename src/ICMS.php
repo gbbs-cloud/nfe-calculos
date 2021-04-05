@@ -106,6 +106,18 @@ function calcvICMS(ICMS $ICMS): float
     return round($ICMS->vBC * $ICMS->pICMS / 100, 2);
 }
 
+/**
+ * Calcula o Valor do ICMS com pICMSDif
+ * @param ICMS $ICMS
+ * @return float
+ */
+function calcvICMSCompDif(ICMS $ICMS): float
+{
+    $pDif = $ICMS->pICMS - ($ICMS->pICMS * $ICMS->pDif) / 100;
+
+    return round($ICMS->vBC * $pDif / 100, 2);
+}
+
 
 /**
  * Calcula o valor do ICMS Diferido
@@ -203,8 +215,8 @@ function calcCST51(ICMS $ICMS): ICMS
     $calculado->CST = $ICMS->CST;
     $calculado->modBC = $ICMS->modBC;
     $calculado->vBC = $ICMS->vBC;
-    $calculado->pICMS = $ICMS->pICMS - ($ICMS->pICMS * $ICMS->pDif) / 100;
-    $calculado->vICMS = calcvICMS($calculado);
+    $calculado->pICMS = $ICMS->pICMS;
+    $calculado->vICMS = calcvICMSCompDif($ICMS);
     $calculado->vICMSOp = calcvICMS($ICMS);
     $calculado->pDif = $ICMS->pDif;
     $calculado->vICMSDif = calcvICMSDif($ICMS);
