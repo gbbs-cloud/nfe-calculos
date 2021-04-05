@@ -233,21 +233,21 @@ class ICMSTest extends TestCase
     }
 
     /**
-     * Test CST 51 with modBC === 0
+     * Test CST 51 with modBC === 3
      */
-    public function testCST51ModBC0()
+    public function testCST51ModBC3()
     {
         $icms = $this->instantiateICMS();
         $icms->CST = '51';
         $icms->vBC = 100.0;
-        $icms->modBC = 0;
+        $icms->modBC = 3;
         $icms->pDif = 31.428;
 
         $calculado = calcularICMS($icms, '43', '43');
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('51', $calculado->CST);
-        $this->assertSame(0, $calculado->modBC);
+        $this->assertSame(3, $calculado->modBC);
         $this->assertSame(100.0, $calculado->vBC);
         $this->assertSame(12.0001, $calculado->pICMS);
         $this->assertSame(12.0, $calculado->vICMS);
@@ -256,10 +256,10 @@ class ICMSTest extends TestCase
     }
 
     /**
-     * Test CST 51 with modBC !== 0
-     * modBC === 1, modBC === 2 and modBC === 3 aren't implemented
+     * Test CST 51 with modBC !== 3
+     * modBC === 0, modBC === 1 and modBC === 2 aren't implemented
      */
-    public function testCST51ModBCDifferentThan1()
+    public function testCST51ModBCDifferentThan3()
     {
         $this->expectException('\Exception');
         $icms = $this->instantiateICMS();
