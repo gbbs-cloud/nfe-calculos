@@ -195,7 +195,7 @@ function calcCST41(ICMS $ICMS): ICMS
  */
 function calcCST51(ICMS $ICMS): ICMS
 {
-    if ($ICMS->modBC !== 0) {
+    if ($ICMS->modBC !== 3) {
         throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
     }
     $calculado = new ICMS();
