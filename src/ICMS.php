@@ -259,7 +259,7 @@ class ICMS
      * @throws Exception
      * @return float
      */
-    static function pICMSFromUFs(string $ufOrigem, string $ufDestino): float
+    public static function pICMSFromUFs(string $ufOrigem, string $ufDestino): float
     {
         $path = realpath(__DIR__ . '/../storage') . '/';
         $picmsFile = file_get_contents($path . 'picms.json');
@@ -281,7 +281,7 @@ class ICMS
      * @throws Exception
      * @return float
      */
-    static function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
+    public static function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
     {
         $path = realpath(__DIR__ . '/../storage') . '/';
         $picmsstFile = file_get_contents($path . 'picmsst.json');

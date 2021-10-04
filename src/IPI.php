@@ -80,7 +80,7 @@ class IPI
      * @return float
      * @throws Exception
      */
-    static function pIPIFromNCM(string $ncm): float
+    public static function pIPIFromNCM(string $ncm): float
     {
         $path = realpath(__DIR__ . '/../storage') . '/';
         $tipiFile = file_get_contents($path . 'tipi.json');
