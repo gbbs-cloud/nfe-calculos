@@ -127,7 +127,7 @@ class ICMS
     {
         $vICMS = ICMS::calcvICMS($ICMS);
 
-        return $vICMS - $ICMS->vBC * ($ICMS->pICMS - ($ICMS->pICMS * ($ICMS->pDif / 100))) / 100;
+        return round($vICMS - $ICMS->vBC * ($ICMS->pICMS - ($ICMS->pICMS * ($ICMS->pDif / 100))) / 100, 2);
     }
 
     /**
