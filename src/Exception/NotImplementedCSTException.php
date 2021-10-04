@@ -10,6 +10,6 @@ class NotImplementedCSTException extends \InvalidArgumentException implements \T
 {
     public function __construct($message = "", $code = 0, Throwable $previous = null)
     {
-        parent::__construct('CST' . $message . ' not implemented', $code, $previous);
+        parent::__construct('CST ' . $message . ' not implemented', $code, $previous);
     }
 }

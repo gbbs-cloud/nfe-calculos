@@ -7,8 +7,6 @@ namespace Gbbs\NfeCalculos\Tests;
 use Gbbs\NfeCalculos\COFINS;
 use PHPUnit\Framework\TestCase;
 
-use function Gbbs\NfeCalculos\calcularCOFINS;
-
 class COFINSTest extends TestCase
 {
     /**
@@ -29,7 +27,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '00000';
 
-        $calculado = calcularCOFINS($cofins);
+        COFINS::calcularCOFINS($cofins);
     }
 
     /**
@@ -39,14 +37,14 @@ class COFINSTest extends TestCase
     {
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '01';
-        $cofins->vBC = 1000;
+        $cofins->vBC = 1234.56;
 
-        $calculado = calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins);
 
         $this->assertSame('01', $calculado->CST);
-        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(1234.56, $calculado->vBC);
         $this->assertSame(3, $calculado->pCOFINS);
-        $this->assertSame(30.0, $calculado->vCOFINS);
+        $this->assertSame(37.04, $calculado->vCOFINS);
     }
 
     /**
@@ -57,7 +55,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '08';
 
-        $calculado = calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins);
 
         $this->assertSame('08', $calculado->CST);
     }
@@ -70,7 +68,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '99';
 
-        $calculado = calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins);
 
         $this->assertSame('99', $calculado->CST);
         $this->assertSame(0.0, $calculado->vBC);
@@ -87,7 +85,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '03';
 
-        calcularCOFINS($cofins);
+        COFINS::calcularCOFINS($cofins);
     }
 
     /**

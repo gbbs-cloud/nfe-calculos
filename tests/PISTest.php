@@ -7,8 +7,6 @@ namespace Gbbs\NfeCalculos\Tests;
 use Gbbs\NfeCalculos\PIS;
 use PHPUnit\Framework\TestCase;
 
-use function Gbbs\NfeCalculos\calcularPIS;
-
 class PISTest extends TestCase
 {
     /**
@@ -29,7 +27,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '00000';
 
-        calcularPIS($pis);
+        PIS::calcularPIS($pis);
     }
 
     /**
@@ -39,14 +37,14 @@ class PISTest extends TestCase
     {
         $pis = $this->instantiatePIS();
         $pis->CST = '01';
-        $pis->vBC = 1000;
+        $pis->vBC = 1234.56;
 
-        $calculado = calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis);
 
         $this->assertSame('01', $calculado->CST);
-        $this->assertSame(1000, $calculado->vBC);
+        $this->assertSame(1234.56, $calculado->vBC);
         $this->assertSame(0.65, $calculado->pPIS);
-        $this->assertSame(6.5, $calculado->vPIS);
+        $this->assertSame(8.02, $calculado->vPIS);
     }
 
     /**
@@ -57,7 +55,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '08';
 
-        $calculado = calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis);
 
         $this->assertSame('08', $calculado->CST);
     }
@@ -70,7 +68,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '99';
 
-        $calculado = calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis);
 
         $this->assertSame('99', $calculado->CST);
         $this->assertSame(0.0, $calculado->vBC);
@@ -87,7 +85,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '03';
 
-        calcularPIS($pis);
+        PIS::calcularPIS($pis);
     }
 
     /**

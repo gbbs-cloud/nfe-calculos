@@ -46,254 +46,254 @@ class ICMS
     public $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
-}
 
-/**
- * @param ICMS $ICMS
- * @param string $ufOrigem
- * @param string $ufDestino
- * @param float $reducao
- * @return ICMS
- * @throws NotImplementedCSTException|InvalidCSTException|Exception
- */
-function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
-{
-    $notImplemented = [
-        '20', '30', '40', '50', '60', '70', '101', '103',
-        '200', '201', '202', '203', '300', '400', '500', '900'
-    ];
-    if (in_array($ICMS->CST, $notImplemented, true)) {
-        throw new NotImplementedCSTException($ICMS->CST);
-    }
-    if ($reducao === null) {
-        $ICMS->pICMS = pICMSFromUFs($ufOrigem, $ufDestino);
-        $ICMS->pICMSST = pICMSSTFromUFs($ufOrigem, $ufDestino);
-    } else {
-        $ICMS->pICMS = $reducao;
-        $ICMS->pICMSST = $reducao;
-    }
-    $calculosCST = [
-        '00' => 'Gbbs\NfeCalculos\calcCST00',
-        '10' => 'Gbbs\NfeCalculos\calcCST10',
-        '41' => 'Gbbs\NfeCalculos\calcCST41',
-        '51' => 'Gbbs\NfeCalculos\calcCST51',
-        '90' => 'Gbbs\NfeCalculos\calcCST90',
-        '102' => 'Gbbs\NfeCalculos\calcCSOSN102',
-    ];
-    if (array_key_exists($ICMS->CST, $calculosCST)) {
-        return $calculosCST[$ICMS->CST]($ICMS);
-    }
-    throw new InvalidCSTException($ICMS->CST);
-}
-
-/**
- * Subtrai do valor da BC do ICMS ST o percentual da redução de BC do ICMS ST
- * @param $ICMS
- * @return float
- */
-function calcularReducaoValorBCST(ICMS $ICMS): float
-{
-    return $ICMS->vBCST * (1 - $ICMS->pRedBCST / 100);
-}
-
-/**
- * Calcula o Valor do ICMS
- * @param $ICMS
- * @return float
- */
-function calcvICMS(ICMS $ICMS): float
-{
-    return round($ICMS->vBC * $ICMS->pICMS / 100, 2);
-}
-
-/**
- * Calcula o Valor do ICMS com pICMSDif
- * @param ICMS $ICMS
- * @return float
- */
-function calcvICMSCompDif(ICMS $ICMS): float
-{
-    $pDif = $ICMS->pICMS - ($ICMS->pICMS * $ICMS->pDif) / 100;
-
-    return round($ICMS->vBC * $pDif / 100, 2);
-}
-
-
-/**
- * Calcula o valor do ICMS Diferido
- * @param ICMS $ICMS
- * @return float
- */
-function calcvICMSDif(ICMS $ICMS): float
-{
-    $vICMS = calcvICMS($ICMS);
-
-    return $vICMS - $ICMS->vBC * ($ICMS->pICMS - ($ICMS->pICMS * ($ICMS->pDif / 100))) / 100;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- * @throws Exception
- */
-function calcCST00(ICMS $ICMS): ICMS
-{
-    if ($ICMS->modBC !== 0) {
-        throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
-    }
-    $calculado = new ICMS();
-    $calculado->orig = $ICMS->orig;
-    $calculado->CST = $ICMS->CST;
-    $calculado->modBC = $ICMS->modBC;
-    $calculado->vBC = $ICMS->vBC;
-    $calculado->pICMS = $ICMS->pICMS;
-    $calculado->vICMS = calcvICMS($ICMS);
-
-    return $calculado;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- * @throws Exception
- */
-function calcCST10(ICMS $ICMS): ICMS
-{
-    if ($ICMS->modBCST !== 4) {
-        throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');
-    }
-    $calculado = new ICMS();
-    $calculado->orig = $ICMS->orig;
-    $calculado->CST = $ICMS->CST;
-    $calculado->modBC = $ICMS->modBC;
-    $calculado->vBC = $ICMS->vBC;
-    $calculado->pICMS = $ICMS->pICMS;
-    $calculado->modBCST = $ICMS->modBCST;
-    $calculado->pMVAST = $ICMS->pMVAST;
-    $calculado->pRedBCST = $ICMS->pRedBCST;
-    $calculado->pICMSST = $ICMS->pICMSST;
-    $calculado->vICMS = calcvICMS($ICMS);
-    $calculado->vBCST = calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100);
-    $calculado->vICMSST = $ICMS->pMVAST === 0.0
-        ? 0.0
-        : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
-
-    return $calculado;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- * @throws Exception
- */
-function calcCST41(ICMS $ICMS): ICMS
-{
-    $calculado = new ICMS();
-    $calculado->orig = $ICMS->orig;
-    $calculado->CST = $ICMS->CST;
-    $calculado->vBC = 0.0;
-    $calculado->vICMS = 0.0;
-    $calculado->pICMS = 0.0;
-    $calculado->vICMSDeson = $ICMS->vBC * ($ICMS->pICMS / 100);
-    $calculado->motDesICMS = $ICMS->motDesICMS;
-
-    return $calculado;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- * @throws Exception
- */
-function calcCST51(ICMS $ICMS): ICMS
-{
-    if ($ICMS->modBC !== 3) {
-        throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
-    }
-    $calculado = new ICMS();
-    $calculado->orig = '0';
-    $calculado->CST = $ICMS->CST;
-    $calculado->modBC = $ICMS->modBC;
-    $calculado->vBC = $ICMS->vBC;
-    $calculado->pICMS = $ICMS->pICMS;
-    $calculado->vICMS = calcvICMSCompDif($ICMS);
-    $calculado->vICMSOp = calcvICMS($ICMS);
-    $calculado->pDif = $ICMS->pDif;
-    $calculado->vICMSDif = calcvICMSDif($ICMS);
-
-    return $calculado;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- * @throws Exception
- */
-function calcCST90(ICMS $ICMS): ICMS
-{
-    $calculado = new ICMS();
-    $calculado->orig = $ICMS->orig;
-    $calculado->CST = $ICMS->CST;
-    $calculado->modBC = $ICMS->modBC;
-    $calculado->vBC = $ICMS->vBC;
-    $calculado->pICMS = $ICMS->pICMS;
-    $calculado->vICMS = calcvICMS($ICMS);
-
-    return $calculado;
-}
-
-/**
- * @param $ICMS
- * @return ICMS
- */
-function calcCSOSN102(ICMS $ICMS): ICMS
-{
-    $calculado = new ICMS();
-    $calculado->orig = $ICMS->orig;
-    $calculado->CST = $ICMS->CST;
-    return $calculado;
-}
-
-/**
- * @param string $ufOrigem
- * @param string $ufDestino
- * @throws Exception
- * @return float
- */
-function pICMSFromUFs(string $ufOrigem, string $ufDestino): float
-{
-    $path = realpath(__DIR__ . '/../storage') . '/';
-    $picmsFile = file_get_contents($path . 'picms.json');
-    $picmsList = json_decode($picmsFile, true);
-    if ($ufDestino === '99') {
-        return 0.0;
-    }
-    foreach ($picmsList as $picms) {
-        if ($picms['uf'] === $ufOrigem) {
-            return (float) $picms['uf' . $ufDestino];
+    /**
+     * @param ICMS $ICMS
+     * @param string $ufOrigem
+     * @param string $ufDestino
+     * @param float $reducao
+     * @return ICMS
+     * @throws NotImplementedCSTException|InvalidCSTException|Exception
+     */
+    static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
+    {
+        $notImplemented = [
+            '20', '30', '40', '50', '60', '70', '101', '103',
+            '200', '201', '202', '203', '300', '400', '500', '900'
+        ];
+        if (in_array($ICMS->CST, $notImplemented, true)) {
+            throw new NotImplementedCSTException($ICMS->CST);
         }
-    }
-    throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
-}
-
-/**
- * @param string $ufOrigem
- * @param string $ufDestino
- * @throws Exception
- * @return float
- */
-function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
-{
-    $path = realpath(__DIR__ . '/../storage') . '/';
-    $picmsstFile = file_get_contents($path . 'picmsst.json');
-    $picmsstList = json_decode($picmsstFile, true);
-    if ($ufDestino === '99') {
-        return 0.0;
-    }
-    foreach ($picmsstList as $picmsst) {
-        if ($picmsst['uf'] === $ufOrigem) {
-            return (float) $picmsst['uf' . $ufDestino];
+        if ($reducao === null) {
+            $ICMS->pICMS = ICMS::pICMSFromUFs($ufOrigem, $ufDestino);
+            $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufOrigem, $ufDestino);
+        } else {
+            $ICMS->pICMS = $reducao;
+            $ICMS->pICMSST = $reducao;
         }
+        $calculosCST = [
+            '00' => 'Gbbs\NfeCalculos\ICMS::calcCST00',
+            '10' => 'Gbbs\NfeCalculos\ICMS::calcCST10',
+            '41' => 'Gbbs\NfeCalculos\ICMS::calcCST41',
+            '51' => 'Gbbs\NfeCalculos\ICMS::calcCST51',
+            '90' => 'Gbbs\NfeCalculos\ICMS::calcCST90',
+            '102' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN102',
+        ];
+        if (array_key_exists($ICMS->CST, $calculosCST)) {
+            return $calculosCST[$ICMS->CST]($ICMS);
+        }
+        throw new InvalidCSTException($ICMS->CST);
     }
-    throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
+
+    /**
+     * Subtrai do valor da BC do ICMS ST o percentual da redução de BC do ICMS ST
+     * @param $ICMS
+     * @return float
+     */
+    private static function calcularReducaoValorBCST(ICMS $ICMS): float
+    {
+        return $ICMS->vBCST * (1 - $ICMS->pRedBCST / 100);
+    }
+
+    /**
+     * Calcula o Valor do ICMS
+     * @param $ICMS
+     * @return float
+     */
+    private static function calcvICMS(ICMS $ICMS): float
+    {
+        return round($ICMS->vBC * $ICMS->pICMS / 100, 2);
+    }
+
+    /**
+     * Calcula o Valor do ICMS com pICMSDif
+     * @param ICMS $ICMS
+     * @return float
+     */
+    private static function calcvICMSCompDif(ICMS $ICMS): float
+    {
+        $pDif = $ICMS->pICMS - ($ICMS->pICMS * $ICMS->pDif) / 100;
+
+        return round($ICMS->vBC * $pDif / 100, 2);
+    }
+
+
+    /**
+     * Calcula o valor do ICMS Diferido
+     * @param ICMS $ICMS
+     * @return float
+     */
+    private static function calcvICMSDif(ICMS $ICMS): float
+    {
+        $vICMS = ICMS::calcvICMS($ICMS);
+
+        return $vICMS - $ICMS->vBC * ($ICMS->pICMS - ($ICMS->pICMS * ($ICMS->pDif / 100))) / 100;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST00(ICMS $ICMS): ICMS
+    {
+        if ($ICMS->modBC !== 0) {
+            throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
+        }
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->vICMS = ICMS::calcvICMS($ICMS);
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST10(ICMS $ICMS): ICMS
+    {
+        if ($ICMS->modBCST !== 4) {
+            throw new Exception('modBCST ' . $ICMS->modBCST . ' not implemented');
+        }
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->modBCST = $ICMS->modBCST;
+        $calculado->pMVAST = $ICMS->pMVAST;
+        $calculado->pRedBCST = $ICMS->pRedBCST;
+        $calculado->pICMSST = $ICMS->pICMSST;
+        $calculado->vICMS = ICMS::calcvICMS($ICMS);
+        $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 2);
+        $calculado->vICMSST = $ICMS->pMVAST === 0.0
+            ? 0.0
+            : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST41(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->vBC = 0.0;
+        $calculado->vICMS = 0.0;
+        $calculado->pICMS = 0.0;
+        $calculado->vICMSDeson = $ICMS->vBC * ($ICMS->pICMS / 100);
+        $calculado->motDesICMS = $ICMS->motDesICMS;
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST51(ICMS $ICMS): ICMS
+    {
+        if ($ICMS->modBC !== 3) {
+            throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
+        }
+        $calculado = new ICMS();
+        $calculado->orig = '0';
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->vICMS = ICMS::calcvICMSCompDif($ICMS);
+        $calculado->vICMSOp = ICMS::calcvICMS($ICMS);
+        $calculado->pDif = $ICMS->pDif;
+        $calculado->vICMSDif = ICMS::calcvICMSDif($ICMS);
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST90(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->vICMS = ICMS::calcvICMS($ICMS);
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     */
+    private static function calcCSOSN102(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        return $calculado;
+    }
+
+    /**
+     * @param string $ufOrigem
+     * @param string $ufDestino
+     * @throws Exception
+     * @return float
+     */
+    static function pICMSFromUFs(string $ufOrigem, string $ufDestino): float
+    {
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $picmsFile = file_get_contents($path . 'picms.json');
+        $picmsList = json_decode($picmsFile, true);
+        if ($ufDestino === '99') {
+            return 0.0;
+        }
+        foreach ($picmsList as $picms) {
+            if ($picms['uf'] === $ufOrigem) {
+                return (float) $picms['uf' . $ufDestino];
+            }
+        }
+        throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
+    }
+
+    /**
+     * @param string $ufOrigem
+     * @param string $ufDestino
+     * @throws Exception
+     * @return float
+     */
+    static function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
+    {
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $picmsstFile = file_get_contents($path . 'picmsst.json');
+        $picmsstList = json_decode($picmsstFile, true);
+        if ($ufDestino === '99') {
+            return 0.0;
+        }
+        foreach ($picmsstList as $picmsst) {
+            if ($picmsst['uf'] === $ufOrigem) {
+                return (float) $picmsst['uf' . $ufDestino];
+            }
+        }
+        throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
+    }
 }

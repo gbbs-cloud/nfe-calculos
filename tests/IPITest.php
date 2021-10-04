@@ -7,9 +7,6 @@ namespace Gbbs\NfeCalculos\Tests;
 use Gbbs\NfeCalculos\IPI;
 use PHPUnit\Framework\TestCase;
 
-use function Gbbs\NfeCalculos\calcularIPI;
-use function Gbbs\NfeCalculos\pIPIFromNCM;
-
 class IPITest extends TestCase
 {
     /**
@@ -30,7 +27,7 @@ class IPITest extends TestCase
         $ipi = $this->instantiateIPI();
         $ipi->CST = '00000';
 
-        $calculado = calcularIPI($ipi);
+        IPI::calcularIPI($ipi);
     }
 
     /**
@@ -39,7 +36,25 @@ class IPITest extends TestCase
     public function testInvalidNCM()
     {
         $this->expectException('\Exception');
-        pIPIFromNCM('020750100');
+        IPI::pIPIFromNCM('020750100');
+    }
+
+    /**
+     * Test NCM with NCMAli === 'NT'
+     */
+    public function testNCMWithNCMAliNT()
+    {
+        $pIPI = IPI::pIPIFromNCM('01012100');
+        $this->assertSame(0.0, $pIPI);
+    }
+
+    /**
+     * Test NCM with NCMAli !== 'NT' and NCMAli !== '0'
+     */
+    public function testNCMWithNCMAliNotNT()
+    {
+        $pIPI = IPI::pIPIFromNCM('22011000');
+        $this->assertSame(15.0, $pIPI);
     }
 
     /**
@@ -51,11 +66,11 @@ class IPITest extends TestCase
         $ipi = $this->instantiateIPI();
         $ipi->CST = '02';
 
-        calcularIPI($ipi);
+        IPI::calcularIPI($ipi);
     }
 
     /**
-     * Test CST with adValoremIPI
+     * Test CST with adValoremIPI with pIPI === 0
      */
     public function testAdValoremIPI()
     {
@@ -63,14 +78,52 @@ class IPITest extends TestCase
         $ipi->cEnq = '999';
         $ipi->CST = '50';
         $ipi->vBC = 1000.0;
-        $ipi->pIPI = pIPIFromNCM('02075100');
-        $calculado = calcularIPI($ipi);
+        $ipi->pIPI = IPI::pIPIFromNCM('02075100');
+        $calculado = IPI::calcularIPI($ipi);
 
         $this->assertSame('999', $calculado->cEnq);
         $this->assertSame('50', $calculado->CST);
         $this->assertSame(1000.0, $calculado->vBC);
         $this->assertSame(0.0, $calculado->pIPI);
         $this->assertSame(0.0, $calculado->vIPI);
+    }
+
+    /**
+     * Test CST with adValoremIPI with pIPI !== 0
+     */
+    public function testAdValoremIPIWithPIPI()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->cEnq = '999';
+        $ipi->CST = '50';
+        $ipi->vBC = 1000.0;
+        $ipi->pIPI = IPI::pIPIFromNCM('22011000');
+        $calculado = IPI::calcularIPI($ipi);
+
+        $this->assertSame('999', $calculado->cEnq);
+        $this->assertSame('50', $calculado->CST);
+        $this->assertSame(1000.0, $calculado->vBC);
+        $this->assertSame(15.0, $calculado->pIPI);
+        $this->assertSame(150.0, $calculado->vIPI);
+    }
+
+    /**
+     * Test adValoremIPI with CST === '00'
+     */
+    public function testAdValoremIPIWithCST00()
+    {
+        $ipi = $this->instantiateIPI();
+        $ipi->cEnq = '999';
+        $ipi->CST = '00';
+        $ipi->vBC = 1000.0;
+        $ipi->pIPI = IPI::pIPIFromNCM('22011000');
+        $calculado = IPI::calcularIPI($ipi);
+
+        $this->assertSame('999', $calculado->cEnq);
+        $this->assertSame('00', $calculado->CST);
+        $this->assertSame(1000.0, $calculado->vBC);
+        $this->assertSame(15.0, $calculado->pIPI);
+        $this->assertSame(150.0, $calculado->vIPI);
     }
 
     /**
@@ -81,12 +134,32 @@ class IPITest extends TestCase
         $ipi = $this->instantiateIPI();
         $ipi->cEnq = '999';
         $ipi->CST = '51';
-        $ipi->pIPI = pIPIFromNCM('02075100');
+        $ipi->pIPI = IPI::pIPIFromNCM('02075100');
 
-        $calculado = calcularIPI($ipi);
+        $calculado = IPI::calcularIPI($ipi);
 
         $this->assertSame('999', $calculado->cEnq);
         $this->assertSame('51', $calculado->CST);
+        $this->assertSame(0.0, $calculado->vBC);
+        $this->assertSame(0.0, $calculado->pIPI);
+        $this->assertSame(0.0, $calculado->vIPI);
+    }
+
+    /**
+     * Test CST with 01
+     */
+    public function testCST01()
+    {
+
+        $ipi = $this->instantiateIPI();
+        $ipi->cEnq = '999';
+        $ipi->CST = '01';
+        $ipi->pIPI = IPI::pIPIFromNCM('02075100');
+
+        $calculado = IPI::calcularIPI($ipi);
+
+        $this->assertSame('999', $calculado->cEnq);
+        $this->assertSame('01', $calculado->CST);
         $this->assertSame(0.0, $calculado->vBC);
         $this->assertSame(0.0, $calculado->pIPI);
         $this->assertSame(0.0, $calculado->vIPI);
