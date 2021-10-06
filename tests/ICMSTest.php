@@ -24,6 +24,8 @@ class ICMSTest extends TestCase
     public function testInvalidCST()
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
+        $this->expectExceptionMessage('CST 00000 invalid');
+        $this->expectExceptionCode(0);
         $icms = $this->instantiateICMS();
         $icms->CST = '00000';
 
@@ -412,6 +414,8 @@ class ICMSTest extends TestCase
     public function testNotImplementedCST()
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
+        $this->expectExceptionMessage('CST 20 not implemented');
+        $this->expectExceptionCode(0);
         $icms = $this->instantiateICMS();
         $icms->CST = '20';
         ICMS::calcularICMS($icms, '11', '11');

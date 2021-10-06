@@ -24,6 +24,8 @@ class COFINSTest extends TestCase
     public function testInvalidCST()
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\InvalidCSTException');
+        $this->expectExceptionMessage('CST 00000 invalid');
+        $this->expectExceptionCode(0);
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '00000';
 
@@ -82,6 +84,8 @@ class COFINSTest extends TestCase
     public function testNotImplementedCST()
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
+        $this->expectExceptionMessage('CST 03 not implemented');
+        $this->expectExceptionCode(0);
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '03';
 
