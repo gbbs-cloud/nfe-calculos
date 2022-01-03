@@ -166,14 +166,14 @@ class ICMSTest extends TestCase
         $this->assertSame('10', $calculado->CST);
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(144.0, $calculado->vBC);
-        $this->assertSame(17.5, $calculado->pICMS);
-        $this->assertSame(25.2, $calculado->vICMS);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(24.48, $calculado->vICMS);
         $this->assertSame(4, $calculado->modBCST);
         $this->assertSame(37.0, $calculado->pMVAST);
         $this->assertSame(0.0, $calculado->pRedBCST);
         $this->assertSame(197.28, $calculado->vBCST);
         $this->assertSame(17.5, $calculado->pICMSST);
-        $this->assertSame(9.32, $calculado->vICMSST);
+        $this->assertSame(10.04, $calculado->vICMSST);
     }
 
     /**
@@ -200,14 +200,14 @@ class ICMSTest extends TestCase
         $this->assertSame('10', $calculado->CST);
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(144.0, $calculado->vBC);
-        $this->assertSame(17.5, $calculado->pICMS);
-        $this->assertSame(25.2, $calculado->vICMS);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(24.48, $calculado->vICMS);
         $this->assertSame(4, $calculado->modBCST);
         $this->assertSame(37.0, $calculado->pMVAST);
         $this->assertSame(10.0, $calculado->pRedBCST);
         $this->assertSame(177.55, $calculado->vBCST);
         $this->assertSame(17.5, $calculado->pICMSST);
-        $this->assertSame(2.76, $calculado->vICMSST);
+        $this->assertSame(3.48, $calculado->vICMSST);
     }
 
     /**
@@ -324,11 +324,11 @@ class ICMSTest extends TestCase
         $this->assertSame('51', $calculado->CST);
         $this->assertSame(3, $calculado->modBC);
         $this->assertSame(100.0, $calculado->vBC);
-        $this->assertSame(17.5, $calculado->pICMS);
-        $this->assertSame(12.0, $calculado->vICMS);
-        $this->assertSame(17.5, $calculado->vICMSOp);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(11.66, $calculado->vICMS);
+        $this->assertSame(17.0, $calculado->vICMSOp);
         $this->assertSame(31.428, $calculado->pDif);
-        $this->assertSame(5.5, $calculado->vICMSDif);
+        $this->assertSame(5.34, $calculado->vICMSDif);
     }
 
     /**
@@ -348,11 +348,11 @@ class ICMSTest extends TestCase
         $this->assertSame('51', $calculado->CST);
         $this->assertSame(3, $calculado->modBC);
         $this->assertSame(100.0, $calculado->vBC);
-        $this->assertSame(17.5, $calculado->pICMS);
-        $this->assertSame(10.41, $calculado->vICMS);
-        $this->assertSame(17.5, $calculado->vICMSOp);
+        $this->assertSame(17.0, $calculado->pICMS);
+        $this->assertSame(10.12, $calculado->vICMS);
+        $this->assertSame(17.0, $calculado->vICMSOp);
         $this->assertSame(40.5, $calculado->pDif);
-        $this->assertSame(7.09, $calculado->vICMSDif);
+        $this->assertSame(6.89, $calculado->vICMSDif);
     }
 
     /**
