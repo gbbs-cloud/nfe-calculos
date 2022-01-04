@@ -21,7 +21,7 @@ class COFINS
      * @return COFINS
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    static function calcularCOFINS(COFINS $COFINS): COFINS
+    public static function calcularCOFINS(COFINS $COFINS): COFINS
     {
         $adValorem = [
             '01', '02', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62',

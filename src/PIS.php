@@ -21,7 +21,7 @@ class PIS
      * @return PIS
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    static function calcularPIS(PIS $PIS): PIS
+    public static function calcularPIS(PIS $PIS): PIS
     {
         $adValorem = [
             '01', '02', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62',

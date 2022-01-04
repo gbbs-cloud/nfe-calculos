@@ -26,7 +26,7 @@ class IPI
      * @return IPI
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    static function calcularIPI(IPI $IPI): IPI
+    public static function calcularIPI(IPI $IPI): IPI
     {
         $adValorem = ['00', '50'];
         $isento = ['01', '03', '04', '51', '53', '54', '55', '99'];

@@ -55,7 +55,7 @@ class ICMS
      * @return ICMS
      * @throws NotImplementedCSTException|InvalidCSTException|Exception
      */
-    static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
+    public static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null): ICMS
     {
         $notImplemented = [
             '20', '30', '40', '50', '60', '70', '101', '103',
