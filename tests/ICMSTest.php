@@ -61,7 +61,7 @@ class ICMSTest extends TestCase
         $icms->modBC = 0;
         $icms->vBC = 1234.56;
 
-        $calculado = ICMS::calcularICMS($icms, '11', '11', 10.0);
+        $calculado = ICMS::calcularICMS($icms, '11', '11', 10.0, 10.0);
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('00', $calculado->CST);
