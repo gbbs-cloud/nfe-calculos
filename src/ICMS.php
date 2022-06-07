@@ -58,7 +58,7 @@ class ICMS
     public static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null, float $reducaoST = null): ICMS
     {
         $notImplemented = [
-            '20', '30', '40', '50', '60', '70', '101', '103',
+            '20', '30', '40', '60', '70', '101', '103',
             '200', '201', '202', '203', '300', '400', '500', '900'
         ];
         if (in_array($ICMS->CST, $notImplemented, true)) {
@@ -78,6 +78,7 @@ class ICMS
             '00' => 'Gbbs\NfeCalculos\ICMS::calcCST00',
             '10' => 'Gbbs\NfeCalculos\ICMS::calcCST10',
             '41' => 'Gbbs\NfeCalculos\ICMS::calcCST41',
+            '50' => 'Gbbs\NfeCalculos\ICMS::calcCST50',
             '51' => 'Gbbs\NfeCalculos\ICMS::calcCST51',
             '90' => 'Gbbs\NfeCalculos\ICMS::calcCST90',
             '102' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN102',
@@ -198,6 +199,27 @@ class ICMS
         $calculado->pICMS = 0.0;
         $calculado->vICMSDeson = $ICMS->vBC * ($ICMS->pICMS / 100);
         $calculado->motDesICMS = $ICMS->motDesICMS;
+
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     * @throws Exception
+     */
+    private static function calcCST50(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->vBC = 0.0;
+        $calculado->vICMS = 0.0;
+        $calculado->pICMS = 0.0;
+        $calculado->vICMSST = 0.0;
+        $calculado->vBCST = 0.0;
+        $calculado->pMVAST = 0.0;
+        $calculado->pICMSST = 0.0;
 
         return $calculado;
     }
