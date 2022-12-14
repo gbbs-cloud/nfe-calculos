@@ -55,7 +55,7 @@ class ICMS
      * @return ICMS
      * @throws NotImplementedCSTException|InvalidCSTException|Exception
      */
-    public static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null, float $reducaoST = null): ICMS
+    public static function calcularICMS(ICMS $ICMS, string $ufOrigem = null, string $ufDestino = null, float $reducao = null, float $reducaoST = null): ICMS
     {
         $notImplemented = [
             '20', '30', '40', '60', '70', '103',
@@ -65,12 +65,16 @@ class ICMS
             throw new NotImplementedCSTException($ICMS->CST);
         }
         if ($reducao === null) {
-            $ICMS->pICMS = ICMS::pICMSFromUFs($ufOrigem, $ufDestino);
+            if ($ufOrigem !== null && $ufDestino !== null) {
+                $ICMS->pICMS = ICMS::pICMSFromUFs($ufOrigem, $ufDestino);
+            }
         } else {
             $ICMS->pICMS = $reducao;
         }
         if ($reducaoST === null) {
-            $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufOrigem, $ufDestino);
+            if ($ufOrigem !== null && $ufDestino !== null) {
+                $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufOrigem, $ufDestino);
+            }
         } else {
             $ICMS->pICMSST = $reducaoST;
         }

@@ -426,7 +426,7 @@ class ICMSTest extends TestCase
         $icms->vBC = 138.30;
         $icms->pCredSN = 2.56;
 
-        $calculado = ICMS::calcularICMS($icms, '11', '11');
+        $calculado = ICMS::calcularICMS($icms);
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('101', $calculado->CST);
@@ -443,7 +443,7 @@ class ICMSTest extends TestCase
         $icms->orig = '0';
         $icms->CST = '102';
 
-        $calculado = ICMS::calcularICMS($icms, '11', '11');
+        $calculado = ICMS::calcularICMS($icms);
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('102', $calculado->CST);
