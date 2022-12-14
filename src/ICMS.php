@@ -47,6 +47,9 @@ class ICMS
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
 
+    // FIXME: remove this properties
+    public $vProd;
+
     /**
      * @param ICMS $ICMS
      * @param string $ufOrigem
@@ -58,7 +61,7 @@ class ICMS
     public static function calcularICMS(ICMS $ICMS, string $ufOrigem, string $ufDestino, float $reducao = null, float $reducaoST = null): ICMS
     {
         $notImplemented = [
-            '20', '30', '40', '60', '70', '101', '103',
+            '20', '30', '40', '60', '70', '103',
             '200', '201', '202', '203', '300', '400', '500', '900'
         ];
         if (in_array($ICMS->CST, $notImplemented, true)) {
@@ -81,6 +84,7 @@ class ICMS
             '50' => 'Gbbs\NfeCalculos\ICMS::calcCST50',
             '51' => 'Gbbs\NfeCalculos\ICMS::calcCST51',
             '90' => 'Gbbs\NfeCalculos\ICMS::calcCST90',
+            '101' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN101',
             '102' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN102',
         ];
         if (array_key_exists($ICMS->CST, $calculosCST)) {
@@ -121,7 +125,6 @@ class ICMS
         return round($ICMS->vBC * $pDif / 100, 2);
     }
 
-
     /**
      * Calcula o valor do ICMS Diferido
      * @param ICMS $ICMS
@@ -132,6 +135,16 @@ class ICMS
         $vICMS = ICMS::calcvICMS($ICMS);
 
         return round($vICMS - $ICMS->vBC * ($ICMS->pICMS - ($ICMS->pICMS * ($ICMS->pDif / 100))) / 100, 2);
+    }
+
+    /**
+     * Calcula o valor do crédito do ICMS
+     * @param ICMS $ICMS
+     * @return float
+     */
+    private static function calcvCredICMSSN(ICMS $ICMS): float
+    {
+        return round($ICMS->vProd * ($ICMS->pCredSN / 100), 2);
     }
 
     /**
@@ -262,6 +275,17 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
+
+        return $calculado;
+    }
+
+    private static function calcCSOSN101(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->pCredSN = $ICMS->pCredSN;
+        $calculado->vCredICMSSN = ICMS::calcvCredICMSSN($ICMS);
 
         return $calculado;
     }

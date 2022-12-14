@@ -416,6 +416,25 @@ class ICMSTest extends TestCase
     }
 
     /**
+     * Test CST 101
+     */
+    public function testCST101()
+    {
+        $icms = $this->instantiateICMS();
+        $icms->orig = '0';
+        $icms->CST = '101';
+        $icms->vProd = 138.30;
+        $icms->pCredSN = 2.56;
+
+        $calculado = ICMS::calcularICMS($icms, '11', '11');
+
+        $this->assertSame('0', $calculado->orig);
+        $this->assertSame('101', $calculado->CST);
+        $this->assertSame(2.56, $calculado->pCredSN);
+        $this->assertSame(3.54, $calculado->vCredICMSSN);
+    }
+
+    /**
      * Test CST 102
      */
     public function testCST102()
