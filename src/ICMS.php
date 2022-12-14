@@ -47,9 +47,6 @@ class ICMS
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
 
-    // FIXME: remove this properties
-    public $vProd;
-
     /**
      * @param ICMS $ICMS
      * @param string $ufOrigem
@@ -144,7 +141,7 @@ class ICMS
      */
     private static function calcvCredICMSSN(ICMS $ICMS): float
     {
-        return round($ICMS->vProd * ($ICMS->pCredSN / 100), 2);
+        return round($ICMS->vBC * ($ICMS->pCredSN / 100), 2);
     }
 
     /**

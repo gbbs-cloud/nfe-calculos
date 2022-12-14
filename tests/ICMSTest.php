@@ -423,7 +423,7 @@ class ICMSTest extends TestCase
         $icms = $this->instantiateICMS();
         $icms->orig = '0';
         $icms->CST = '101';
-        $icms->vProd = 138.30;
+        $icms->vBC = 138.30;
         $icms->pCredSN = 2.56;
 
         $calculado = ICMS::calcularICMS($icms, '11', '11');
