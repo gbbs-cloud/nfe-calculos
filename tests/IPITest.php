@@ -65,7 +65,7 @@ class IPITest extends TestCase
     public function testNotImplementedCST()
     {
         $this->expectException('\Gbbs\NfeCalculos\Exception\NotImplementedCSTException');
-        $this->expectErrorMessage('CST 02 not implemented');
+        $this->expectExceptionMessage('CST 02 not implemented');
         $this->expectExceptionCode(0);
         $ipi = $this->instantiateIPI();
         $ipi->CST = '02';
