@@ -189,7 +189,13 @@ class ICMS
         $calculado->pMVAST = $ICMS->pMVAST;
         $calculado->pRedBCST = $ICMS->pRedBCST;
         $calculado->pICMSST = $ICMS->pICMSST;
-        $calculado->vICMS = ICMS::calcvICMS($ICMS);
+        $calculado->pDif = $ICMS->pDif;
+        if ($ICMS->pDif) {
+            $calculado->vICMS = ICMS::calcvICMSCompDif($ICMS);
+            $calculado->vICMSDif = ICMS::calcvICMSDif($ICMS);
+        } else {
+            $calculado->vICMS = ICMS::calcvICMS($ICMS);
+        }
         $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 2);
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
