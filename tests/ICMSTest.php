@@ -88,8 +88,8 @@ class ICMSTest extends TestCase
         $this->assertSame('00', $calculado->CST);
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(1234.56, $calculado->vBC);
-        $this->assertSame(17.0, $calculado->pICMS);
-        $this->assertSame(209.88, $calculado->vICMS);
+        $this->assertSame(17.5, $calculado->pICMS);
+        $this->assertSame(216.05, $calculado->vICMS);
     }
 
     /**
@@ -132,13 +132,13 @@ class ICMSTest extends TestCase
         $this->assertSame('10', $calculado->CST);
         $this->assertSame(0, $calculado->modBC);
         $this->assertSame(100.0, $calculado->vBC);
-        $this->assertSame(17.0, $calculado->pICMS);
-        $this->assertSame(17.0, $calculado->vICMS);
+        $this->assertSame(17.5, $calculado->pICMS);
+        $this->assertSame(17.5, $calculado->vICMS);
         $this->assertSame(4, $calculado->modBCST);
         $this->assertSame(0.0, $calculado->pMVAST);
         $this->assertSame(1, $calculado->pRedBCST);
         $this->assertSame(99.0, $calculado->vBCST);
-        $this->assertSame(17.0, $calculado->pICMSST);
+        $this->assertSame(17.5, $calculado->pICMSST);
         $this->assertSame(0.0, $calculado->vICMSST);
     }
 
@@ -281,7 +281,7 @@ class ICMSTest extends TestCase
 
         $this->assertSame('0', $calculado->orig);
         $this->assertSame('41', $calculado->CST);
-        $this->assertSame(17.0, $calculado->vICMSDeson);
+        $this->assertSame(17.5, $calculado->vICMSDeson);
         $this->assertSame(9, $calculado->motDesICMS);
         $this->assertSame(0.0, $calculado->vBC);
         $this->assertSame(0.0, $calculado->vICMS);
@@ -411,8 +411,8 @@ class ICMSTest extends TestCase
         $this->assertSame('90', $calculado->CST);
         $this->assertSame(3, $calculado->modBC);
         $this->assertSame(152.0, $calculado->vBC);
-        $this->assertSame(17.0, $calculado->pICMS);
-        $this->assertSame(25.84, $calculado->vICMS);
+        $this->assertSame(17.5, $calculado->pICMS);
+        $this->assertSame(26.6, $calculado->vICMS);
     }
 
     /**
