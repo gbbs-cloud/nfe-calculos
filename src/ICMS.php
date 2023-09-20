@@ -73,10 +73,13 @@ class ICMS
         }
         if ($reducaoST === null) {
             if ($ufOrigem !== null && $ufDestino !== null) {
-                $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufOrigem, $ufDestino);
+                $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufDestino);
             }
         } else {
             $ICMS->pICMSST = $reducaoST;
+        }
+        if ($ufDestino !== null) {
+            $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
         }
         $calculosCST = [
             '00' => 'Gbbs\NfeCalculos\ICMS::calcCST00',
@@ -195,7 +198,17 @@ class ICMS
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
-
+        if ($ICMS->pFCP) { // RJ ou AL unicos que tem FCP
+            $pFCP = $ICMS->pFCP;
+            $vFCP = round($calculado->vBC * $pFCP / 100, 2);
+            // verificar se eh destacado o calculo do FCP ou somente do FCPST caso seja descomentar linhas abaixo:
+            // $calculado->vBCFCP = $ICMS->vBC;
+            // $calculado->pFCP = $pFCP;
+            // $calculado->vFCP = $vFCP;
+            $calculado->vBCFCPST = $ICMS->vBCST;
+            $calculado->pFCPST = $pFCP;
+            $calculado->vFCPST = round(($calculado->vBCFCPST * $ICMS->pFCPST / 100 - $vFCP), 2);
+        }
         return $calculado;
     }
 
@@ -322,6 +335,27 @@ class ICMS
     }
 
     /**
+     * @param string $ufDestino
+     * @throws Exception
+     * @return float
+     */
+    public static function pFCPFromUFs(string $ufDestino): float
+    {
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $pfcpFile = file_get_contents($path . 'pfcp.json');
+        $pfcpList = json_decode($pfcpFile, true);
+        if ($ufDestino === '99') {
+            return 0.0;
+        }
+        foreach ($pfcpList as $pfpc) {
+            if ($pfpc['uf'] === $ufDestino) {
+                return (float) $pfpc['aliquota'];
+            }
+        }
+        throw new Exception('UF inexistente(FCP): ' . ' - ' . $ufDestino);
+    }
+
+    /**
      * @param string $ufOrigem
      * @param string $ufDestino
      * @throws Exception
@@ -340,28 +374,27 @@ class ICMS
                 return (float) $picms['uf' . $ufDestino];
             }
         }
-        throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
+        throw new Exception('UF inexistente(ICMS): ' . $ufOrigem . ' - ' . $ufDestino);
     }
 
     /**
-     * @param string $ufOrigem
      * @param string $ufDestino
      * @throws Exception
      * @return float
      */
-    public static function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
+    public static function pICMSSTFromUFs(string $ufDestino): float
     {
         $path = realpath(__DIR__ . '/../storage') . '/';
-        $picmsstFile = file_get_contents($path . 'picmsst.json');
+        $picmsstFile = file_get_contents($path . 'picms.json');
         $picmsstList = json_decode($picmsstFile, true);
         if ($ufDestino === '99') {
             return 0.0;
         }
         foreach ($picmsstList as $picmsst) {
-            if ($picmsst['uf'] === $ufOrigem) {
+            if ($picmsst['uf'] === $ufDestino) {
                 return (float) $picmsst['uf' . $ufDestino];
             }
         }
-        throw new Exception('UF inexistente: ' . $ufOrigem . ' - ' . $ufDestino);
+        throw new Exception('UF inexistente(ST): ' . $ufDestino . ' - ' . $ufDestino);
     }
 }
