@@ -46,7 +46,6 @@ class ICMS
     public $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
-    public $uf_destino;
 
     /**
      * @param ICMS $ICMS
@@ -79,7 +78,9 @@ class ICMS
         } else {
             $ICMS->pICMSST = $reducaoST;
         }
-        $ICMS->uf_destino = $ufDestino;
+        if ($ufDestino !== null) {
+            $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
+        }
         $calculosCST = [
             '00' => 'Gbbs\NfeCalculos\ICMS::calcCST00',
             '10' => 'Gbbs\NfeCalculos\ICMS::calcCST10',
@@ -197,13 +198,13 @@ class ICMS
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
-        if ($ICMS->uf_destino == 33 || $ICMS->uf_destino == 27) { // RJ ou AL unicos que tem FCP
-            $pFCP = ICMS::pFCPFromUFs($ICMS->uf_destino);
+        if ($ICMS->pFCP) { // RJ ou AL unicos que tem FCP
+            $pFCP = $ICMS->pFCP;
             $vFCP = round($calculado->vBC * $pFCP / 100, 2);
-            //verificar se eh destacado o calculo do FCP ou somente do FCPST caso seja descomentar linhas abaixo:
-            //$calculado->vBCFCP = $ICMS->vBC;
-            //$calculado->pFCP = $pFCP;
-            //$calculado->vFCP = $vFCP;
+            // verificar se eh destacado o calculo do FCP ou somente do FCPST caso seja descomentar linhas abaixo:
+            // $calculado->vBCFCP = $ICMS->vBC;
+            // $calculado->pFCP = $pFCP;
+            // $calculado->vFCP = $vFCP;
             $calculado->vBCFCPST = $ICMS->vBCST;
             $calculado->pFCPST = $pFCP;
             $calculado->vFCPST = round(($calculado->vBCFCPST * $ICMS->pFCPST / 100 - $vFCP), 2);
