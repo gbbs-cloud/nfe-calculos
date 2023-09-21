@@ -81,7 +81,7 @@ class ICMS
         } else {
             $ICMS->pICMSST = $reducaoST;
         }
-        if ($ufDestino !== null) {
+        if ($ufDestino !== null && ($ufDestino == 33 || $ufDestino == 27)) {// RJ ou AL unicos que tem FCP
             $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
         }
         $calculosCST = [
@@ -172,7 +172,7 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        if($ICMS->consumidorFinal == 1){
+        if($ICMS->consumidorFinal == 1 && $ICMS->pFCP){
             $pFCP = $ICMS->pFCP;
             $vFCP = round($calculado->vBC * $pFCP / 100, 2);
             $calculado->pFCP = $pFCP;
@@ -206,7 +206,7 @@ class ICMS
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
-        if ($ICMS->pFCP) { // RJ ou AL unicos que tem FCP
+        if ($ICMS->pFCP) {
             $pFCP = $ICMS->pFCP;
             $vFCP = round($calculado->vBC * $pFCP / 100, 2);
             // verificar se eh destacado o calculo do FCP ou somente do FCPST caso seja descomentar linhas abaixo:
