@@ -46,7 +46,7 @@ class ICMS
     public $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
-    public $consumidorFinal
+    public $consumidorFinal;
     /**
      * @param ICMS $ICMS
      * @param string $ufOrigem
