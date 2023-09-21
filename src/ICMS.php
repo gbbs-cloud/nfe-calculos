@@ -46,7 +46,7 @@ class ICMS
     public $pFCPSTRet;  // Alíquota do FCP retido anteriormente por Substituição Tributária
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
-
+    public $consumidorFinal
     /**
      * @param ICMS $ICMS
      * @param string $ufOrigem
@@ -55,8 +55,11 @@ class ICMS
      * @return ICMS
      * @throws NotImplementedCSTException|InvalidCSTException|Exception
      */
-    public static function calcularICMS(ICMS $ICMS, string $ufOrigem = null, string $ufDestino = null, float $reducao = null, float $reducaoST = null): ICMS
+    public static function calcularICMS(ICMS $ICMS, string $ufOrigem = null, string $ufDestino = null, float $reducao = null, float $reducaoST = null, $consumidorFinal = null): ICMS
     {
+        if($consumidorFinal != null){
+            $ICMS->consumidorFinal = $consumidorFinal;
+        }
         $notImplemented = [
             '20', '30', '60', '70', '103',
             '200', '201', '202', '203', '300', '400', '500', '900'
@@ -169,7 +172,12 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-
+        if($ICMS->consumidorFinal == 1){
+            $pFCP = $ICMS->pFCP;
+            $vFCP = round($calculado->vBC * $pFCP / 100, 2);
+            $calculado->pFCP = $pFCP;
+            $calculado->vFCP = $vFCP;
+        }
         return $calculado;
     }
 
