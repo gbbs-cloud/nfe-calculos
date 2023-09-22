@@ -28,8 +28,8 @@ class COFINS
             '63', '64', '65', '66', '67', '70', '71', '72', '73', '74', '75', '98'
         ];
         $zerado = ['08'];
-        $isento = ['99'];
-        $notImplemented = ['03', '04', '05', '06', '07', '09'];
+        $isento = ['06', '99'];
+        $notImplemented = ['03', '04', '05', '07', '09'];
         if (in_array($COFINS->CST, $adValorem, true)) {
             return COFINS::adValoremCOFINS($COFINS);
         }
