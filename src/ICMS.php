@@ -213,7 +213,7 @@ class ICMS
             // $calculado->vBCFCP = $ICMS->vBC;
             // $calculado->pFCP = $pFCP;
             // $calculado->vFCP = $vFCP;
-            $calculado->vBCFCPST = $ICMS->vBCST;
+            $calculado->vBCFCPST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 2);
             $calculado->pFCPST = $pFCP;
             $calculado->vFCPST = round(($calculado->vBCFCPST * $ICMS->pFCPST / 100 - $vFCP), 2);
         }
