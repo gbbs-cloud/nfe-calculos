@@ -215,7 +215,7 @@ class ICMS
             // $calculado->vFCP = $vFCP;
             $calculado->vBCFCPST = $calculado->vBCST;
             $calculado->pFCPST = $pFCP;
-            $calculado->vFCPST = round(($calculado->vBCFCPST * $ICMS->pFCPST / 100 - $vFCP), 2);
+            $calculado->vFCPST = round((($calculado->vBCFCPST * $calculado->pFCPST / 100) - $vFCP), 2);
         }
         return $calculado;
     }
