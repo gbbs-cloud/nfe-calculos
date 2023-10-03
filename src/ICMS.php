@@ -207,15 +207,9 @@ class ICMS
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
         if ($ICMS->pFCP) {
-            $pFCP = $ICMS->pFCP;
-            $vFCP = round($calculado->vBC * $pFCP / 100, 2);
-            // verificar se eh destacado o calculo do FCP ou somente do FCPST caso seja descomentar linhas abaixo:
-            // $calculado->vBCFCP = $ICMS->vBC;
-            // $calculado->pFCP = $pFCP;
-            // $calculado->vFCP = $vFCP;
             $calculado->vBCFCPST = $calculado->vBCST;
-            $calculado->pFCPST = $pFCP;
-            $calculado->vFCPST = round((($calculado->vBCFCPST * $calculado->pFCPST / 100) - $vFCP), 2);
+            $calculado->pFCPST = $ICMS->pFCP;
+            $calculado->vFCPST = round((($calculado->vBCFCPST * $calculado->pFCPST / 100)), 2);
         }
         return $calculado;
     }
