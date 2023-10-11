@@ -47,6 +47,16 @@ class ICMS
     public $vFCPSTRet;  // Valor do FCP retido anteriormente por Substituição Tributária
     public $pST;  // Alíquota suportada pelo Consumidor Final
     public $consumidorFinal;
+    public $vBCFCPUFDest;
+    public $pFCPUFDest;
+    public $vFCPUFDest;
+    public $vBCUFDest;
+    public $pICMSUFDest;
+    public $pICMSInter;
+    public $pICMSInterPart;
+    public $vICMSUFDest;
+    public $vICMSUFRemet;
+    public $ufDestino;
     /**
      * @param ICMS $ICMS
      * @param string $ufOrigem
@@ -74,6 +84,7 @@ class ICMS
         } else {
             $ICMS->pICMS = $reducao;
         }
+        $ICMS->pICMSUFDest = ICMS::pICMSFromUFs($ufDestino, $ufDestino);
         if ($reducaoST === null) {
             if ($ufOrigem !== null && $ufDestino !== null) {
                 $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufDestino);
@@ -81,6 +92,7 @@ class ICMS
         } else {
             $ICMS->pICMSST = $reducaoST;
         }
+        $ICMS->ufDestino = $ufDestino;
         if ($ufDestino !== null && ($ufDestino == 33 || $ufDestino == 27)) {// RJ ou AL unicos que tem FCP
             $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
         }
@@ -172,11 +184,20 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        if($ICMS->consumidorFinal == 1 && $ICMS->pFCP){
-            $pFCP = $ICMS->pFCP;
-            $vFCP = round($calculado->vBC * $pFCP / 100, 2);
-            $calculado->pFCP = $pFCP;
-            $calculado->vFCP = $vFCP;
+        if($ICMS->consumidorFinal == 1 &&  $ICMS->ufDestino == 33){// se for rj fazer por eqto ->//$ICMS->pICMSUFDest > $ICMS->pICMS // verificar se qdo a aliq for maior se aplica ou se sao alguns casos
+            $calculado->vBCUFDest = $calculado->vBC;
+            $calculado->pICMSInter = $ICMS->pICMS;
+            $calculado->pICMSUFDest = $ICMS->pICMSUFDest;
+            $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 2);
+            $calculado->vICMSUFRemet = 0;
+            $calculado->pICMSInterPart = 100;
+            if($ICMS->pFCP){
+                $pFCP = $ICMS->pFCP;
+                $vFCP = round($calculado->vBC * $pFCP / 100, 2);
+                $calculado->vBCFCPUFDest = $calculado->vBC;
+                $calculado->pFCPUFDest = $pFCP;
+                $calculado->vFCPUFDest = $vFCP;
+            }
         }
         return $calculado;
     }
