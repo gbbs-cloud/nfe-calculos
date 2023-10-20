@@ -174,7 +174,7 @@ class ICMS
      */
     private static function calcCST00(ICMS $ICMS): ICMS
     {
-        if ($ICMS->modBC !== 0) {
+        if ($ICMS->modBC !== 3) {
             throw new Exception('modBC ' . $ICMS->modBC . ' not implemented');
         }
         $calculado = new ICMS();
