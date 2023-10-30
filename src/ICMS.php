@@ -56,6 +56,7 @@ class ICMS
     public $pICMSInterPart;
     public $vICMSUFDest;
     public $vICMSUFRemet;
+    public $ufOrigem;
     public $ufDestino;
     /**
      * @param ICMS $ICMS
@@ -92,6 +93,7 @@ class ICMS
         } else {
             $ICMS->pICMSST = $reducaoST;
         }
+        $ICMS->ufOrigem = $ufOrigem;
         $ICMS->ufDestino = $ufDestino;
         if ($ufDestino !== null && ($ufDestino == 33 || $ufDestino == 27)) {// RJ ou AL unicos que tem FCP
             $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
@@ -184,7 +186,7 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        if($ICMS->consumidorFinal == 1 &&  $ICMS->ufDestino == 33){// se for rj fazer por eqto ->//$ICMS->pICMSUFDest > $ICMS->pICMS // verificar se qdo a aliq for maior se aplica ou se sao alguns casos
+        if($ICMS->consumidorFinal == 1 &&  $ICMS->ufDestino != $ICMS->ufOrigem){
             $calculado->vBCUFDest = $calculado->vBC;
             $calculado->pICMSInter = $ICMS->pICMS;
             $calculado->pICMSUFDest = $ICMS->pICMSUFDest;
