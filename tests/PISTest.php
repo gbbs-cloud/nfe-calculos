@@ -29,7 +29,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '00000';
 
-        PIS::calcularPIS($pis);
+        PIS::calcularPIS($pis, false);
     }
 
     /**
@@ -41,7 +41,7 @@ class PISTest extends TestCase
         $pis->CST = '01';
         $pis->vBC = 1234.56;
 
-        $calculado = PIS::calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis, false);
 
         $this->assertSame('01', $calculado->CST);
         $this->assertSame(1234.56, $calculado->vBC);
@@ -57,7 +57,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '08';
 
-        $calculado = PIS::calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis, false);
 
         $this->assertSame('08', $calculado->CST);
     }
@@ -70,7 +70,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '99';
 
-        $calculado = PIS::calcularPIS($pis);
+        $calculado = PIS::calcularPIS($pis, false);
 
         $this->assertSame('99', $calculado->CST);
         $this->assertSame(0.0, $calculado->vBC);
@@ -89,7 +89,7 @@ class PISTest extends TestCase
         $pis = $this->instantiatePIS();
         $pis->CST = '03';
 
-        PIS::calcularPIS($pis);
+        PIS::calcularPIS($pis, false);
     }
 
     /**

@@ -21,7 +21,7 @@ class COFINS
      * @return COFINS
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    public static function calcularCOFINS(COFINS $COFINS): COFINS
+    public static function calcularCOFINS(COFINS $COFINS, bool $lucroReal = false): COFINS
     {
         $adValorem = [
             '01', '02', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62',
@@ -31,6 +31,7 @@ class COFINS
         $isento = ['06', '99'];
         $notImplemented = ['03', '04', '05', '07', '09'];
         if (in_array($COFINS->CST, $adValorem, true)) {
+            $COFINS->pCOFINS = $lucroReal ? 7.6 : 3;
             return COFINS::adValoremCOFINS($COFINS);
         }
         if (in_array($COFINS->CST, $zerado, true)) {
@@ -51,12 +52,11 @@ class COFINS
      */
     private static function adValoremCOFINS(COFINS $COFINS): COFINS
     {
-        $pCOFINS = 3;
         $calculado = new COFINS();
         $calculado->CST = $COFINS->CST;
         $calculado->vBC = $COFINS->vBC;
-        $calculado->pCOFINS = $pCOFINS;
-        $calculado->vCOFINS = (float)number_format($COFINS->vBC * ($pCOFINS / 100), 2);
+        $calculado->pCOFINS = $COFINS->pCOFINS;
+        $calculado->vCOFINS = (float)number_format($COFINS->vBC * ($COFINS->pCOFINS / 100), 2);
         return $calculado;
     }
 

@@ -29,7 +29,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '00000';
 
-        COFINS::calcularCOFINS($cofins);
+        COFINS::calcularCOFINS($cofins, false);
     }
 
     /**
@@ -41,7 +41,7 @@ class COFINSTest extends TestCase
         $cofins->CST = '01';
         $cofins->vBC = 1234.56;
 
-        $calculado = COFINS::calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins, false);
 
         $this->assertSame('01', $calculado->CST);
         $this->assertSame(1234.56, $calculado->vBC);
@@ -57,7 +57,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '08';
 
-        $calculado = COFINS::calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins, false);
 
         $this->assertSame('08', $calculado->CST);
     }
@@ -70,7 +70,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '99';
 
-        $calculado = COFINS::calcularCOFINS($cofins);
+        $calculado = COFINS::calcularCOFINS($cofins, false);
 
         $this->assertSame('99', $calculado->CST);
         $this->assertSame(0.0, $calculado->vBC);
@@ -89,7 +89,7 @@ class COFINSTest extends TestCase
         $cofins = $this->instantiateCOFINS();
         $cofins->CST = '03';
 
-        COFINS::calcularCOFINS($cofins);
+        COFINS::calcularCOFINS($cofins, false);
     }
 
     /**

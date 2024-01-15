@@ -21,7 +21,7 @@ class PIS
      * @return PIS
      * @throws NotImplementedCSTException|InvalidCSTException
      */
-    public static function calcularPIS(PIS $PIS): PIS
+    public static function calcularPIS(PIS $PIS, bool $lucroReal = false): PIS
     {
         $adValorem = [
             '01', '02', '49', '50', '51', '52', '53', '54', '55', '56', '60', '61', '62',
@@ -32,6 +32,7 @@ class PIS
         $notImplemented = ['03', '04', '05', '07', '09'];
 
         if (in_array($PIS->CST, $adValorem, true)) {
+            $PIS->pPIS = $lucroReal ? 1.65 : 0.65;
             return PIS::adValoremPIS($PIS);
         }
         if (in_array($PIS->CST, $zerado, true)) {
@@ -52,12 +53,11 @@ class PIS
      */
     private static function adValoremPIS(PIS $PIS): PIS
     {
-        $pPIS = 0.65;
         $calculado = new PIS();
         $calculado->CST = $PIS->CST;
         $calculado->vBC = $PIS->vBC;
-        $calculado->pPIS = $pPIS;
-        $calculado->vPIS = (float)number_format($PIS->vBC * ($pPIS / 100), 2);
+        $calculado->pPIS = $PIS->pPIS;
+        $calculado->vPIS = (float)number_format($PIS->vBC * ($PIS->pPIS / 100), 2);
         return $calculado;
     }
 
