@@ -402,6 +402,22 @@ class ICMS
         throw new Exception('UF inexistente(ICMS): ' . $ufOrigem . ' - ' . $ufDestino);
     }
 
+    public static function pICMSCteFromUFs(string $ufOrigem, string $ufDestino): float
+    {
+        $path = realpath(__DIR__ . '/../storage') . '/';
+        $picmsFile = file_get_contents($path . 'picmscte.json');
+        $picmsList = json_decode($picmsFile, true);
+        if ($ufDestino === '99') {
+            return 4.0;
+        }
+        foreach ($picmsList as $picms) {
+            if ($picms['uf'] === $ufOrigem) {
+                return (float) $picms['uf' . $ufDestino];
+            }
+        }
+        throw new Exception('UF inexistente(ICMS): ' . $ufOrigem . ' - ' . $ufDestino);
+    }
+
     /**
      * @param string $ufDestino
      * @throws Exception
