@@ -81,6 +81,10 @@ class ICMS
         if ($reducao === null) {
             if ($ufOrigem !== null && $ufDestino !== null) {
                 $ICMS->pICMS = ICMS::pICMSFromUFs($ufOrigem, $ufDestino);
+                if($ICMS->orig == 1){ // cimento branco importado.. verificar se os 4% sao pra todos os emitentes e mais algum dado pra n cair aqui sempre que for origem 1
+                    //verificar se existe alguma maneira de chegar aos 4% com algum calculo aleatorio pra nao ficar chumbado no codigo
+                    $ICMS->pICMS = 4;
+                }
             }
         } else {
             $ICMS->pICMS = $reducao;
