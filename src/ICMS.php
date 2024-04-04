@@ -68,7 +68,7 @@ class ICMS
      */
     public static function calcularICMS(ICMS $ICMS, string $ufOrigem = null, string $ufDestino = null, float $reducao = null, float $reducaoST = null, $consumidorFinal = null): ICMS
     {
-        if($consumidorFinal != null){
+        if ($consumidorFinal != null) {
             $ICMS->consumidorFinal = $consumidorFinal;
         }
         $notImplemented = [
@@ -81,7 +81,7 @@ class ICMS
         if ($reducao === null) {
             if ($ufOrigem !== null && $ufDestino !== null) {
                 $ICMS->pICMS = ICMS::pICMSFromUFs($ufOrigem, $ufDestino);
-                if($ICMS->orig == 1){ // cimento branco importado.. verificar se os 4% sao pra todos os emitentes e mais algum dado pra n cair aqui sempre que for origem 1
+                if ($ICMS->orig == 1) { // cimento branco importado.. verificar se os 4% sao pra todos os emitentes e mais algum dado pra n cair aqui sempre que for origem 1
                     //verificar se existe alguma maneira de chegar aos 4% com algum calculo aleatorio pra nao ficar chumbado no codigo
                     $ICMS->pICMS = 4;
                 }
@@ -92,14 +92,14 @@ class ICMS
         $ICMS->pICMSUFDest = ICMS::pICMSFromUFs($ufDestino, $ufDestino);
         if ($reducaoST === null) {
             if ($ufOrigem !== null && $ufDestino !== null) {
-                $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufDestino);
+                $ICMS->pICMSST = ICMS::pICMSSTFromUFs($ufOrigem, $ufDestino); // WORKARROND FIX THIS
             }
         } else {
             $ICMS->pICMSST = $reducaoST;
         }
         $ICMS->ufOrigem = $ufOrigem;
         $ICMS->ufDestino = $ufDestino;
-        if ($ufDestino !== null && ($ufDestino == 33 || $ufDestino == 27)) {// RJ ou AL unicos que tem FCP
+        if ($ufDestino !== null && ($ufDestino == 33 || $ufDestino == 27)) { // RJ ou AL unicos que tem FCP
             $ICMS->pFCP = ICMS::pFCPFromUFs($ufDestino);
         }
         $calculosCST = [
@@ -190,14 +190,14 @@ class ICMS
         $calculado->vBC = $ICMS->vBC;
         $calculado->pICMS = $ICMS->pICMS;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        if($ICMS->consumidorFinal == 1 &&  $ICMS->ufDestino != $ICMS->ufOrigem){
+        if ($ICMS->consumidorFinal == 1 &&  $ICMS->ufDestino != $ICMS->ufOrigem) {
             $calculado->vBCUFDest = $calculado->vBC;
             $calculado->pICMSInter = $ICMS->pICMS;
             $calculado->pICMSUFDest = $ICMS->pICMSUFDest;
             $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 2);
             $calculado->vICMSUFRemet = 0;
             $calculado->pICMSInterPart = 100;
-            if($ICMS->pFCP){
+            if ($ICMS->pFCP) {
                 $pFCP = $ICMS->pFCP;
                 $vFCP = round($calculado->vBC * $pFCP / 100, 2);
                 $calculado->vBCFCPUFDest = $calculado->vBC;
@@ -427,16 +427,17 @@ class ICMS
      * @throws Exception
      * @return float
      */
-    public static function pICMSSTFromUFs(string $ufDestino): float
+    // WORKARROND FIX THIS
+    public static function pICMSSTFromUFs(string $ufOrigem, string $ufDestino): float
     {
         $path = realpath(__DIR__ . '/../storage') . '/';
-        $picmsstFile = file_get_contents($path . 'picms.json');
+        $picmsstFile = file_get_contents($path . 'picmsst.json');
         $picmsstList = json_decode($picmsstFile, true);
-        if ($ufDestino === '99') {
+        if ($ufOrigem === '99') {
             return 0.0;
         }
         foreach ($picmsstList as $picmsst) {
-            if ($picmsst['uf'] === $ufDestino) {
+            if ($picmsst['uf'] === $ufOrigem) {
                 return (float) $picmsst['uf' . $ufDestino];
             }
         }
