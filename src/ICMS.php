@@ -433,7 +433,7 @@ class ICMS
         $path = realpath(__DIR__ . '/../storage') . '/';
         $picmsstFile = file_get_contents($path . 'picmsst.json');
         $picmsstList = json_decode($picmsstFile, true);
-        if ($ufOrigem === '99') {
+        if ($ufDestino === '99') {
             return 0.0;
         }
         foreach ($picmsstList as $picmsst) {
