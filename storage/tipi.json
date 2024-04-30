@@ -9144,7 +9144,7 @@
 {"CodTIPI":"13122","NCMNum":"85437050","NCMNom":"Simulador de antenas para transmissores com potência igual ou superior a 25 kW (carga fantasma)","NCMAli":"10"},
 {"CodTIPI":"13124","NCMNum":"85437091","NCMNom":"Terminais de texto que operem com código de transmissão Baudot, providos de teclado alfanumérico e visor, para acoplamento exclusivamente acústico a telefone","NCMAli":"10"},
 {"CodTIPI":"13125","NCMNum":"85437092","NCMNom":"Eletrificadores de cercas","NCMAli":"10"},
-{"CodTIPI":"13126","NCMNum":"85437099","NCMNom":"Outros","NCMAli":"10"},
+{"CodTIPI":"13126","NCMNum":"85437099","NCMNom":"Outros","NCMAli":"6.5"},
 {"CodTIPI":"13128","NCMNum":"85439010","NCMNom":"Das máquinas ou aparelhos da subposição 8543.70","NCMAli":"10"},
 {"CodTIPI":"13129","NCMNum":"85439090","NCMNom":"Outras","NCMAli":"10"},
 {"CodTIPI":"13132","NCMNum":"85441100","NCMNom":"-- De cobre","NCMAli":"0"},
