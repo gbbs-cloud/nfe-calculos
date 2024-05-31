@@ -194,7 +194,7 @@ class ICMS
             $calculado->vBCUFDest = $calculado->vBC;
             $calculado->pICMSInter = $ICMS->pICMS;
             $calculado->pICMSUFDest = $ICMS->pICMSUFDest;
-            $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 2);
+            $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 4);
             $calculado->vICMSUFRemet = 0;
             $calculado->pICMSInterPart = 100;
             if ($ICMS->pFCP) {
@@ -229,7 +229,7 @@ class ICMS
         $calculado->pRedBCST = $ICMS->pRedBCST;
         $calculado->pICMSST = $ICMS->pICMSST;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 2);
+        $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 4);
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
