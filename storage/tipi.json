@@ -4795,7 +4795,7 @@
 {"NCMNum":"40103400","NCMNom":"-- Correias de transmissão sem fim, de seção trapezoidal, não estriadas, com uma circunferência externa superior a 180 cm, mas não superior a 240 cm","NCMAli":"10"},
 {"NCMNum":"40103500","NCMNom":"-- Correias de transmissão sem fim, síncronas, com uma circunferência externa superior a 60 cm, mas não superior a 150 cm","NCMAli":"10"},
 {"NCMNum":"40103600","NCMNom":"-- Correias de transmissão sem fim, síncronas, com uma circunferência externa superior a 150 cm, mas não superior a 198 cm","NCMAli":"10"},
-{"NCMNum":"40103900","NCMNom":"-- Outras","NCMAli":"10"},
+{"NCMNum":"40103900","NCMNom":"-- Outras","NCMAli":"6.5"},
 {"NCMNum":"40111000","NCMNom":"- Dos tipos utilizados em automóveis de passageiros (incluindo os veículos de uso misto (station wagons) e os automóveis de corrida)","NCMAli":"15"},
 {"NCMNum":"40112010","NCMNom":"De medida 11,00-24","NCMAli":"2"},
 {"NCMNum":"40112090","NCMNom":"Outros","NCMAli":"2"},
