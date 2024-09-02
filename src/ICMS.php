@@ -72,8 +72,19 @@ class ICMS
             $ICMS->consumidorFinal = $consumidorFinal;
         }
         $notImplemented = [
-            '20', '30', '60', '70', '103',
-            '200', '201', '202', '203', '300', '400', '500', '900'
+            '20',
+            '30',
+            '60',
+            '70',
+            '103',
+            '200',
+            '201',
+            '202',
+            '203',
+            '300',
+            '400',
+            '500',
+            '900'
         ];
         if (in_array($ICMS->CST, $notImplemented, true)) {
             throw new NotImplementedCSTException($ICMS->CST);
@@ -194,7 +205,7 @@ class ICMS
             $calculado->vBCUFDest = $calculado->vBC;
             $calculado->pICMSInter = $ICMS->pICMS;
             $calculado->pICMSUFDest = $ICMS->pICMSUFDest;
-            $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 4);
+            $calculado->vICMSUFDest = round($calculado->vBC * ($calculado->pICMSUFDest - $calculado->pICMSInter) / 100, 2);
             $calculado->vICMSUFRemet = 0;
             $calculado->pICMSInterPart = 100;
             if ($ICMS->pFCP) {
@@ -229,7 +240,7 @@ class ICMS
         $calculado->pRedBCST = $ICMS->pRedBCST;
         $calculado->pICMSST = $ICMS->pICMSST;
         $calculado->vICMS = ICMS::calcvICMS($ICMS);
-        $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 4);
+        $calculado->vBCST = round(ICMS::calcularReducaoValorBCST($ICMS) * (1 + $ICMS->pMVAST / 100), 2);
         $calculado->vICMSST = $ICMS->pMVAST === 0.0
             ? 0.0
             : round(($calculado->vBCST * (1 - $ICMS->pRedBCST / 100)) * $ICMS->pICMSST / 100 - $calculado->vICMS, 2);
