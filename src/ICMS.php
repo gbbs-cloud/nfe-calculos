@@ -73,7 +73,7 @@ class ICMS
         }
         $notImplemented = [
             '20', '30', '60', '70', '103',
-            '200', '201', '202', '203', '300', '400', '500', '900'
+            '200', '201', '202', '203', '300', '400', '500',
         ];
         if (in_array($ICMS->CST, $notImplemented, true)) {
             throw new NotImplementedCSTException($ICMS->CST);
@@ -112,6 +112,7 @@ class ICMS
             '90' => 'Gbbs\NfeCalculos\ICMS::calcCST90',
             '101' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN101',
             '102' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN102',
+            '900' => 'Gbbs\NfeCalculos\ICMS::calcCSOSN900',
         ];
         if (array_key_exists($ICMS->CST, $calculosCST)) {
             return $calculosCST[$ICMS->CST]($ICMS);
@@ -360,6 +361,23 @@ class ICMS
         $calculado = new ICMS();
         $calculado->orig = $ICMS->orig;
         $calculado->CST = $ICMS->CST;
+        return $calculado;
+    }
+
+    /**
+     * @param $ICMS
+     * @return ICMS
+     */
+    private static function calcCSOSN900(ICMS $ICMS): ICMS
+    {
+        $calculado = new ICMS();
+        $calculado->orig = $ICMS->orig;
+        $calculado->CST = $ICMS->CST;
+        $calculado->modBC = $ICMS->modBC;
+        $calculado->vBC = $ICMS->vBC;
+        $calculado->pICMS = $ICMS->pICMS;
+        $calculado->vICMS = ICMS::calcvICMS($ICMS);
+
         return $calculado;
     }
 
